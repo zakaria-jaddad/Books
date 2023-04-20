@@ -1,12 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
-int main(void) {
-    char *hello = malloc(20 * sizeof(char));
-    printf("Write Some Thing Here : \n");
-    scanf("%[^\n]", hello);
-
-    // ? printing using the address of a pointer    
-    printf("this is what you just typed %s \n", hello);
+int main(int argc, char *argv[]) {
+    if(argc == 1){
+        printf("Write Something First");
+        exit(1);
+    }
+    char *hello = malloc(strlen(argv[1]) * sizeof(char));
+    // copying memory
+    memcpy(&hello, &argv[1], sizeof(argv[1]));
+    printf("%s", hello);
     return 0;
 }
