@@ -7,9 +7,13 @@ int main(int argc, char *argv[]) {
         printf("Write Something First");
         exit(1);
     }
-    char *hello = malloc(strlen(argv[1]) * sizeof(char));
-    // copying memory
-    memcpy(&hello, &argv[1], sizeof(argv[1]));
-    printf("%s", hello);
+    char *hello = malloc(sizeof(&argv));
+
+    printf("%d\n", argc);
+
+    for (int i = 1; i < argc; i++){
+        printf("%s ", argv[i]);
+    }
+
     return 0;
 }
