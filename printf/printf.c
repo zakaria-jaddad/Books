@@ -36,17 +36,16 @@ int main(void) {
             buffer[COUNTER + 1] = '\0';
             break;
         }
-        // * if the user didn't press enter add anoter place for the new char 
+        // * if the user didn't press enter, add place for the new char 
         COUNTER++;
     }
 
 
-    // print(buffer, 44, 45);
-    // print("Ana Zakria This Is Just Some Test Here\n");
-    print("Salam ana Zakaria 3andi %d l3am lwalid 3ando %d l3am \n", 19, 56);
+    print("\n", 19, 65, 59);
     return 0;
     free(buffer);
-    // print()
+
+
 }
 
 void print(const char *buffer, ...) {
@@ -54,7 +53,6 @@ void print(const char *buffer, ...) {
     va_list args;
     va_start(args, buffer);
 
-    int little_counter = -1;
 
     // TODO : iterrating over the string  
     for (int i = 0; buffer[i] != '\0' ; i++) {
@@ -62,16 +60,25 @@ void print(const char *buffer, ...) {
         // * if ther is the % sympole
         if (buffer[i] == '%') {
             
-            // TODO : handeling %d
+            // TODO : handeling %d DONE
             if(buffer[i + 1] == 'd'){
-                little_counter = i + 1;
-                char number[100];
+
+                // ! adding 1 to pass the next d
+                i++;
+
+                // * getting the value of the integer argument 
                 int num = va_arg(args, int);
+
+                // * allocating memory for the ascii string 
+                char *number = malloc(sizeof num);
+
+                // * conveting int number to ascii value 
                 sprintf(number, "%d", num);
+
                 write(1, number, strlen(number));
             }
         }
-        else if (i != little_counter)
+        else
             write(1, &buffer[i], 1);
 
     }
