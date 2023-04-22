@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <stdarg.h>
+#include <errno.h>
 
     // ! write(int __fd, const void * __buf, size_t __nbyte)
 
@@ -42,7 +43,7 @@ int main(void) {
         COUNTER++;
     }
 
-    print("%o", 1234);
+    print(buffer);
     return 0;
     free(buffer);
 
@@ -124,7 +125,7 @@ void print(const char *buffer, ...) {
 
                 char *floating_number = malloc(sizeof(va_arg(args, double)));
 
-                sprintf(floating_number, "%lf", va_arg(args, double));
+                sprintf(floating_number, "%f", va_arg(args, double));
 
                 writeme(floating_number);
             }
@@ -141,6 +142,29 @@ void print(const char *buffer, ...) {
 
                 writeme(hexoctal_number);
                 i++;
+            }
+
+            // TODO : handeling %lf, %lo, %lx (8 bytes) value double 
+
+            else if (buffer[i + 1] == 'l') {
+
+                long long_input_number = va_arg(args, long);
+                char *float_octal_hex_number = malloc(sizeof(long_input_number));
+
+                // * for float 
+                if (buffer[i + 2] == 'f') {
+                    double double_input_number = va_arg(args, double);
+                    sprintf(float_octal_hex_number, "%lf", double_input_number);
+                }
+                // * for octal
+                else if (buffer[i + 2] == 'o')
+                    sprintf(float_octal_hex_number, "%lo", long_input_number);
+                // * for hex 
+                else if (buffer[i + 2] == 'x' || buffer[i + 2] == 'X')
+                    sprintf(float_octal_hex_number, "%lx", long_input_number);
+
+                writeme(float_octal_hex_number);
+                i += 2;
             }
         }
         else
