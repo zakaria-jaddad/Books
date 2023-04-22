@@ -42,8 +42,7 @@ int main(void) {
         COUNTER++;
     }
 
-
-    print("%s =======/ %ld /======/ %d /========= %s\n", "hello world !", 393002983900, 2003, "hello world 2 !");
+    print("%s =======/ %ld /======/ %d /====/ / %s / /===== %c\n", "hello world !", 393002983900, 2003, "hello world 2 !", 'cg');
     return 0;
     free(buffer);
 
@@ -109,6 +108,18 @@ void print(const char *buffer, ...) {
                 writeme(string);
             }
         }
+
+            // TODO : handeling %c which is a single char DONE 
+
+            else if (buffer[i + 1] == 'c') {
+                i++;
+
+                char charcter = va_arg(args, int);
+
+                write(1, &charcter, 1);
+
+            }
+
         else
             write(1, &buffer[i], 1);
 
