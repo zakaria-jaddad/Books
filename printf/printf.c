@@ -6,8 +6,10 @@
 
     // ! write(int __fd, const void * __buf, size_t __nbyte)
 
-    // * functions 
+// * functions 
 void print(const char *buffer, ...);
+void writeme(char *buffer);
+
 
 int main(void) {
     // TODO : Get the buffer from the user 
@@ -41,7 +43,7 @@ int main(void) {
     }
 
 
-    print("%s ====================== %s\n", "hello world !", "hello world 2 !");
+    print("%s =======/ %ld /======/ %d /========= %s\n", "hello world !", 393002983900, 2003, "hello world 2 !");
     return 0;
     free(buffer);
 
@@ -75,10 +77,27 @@ void print(const char *buffer, ...) {
                 // * conveting int number to ascii value 
                 sprintf(number, "%d", num);
 
-                write(1, number, strlen(number));
+                writeme(number);
             }
 
-            // TODO : handeling %s which is a string 
+            // TODO : handeling %ld which is a long 
+
+            else if (buffer[i + 1] == 'l' && buffer[i + 2] == 'd') {
+
+                long number = va_arg(args, long);
+
+                char *string_number = malloc(sizeof number);
+
+                sprintf(string_number, "%ld", number);
+
+                writeme(string_number);
+
+                // * skipping the nex two indexes cuz of ld
+                i += 2;
+            }
+
+
+            // TODO : handeling %s which is a string DONE 
 
             else if (buffer[i + 1] == 's') {
 
@@ -87,7 +106,7 @@ void print(const char *buffer, ...) {
                 // * getting the string [buffer] value from the agruments 
                 char *string = va_arg(args, char*);
 
-                write(1, string, strlen(string));
+                writeme(string);
             }
         }
         else
@@ -95,4 +114,11 @@ void print(const char *buffer, ...) {
 
     }
 
+}
+
+
+// ! this is just a simple function to write the string i'm just too lazy to write it over and wover 
+
+void writeme(char *buffer) {
+    write(1, buffer, strlen(buffer));
 }
