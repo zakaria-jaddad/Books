@@ -44,6 +44,7 @@ int main(void) {
     }
 
     print(buffer);
+    print("==========/ %ld /=========", 6647352882635);
     return 0;
     free(buffer);
 
@@ -78,22 +79,6 @@ void print(const char *buffer, ...) {
                 sprintf(number, "%d", num);
 
                 writeme(number);
-            }
-
-            // TODO : handeling %ld which is a long 
-
-            else if (buffer[i + 1] == 'l' && buffer[i + 2] == 'd') {
-
-                long number = va_arg(args, long);
-
-                char *string_number = malloc(sizeof number);
-
-                sprintf(string_number, "%ld", number);
-
-                writeme(string_number);
-
-                // * skipping the nex two indexes cuz of ld
-                i += 2;
             }
 
             // TODO : handeling %s which is a string DONE 
@@ -144,26 +129,29 @@ void print(const char *buffer, ...) {
                 i++;
             }
 
-            // TODO : handeling %lf, %lo, %lx (8 bytes) value double 
+            // TODO : handeling %lf, %lo, %lx, %ld (8 bytes) value double 
 
             else if (buffer[i + 1] == 'l') {
 
                 long long_input_number = va_arg(args, long);
-                char *float_octal_hex_number = malloc(sizeof(long_input_number));
+                char *float_octal_hex_int_number = malloc(sizeof(long_input_number));
 
                 // * for float 
                 if (buffer[i + 2] == 'f') {
                     double double_input_number = va_arg(args, double);
-                    sprintf(float_octal_hex_number, "%lf", double_input_number);
+                    sprintf(float_octal_hex_int_number, "%lf", double_input_number);
                 }
                 // * for octal
                 else if (buffer[i + 2] == 'o')
-                    sprintf(float_octal_hex_number, "%lo", long_input_number);
+                    sprintf(float_octal_hex_int_number, "%lo", long_input_number);
                 // * for hex 
                 else if (buffer[i + 2] == 'x' || buffer[i + 2] == 'X')
-                    sprintf(float_octal_hex_number, "%lx", long_input_number);
+                    sprintf(float_octal_hex_int_number, "%lx", long_input_number);
+                // * for long
+                else if (buffer[i + 2] == 'd')
+                    sprintf(float_octal_hex_int_number, "%ld", long_input_number);
 
-                writeme(float_octal_hex_number);
+                writeme(float_octal_hex_int_number);
                 i += 2;
             }
         }
