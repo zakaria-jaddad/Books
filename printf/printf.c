@@ -42,7 +42,7 @@ int main(void) {
         COUNTER++;
     }
 
-    print("%s =======/ %ld /======/ %d /====/ / %s / /===== %c\n", "hello world !", 393002983900, 2003, "hello world 2 !", 'cg');
+    print("%o", 1234);
     return 0;
     free(buffer);
 
@@ -95,7 +95,6 @@ void print(const char *buffer, ...) {
                 i += 2;
             }
 
-
             // TODO : handeling %s which is a string DONE 
 
             else if (buffer[i + 1] == 's') {
@@ -107,7 +106,6 @@ void print(const char *buffer, ...) {
 
                 writeme(string);
             }
-        }
 
             // TODO : handeling %c which is a single char DONE 
 
@@ -117,9 +115,34 @@ void print(const char *buffer, ...) {
                 char charcter = va_arg(args, int);
 
                 write(1, &charcter, 1);
-
             }
 
+            // TODO : handelign %f which is a floating point DONE
+
+            else if (buffer[i + 1] == 'f') {
+                i++;
+
+                char *floating_number = malloc(sizeof(va_arg(args, double)));
+
+                sprintf(floating_number, "%lf", va_arg(args, double));
+
+                writeme(floating_number);
+            }
+
+            // TODO : handeling %x hex and %o octal (4 bytes) value [int] DONE  
+
+            else if (buffer[i + 1] == 'x' || buffer[i + 1] == 'X' || buffer[i + 1] == 'o') {
+                char *hexoctal_number = malloc(sizeof(va_arg(args, int)));
+
+                if (buffer[i + 1] == 'o')
+                    sprintf(hexoctal_number, "%o", va_arg(args, int));
+                else 
+                    sprintf(hexoctal_number, "%x", va_arg(args, int));
+
+                writeme(hexoctal_number);
+                i++;
+            }
+        }
         else
             write(1, &buffer[i], 1);
 
