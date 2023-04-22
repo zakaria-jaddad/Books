@@ -41,7 +41,7 @@ int main(void) {
     }
 
 
-    print("\n", 19, 65, 59);
+    print("%s ====================== %s\n", "hello world !", "hello world 2 !");
     return 0;
     free(buffer);
 
@@ -61,7 +61,7 @@ void print(const char *buffer, ...) {
         if (buffer[i] == '%') {
             
             // TODO : handeling %d DONE
-            if(buffer[i + 1] == 'd'){
+            if(buffer[i + 1] == 'd') {
 
                 // ! adding 1 to pass the next d
                 i++;
@@ -77,10 +77,22 @@ void print(const char *buffer, ...) {
 
                 write(1, number, strlen(number));
             }
+
+            // TODO : handeling %s which is a string 
+
+            else if (buffer[i + 1] == 's') {
+
+                i++;
+
+                // * getting the string [buffer] value from the agruments 
+                char *string = va_arg(args, char*);
+
+                write(1, string, strlen(string));
+            }
         }
         else
             write(1, &buffer[i], 1);
 
     }
-    // write(1, buffer, strlen(buffer));
+
 }
