@@ -27,8 +27,12 @@ int main(void) {
 
         // * if the user pressed enter to end the string  
         if (buffer[COUNTER] == '\n') {
+
+            // * realloctaign memory for \0
+            buffer = realloc(buffer, (COUNTER + 1) * sizeof(char));
+
             // * switch \n to null operator
-            buffer[COUNTER] = '\0';
+            buffer[COUNTER + 1] = '\0';
             break;
         }
         // * if the user didn't press enter add anoter place for the new char 
@@ -37,6 +41,7 @@ int main(void) {
 
 
     print(buffer);
+    print("Ana Zakria This Is Just Some Test Here\n");
     return 0;
     free(buffer);
     // print()
