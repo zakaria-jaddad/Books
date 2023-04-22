@@ -5,9 +5,8 @@
 
     // ! write(int __fd, const void * __buf, size_t __nbyte)
 
-// void print() {
-
-// }
+    // * functions 
+void print(char *buffer);
 
 int main(void) {
     // TODO : Get the buffer from the user 
@@ -37,8 +36,12 @@ int main(void) {
     }
 
 
-    printf("%s \n %d", buffer, COUNTER);
+    print(buffer);
     return 0;
     free(buffer);
     // print()
+}
+
+void print(char *buffer) {
+    write(1, buffer, strlen(buffer));
 }
