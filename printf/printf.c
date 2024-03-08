@@ -4,11 +4,12 @@
 #include <string.h>
 #include <stdarg.h>
 #include <errno.h>
+#include <math.h>
 
     // ! write(int __fd, const void * __buf, size_t __nbyte)
 
 // * functions 
-void print(const char *buffer, ...);
+int print(const char *buffer, ...);
 void writeme(char *buffer);
 
 
@@ -44,14 +45,14 @@ int main(void) {
     }
 
     print(buffer);
-    print("==========/ %ld /=========", 6647352882635);
+    print("==========/ %f /=========", 6647352882635);
     return 0;
     free(buffer);
 
 
 }
 
-void print(const char *buffer, ...) {
+int print(const char *buffer, ...) {
 
     va_list args;
     va_start(args, buffer);
@@ -108,6 +109,11 @@ void print(const char *buffer, ...) {
             else if (buffer[i + 1] == 'f') {
                 i++;
 
+                // ? checking 
+                if (round(va_arg(args, double)) == 0)
+                    perror("you forgot to add this | %f | in you're string");
+                return errno;
+
                 char *floating_number = malloc(sizeof(va_arg(args, double)));
 
                 sprintf(floating_number, "%f", va_arg(args, double));
@@ -157,9 +163,8 @@ void print(const char *buffer, ...) {
         }
         else
             write(1, &buffer[i], 1);
-
     }
-
+    return 0;
 }
 
 
