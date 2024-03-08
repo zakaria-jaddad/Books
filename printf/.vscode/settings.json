@@ -1,6 +1,0 @@
-{
-  "files.associations": {
-    "*.embeddedhtml": "html",
-    "errno.h": "c"
-  }
-}
