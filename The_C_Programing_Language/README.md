@@ -1,25 +1,27 @@
 ### The C Programing Language
+
 $$ \Large\textsf{Chapter 01} $$
+
 ## 1.1 Getting Started
 
 The only way to learn a new programming language is by writing programs in it, so the first program we will write is the popular **Hello, World!** program
 
-In the **C language** printing **"Hello, World!”** is like this 
+In the **C language** printing **"Hello, World!”** is like this
 
 ```c
 #include <stdio.h>
 /*
-	- Book Explanation
-	  include information about standard library
-	  define a function called main
-	  that received no argument values
-	  statements of main are enclosed in braces
-	  main calls library function printf
-	  to print this sequence of characters
-	  \n represents the newline character
+- Book Explanation
+  include information about standard library
+  define a function called main
+  that received no argument values
+  statements of main are enclosed in braces
+  main calls library function printf
+  to print this sequence of characters
+  \n represents the newline character
 */
 int main() {
-	printf("Hello, Wrold!\n");
+  printf("Hello, Wrold!\n");
 }
 ```
 
@@ -33,6 +35,6 @@ in the above example we have a function with the name `main` so the name main in
 
 main usually call other functions to preform it's job, as you can see in the example above we have a `printf` function inside `main`, this function is not implemented in our example, so where is it?
 
-In the top of our code there is the `#include <stdio.h>`  a header that tells the compiler to include information about the `Standard input/output library` where the `printf` function is defined 
+In the top of our code there is the `#include <stdio.h>` a header that tells the compiler to include information about the `Standard input/output library` where the `printf` function is defined
 
-Functions communicate and share data with each other using *arguments* inside `()`*,* in our `main` implementation we didn't provide any arguments to it.
+Functions communicate and share data with each other using _arguments_ inside `()`_,_ in our `main` implementation we didn't provide any arguments to it.
