@@ -1,8 +1,4 @@
-### The C Programing Language
-
-<div style="background-color: rgb(60, 45, 73); padding: 10px;">
-    <h1 style="text-align: center;">Chapter 01</h1>
-</div>
+# Chapter 01
 
 ## 1.1 Getting Started
 
