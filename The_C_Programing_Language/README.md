@@ -1,6 +1,8 @@
 ### The C Programing Language
 
-$$ \Large\textsf{Chapter 01} $$
+<div style="background-color: rgb(60, 45, 73); padding: 10px;">
+    <h1 style="text-align: center;">Chapter 01</h1>
+</div>
 
 ## 1.1 Getting Started
 
