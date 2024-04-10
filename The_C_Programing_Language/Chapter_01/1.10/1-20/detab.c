@@ -1,8 +1,7 @@
 #include <stdio.h>
-#include "../tab_header/tab.h"
+#include "../header/tab.h"
 
 // if you want to run the program use the makefile command.
-
 
 // Global varibales
 int ntabs = 3;
@@ -72,4 +71,5 @@ void remove_line_tabs(char line[], char new_line[])
     ++i;
   }
   new_line[j] = '\n';
+  new_line[j + 1] = '\0';
 }
