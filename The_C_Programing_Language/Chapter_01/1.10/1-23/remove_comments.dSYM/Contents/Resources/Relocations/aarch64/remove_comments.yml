@@ -1,0 +1,11 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     remove_comments
+relocations:
+  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x100003CE0, symSize: 0x74 }
+  - { offsetInCU: 0x41, offset: 0x41, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x100003CE0, symSize: 0x74 }
+  - { offsetInCU: 0x69, offset: 0x69, size: 0x8, addend: 0x0, symName: _get_file_input, symObjAddr: 0x74, symBinAddr: 0x100003D54, symSize: 0xB0 }
+  - { offsetInCU: 0x26, offset: 0xFA, size: 0x8, addend: 0x0, symName: _get_user_line, symObjAddr: 0x0, symBinAddr: 0x100003E04, symSize: 0xE4 }
+  - { offsetInCU: 0x41, offset: 0x115, size: 0x8, addend: 0x0, symName: _get_user_line, symObjAddr: 0x0, symBinAddr: 0x100003E04, symSize: 0xE4 }
+  - { offsetInCU: 0x93, offset: 0x167, size: 0x8, addend: 0x0, symName: _print_line, symObjAddr: 0xE4, symBinAddr: 0x100003EE8, symSize: 0x78 }
+...
