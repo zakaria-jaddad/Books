@@ -1,6 +1,10 @@
 #include <stdio.h>
-
-int main(void) {
+/*
+  multiple line comment.
+*/
+int main(void) 
+/*multiple line comment.*//*multiple line comment.*/
+{
   printf("Hello, World!");
-  return 0;
+  return 0; // hello, world/*multiple line comment.
 }

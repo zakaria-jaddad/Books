@@ -4,8 +4,9 @@
   When either a tab or a single blank would suffice to reach a tab stop, which should be given
   preference?
  */
+
 #include <stdio.h>
-#include "../tab_header/tab.h"
+#include "../header/tab.h"
 
 void remove_line_blanck(char s[], char formated_line[]);
 
@@ -62,4 +63,5 @@ void remove_line_blanck(char line[], char new_line[])
     ++current_index;
   }
   new_line[new_line_index] = '\n';
+  new_line[new_line_index + 1] = '\0';
 }
