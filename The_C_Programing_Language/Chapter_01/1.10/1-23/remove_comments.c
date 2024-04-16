@@ -3,6 +3,7 @@
 
 int get_file_input(char s[], int limit);
 void remove_comments(char line[], char new_line[]);
+
 int main(void)
 {
   //  get file input of size MAXLENGHT
