@@ -1,3 +1,5 @@
+# The C Programing Language
+
 # Chapter 01
 
 ## 1.1 Getting Started
@@ -1360,8 +1362,6 @@ the `new_string` function just assign spaces to all array indexes.
 
 ## 1.10 External Variables and Scope
 
-variables that we declare inside functions are local known as *automatic variables*, it means that we can access them in other functions unless we pass them as a parameters.
-
 so as an alternative to *automatic variables* it's possible to define variable to be external *global variables* 
 
 external variable must be defined once in outside of any function.
@@ -1401,7 +1401,9 @@ int add(int a, int b) {
 
 ```
 
-**At this point we have covered what might be called the conventional core of C. With this handful of building blocks, it's possible to write useful programs of considerable size, and it would probably be a good idea if you paused long enough to do so. These exercises suggest programs of somewhat greater complexity than the ones earlier in this chapter** 💜.
+variables that we declare inside functions are local known as *automatic variables*, it means that we can access them in other functions unless we pass them as a parameters.
+
+i start learning `lldb`  debugger it's nice and easy to use, batter than vs shity debugger.
 
 ```c
 #include <stdio.h>
@@ -1509,8 +1511,6 @@ void print_line(char line[])
 }
 
 ```
-
-i start learning `lldb`  debugger it's nice and easy to use, batter than vs shity debugger.
 
 ### Exercise 1-21
 
@@ -1678,8 +1678,6 @@ is DNA
 
 There is a bug here can't say it though
 
-/
-
 ### Exercise 1-23
 
 Write a program to remove all comments from a C program. Don't forget to
@@ -1759,4 +1757,658 @@ int get_file_input(char s[], int limit)
   return 0;
 }
 
+```
+
+**At this point we have covered what might be called the conventional core of C. With this handful of building blocks, it's possible to write useful programs of considerable size, and it would probably be a good idea if you paused long enough to do so. These exercises suggest programs of somewhat greater complexity than the ones earlier in this chapter** 💜.
+
+# Chapter 02
+
+## 2.1 Variable Names
+
+in C variable are Upper and lower case letters are distinct so `int FOO;` is not the same as `int foo;` .
+
+A variable and a symbolic constants should be named up of letters, number + the first character should be a letter an `_`  counts a letter.
+
+The best practice is to 
+
+- use lower case letters for variable names.
+- use upper case letters for symbolic constants.
+
+## 2.2 Data Types and Sizes
+
+### What are qualifiers in C
+
+C qualifiers serve to modify the size or behavior of data types.
+
+In C There are a few data types: 
+
+1. Integer Types: 
+    - `int`: Represents integers hole numbers with a typical size of 4 bytes.
+    - `char`: Represents single character typically 1 byte long, represented as a number from 0 → 255.
+2. Floating Point Types: 
+    - `float`: Represents single-precision floating point number with a typical size of 4 bytes.
+    - `double`: Represents double-precision floating point number with a typical size of 8 bytes.
+
+In addition there are a number of qualifiers that can be applied these basic types.
+
+- The qualifiers `short` and `long` apply to integers for example:
+    
+    ```c
+    int faz;       // -> int with size of at least 2 bytes to 4 bytes
+    
+    short int foo; // -> short int with a typical size of 2 bytes or less 
+    
+    long int bar;  // -> long int with a typical size of at least 4 to 8 bytes 
+    ```
+    
+    the `int` word can be omitted like this: 
+    
+    ```c
+    int faz;   // -> int with size of at least 2 bytes to 4 bytes
+    
+    short foo; // -> short int with a typical size of 2 bytes or less 
+    
+    long bar;  // -> long int with a typical size of at least 4 to 8 bytes 
+    ```
+    
+    This has the same behavior, i used to think that `long` and `short` are data types just because this.
+    
+    to summarize : `short <= int <= long` .
+    
+- The qualifiers `unsigned` and `signed` apply to chars or any integer, so what is the difference
+    - unsigned numbers are always positive or 0 for example
+    
+    ```c
+    7 is an unsigned integer, 7 is greater or queal to 0.
+    -7 and +7 are signed intergers, +7 >= 0 >= -7.
+    ```
+    
+    for example, char is 8 bits, 1 byte, so 
+    
+    ```c
+    unsigned char foo; // have values from 0 to 255
+    signed char bar;   // have values from -128 to 127 
+    ```
+    
+
+Printable characters always have positive value.
+
+- `long` for `double`  types
+    
+    The size of long double can varies from a system to another but in the most cases it's typical size 
+    
+
+### Exercise 2-1
+
+Write a program to determine the ranges of char, short, int, and long
+variables, both signed and unsigned, by printing appropriate values from standard headers
+and by direct computation. Harder if you compute them: determine the ranges of the various
+floating-point types
+
+```c
+#include <stdio.h>
+#include <limits.h>
+#include <float.h>
+
+/* 
+  Exercise 2-1. Write a program to determine the ranges of char, short, int, and long
+  variables, both signed and unsigned, by printing appropriate values from standard headers
+  and by direct computation. Harder if you compute them: determine the ranges of the various
+  floating-point types.
+*/
+
+int main(void)
+{
+  // chars
+  printf("max value of signed char:          %30d\n", SCHAR_MAX);
+  printf("min value of signed char:          %30d\n", SCHAR_MIN);
+     
+  printf("min value of unsigned char:        %30d\n", 0);
+  printf("max value of unsigned char:        %30d\n", UCHAR_MAX);
+     
+  printf("min value of char:                 %30d\n", CHAR_MIN);
+  printf("max value of char:                 %30d\n", CHAR_MAX);
+     
+  // shorts     
+  printf("min value of signed shorts:        %30d\n", SHRT_MIN);
+  printf("max value of signed shorts:        %30d\n", SHRT_MAX);
+     
+  printf("min value of unsigned shorts:      %30d\n", 0);
+  printf("max value of unsigned shorts:      %30d\n", USHRT_MAX);
+     
+  printf("min value of shorts:               %30d\n", SHRT_MIN);
+  printf("max value of shorts:               %30d\n", SHRT_MAX);
+     
+  // ints     
+  printf("min value of unsigned ints:        %30d\n", 0);
+  printf("max value of unsigned ints:        %30d\n", UINT_MAX);
+     
+  printf("min value of signed ints:          %30d\n", INT_MIN);
+  printf("max value of signed ints:          %30d\n", INT_MAX);
+     
+  // longs     
+  printf("min value of unsigned longs:       %30d\n", 0);
+  printf("max value of unsigned longs:       %30ld\n", ULONG_MAX);
+     
+  printf("min value of signed longs:         %30ld\n", LONG_MIN);
+  printf("max value of signed longs:         %30ld\n", LONG_MAX);
+
+  // long longs 
+  printf("min value of unsigned long longs:  %30d\n", 0);
+  printf("max value of unsigned long longs:  %30lld\n", ULLONG_MAX);
+
+  printf("min value of signed long longs:    %30lld\n", LLONG_MIN);
+  printf("max value of signed long longs:    %30lld\n", LLONG_MAX);
+  return 0;
+}
+```
+
+## 2.3 Constants
+
+specifying type in constants: 
+
+```c
+#define INT_NUMBER 1337
+#define LONG_NUMBER 42l or 42L 
+#define UNSIGNED_LONG_NUMBER 42ul or 42UL 
+#define FLOAT_NUMBER 42.1337f or 42.1337F
+#define FLOAT_NUMBER 42.1337lf or 42.1337LF // indicates long double
+#define HEX_NUMBER 0x1f or 0x1F 
+```
+
+Constants should be evaluated in compilation not inn run time.
+
+Strings is a sequence of zero or more characters surrounded by double quotes
+
+you should notice `"x"` is not `'x'` 
+
+- `"x"`: is an array of chars first character is `x` and second one is null `\0`.
+- `'x'`: this is an integers used to represent the value of x in ascii
+
+Enumeration is one of the way to make multiple constants more meaning full
+
+```c
+#include <stdio.h>
+
+enum Days {Sun = 1, Mon = 2, Tue = 3, Wed = 4, Thu = 5, Fri = 6, Sat = 7};
+
+int main(void) 
+{
+	// today
+	enum Days today = Sun;
+
+	if (today == Sun || today == Sat)
+	{
+		printf("Yay it's Weekend\n");
+	}
+	else 
+	{
+		printf("Time for some work\n");
+	}
+	return 0;
+}
+
+```
+
+enums helps us to create multiple constants and represent them by their category for example 
+
+- Trafic Light
+- Month Names
+- etc
+
+## 2.4 Declarations
+
+all variables should be declared before any usage .
+
+we can declare a variable then initialize it or we can do both at the same time
+
+```c
+// declare a variable then initialize 
+int foo;
+foo = 1337;
+
+// variable initialized in its declaration
+int foo = 1337;
+```
+
+The qualifier const can be applied to the declaration of any variable to specify that its value
+will not be changed. For an array, the const qualifier says that the elements will not be
+altered.
+
+```c
+const double e = 2.71828182845905;
+const char msg[] = "warning: ";
+```
+
+we also can use `const` with arguments to indicates that function do not change argument
+
+```c
+int strlen(const char[]);
+```
+
+Example: 
+
+```c
+#include <stdio.h>
+
+void change_int(const int foo);
+
+int main(void)
+{
+        const int foo = 40;
+        change_int(foo);
+        return 0;
+}
+
+void change_int(const int foo)
+{
+        bar = 50;
+        printf("is this even working: %d\n", foo);
+}
+```
+
+Output: 
+
+```c
+╰─ gcc const.c -o const
+const.c:14:2: error: use of undeclared identifier 'bar'
+        bar = 50;
+        ^
+1 error generated.
+
+```
+
+## 2.5 Arithmetic Operators
+
+## 2.6 Relational and Logical Operators
+
+### Exercise 2-2
+
+```c
+#include <stdio.h>
+
+#define MAX_LENGHT 20
+// question Exercise 2-2. Write a loop equivalent to the for loop above without using && or ||.
+// for (i=0; i < lim-1 && (c=getchar()) != '\n' && c != EOF; ++i)
+// 	s[i] = c;
+
+int main(void)
+{
+	int i, c;
+	char s[MAX_LENGHT];
+
+	for (i = 0; i < MAX_LENGHT - 1; ++i)
+	{
+		c = getchar();
+		if (c == '\n')
+		{
+			i = MAX_LENGHT;
+		}
+		else if (c == EOF)
+		{
+			i = MAX_LENGHT;
+		}
+		else 
+		{
+			s[i] = c;
+		}
+	}
+	s[i] = '\0';
+	retunr 0;
+}
+
+```
+
+## 2.7 Type Conversions
+
+If either operand is long double, convert the other to long double.
+
+- Otherwise, if either operand is double, convert the other to double.
+- Otherwise, if either operand is float, convert the other to float.
+- Otherwise, convert char and short to int.
+- Then, if either operand is long, convert the other to long.
+
+Type casting is way to convert a type to another type in C it’s automatic like 
+
+```c
+double foo = 9.5;
+int bar = foo; // this is casting 
+```
+
+this is equivalent to 
+
+```c
+double foo = 9.5;
+int bar = (int) foo; // -> this is the casting 
+```
+
+casting can also help the function to get the right argument type  for example 
+
+the function `sqrt` from `math.h` is a function that produce a double output but obviously, it can take multiple types argument such as like int double short and more but we can type cast them in the beginning like this
+
+```c
+sqrt((double) n) // this is in definition
+
+// definition of double in math.h
+double sqrt(double __x) { return __ocml_sqrt_f64(__x); }
+//   casting╯
+```
+
+### Exercise 2-3
+
+Write a function htoi(s), which converts a string of hexadecimal digits
+(including an optional 0x or 0X) into its equivalent integer value. The allowable digits are 0
+through 9, a through f, and A through F.
+
+```c
+#include <stdio.h>
+#include <ctype.h>
+
+int htoi(const char s[]);
+
+int main(void)
+{
+	printf("value of htoi: %d\n", htoi("-0x1F")); // -> -31
+	printf("value of htoi: %d\n", htoi("0x1F"));  // -> 31
+	return 0;
+}
+
+int htoi(const char s[]) 
+{
+	int signe;
+	signe = 1;
+
+	int string_length;
+	string_length = 0;
+
+	int i, r;
+	i = r = 0;
+
+	// get length of given string 
+	while(s[string_length] != '\0')
+		++string_length;
+
+	// if negative number 
+	if (s[0] == '-') 
+	{
+
+		if (string_length < 4 || (s[1] != '0' && tolower(s[2]) != 'x'))
+		{
+			return -1;
+		}
+		else
+		{
+			signe = -1;
+		}
+	}
+	
+	// if string is less then 3 or doesn't have 0x or 0X in it.
+	else if (string_length < 3 || (s[0] != '0' && tolower(s[1]) != 'x'))
+	{
+		return -1;
+	}
+
+	// current string is a hex number.
+	for (i = 0; s[i] != '\0'; ++i)
+	{
+		// checking for number 
+		if (s[i] >= '0' && s[i] <= '9')
+		{
+			r = (r * 16) + s[i] - '0';
+		}
+		// checking for a digit to lower wouldn't efeect a number character 1 would be 1 by A wouldb be a.
+		char lower_character = tolower(s[i]); 
+
+		if (lower_character >= 'a' && lower_character <= 'f') 
+		{
+			// add 10 becuase a has a value of 10 in hex
+			r = (r * 16) + (lower_character - 'a') + 10;
+
+		}
+
+	}
+
+	return signe * r;
+}
+
+```
+
+## 2.8 Increment and Decrement Operators
+
+prefix : `++varibel;`
+
+postfix: `variable++;`
+
+### Exercise 2-4
+
+Write an alternative version of squeeze(s1,s2) that deletes each character in
+s1 that matches any character in the string s2.
+
+```c
+#include <stdio.h>
+
+char * squeeze(char s1[], const char s2[]);
+
+int main(void)
+{
+	char baz[4] = "helb";
+	char bar[3] = "hel";
+
+	char *foo = squeeze(baz, bar);	
+	printf("%c\n", foo[0]);
+	return 0;
+}
+
+char * squeeze(char s1[], const char s2[]) 
+{
+	int lenght = 0;
+	for (int i = 0; s1[i] != '\0'; i++)
+		lenght++;
+	
+	// new array 
+	char new_string[lenght + 1];
+	
+	int i, new_string_index;
+	i = new_string_index = 0;
+
+	while(s1[i] != '\0')
+	{
+		int is_letter_found = -1;
+		for (int j = 0; s2[j] != '\0'; j++) 
+		{
+			if (s1[i] == s2[j]) 
+			{
+				is_letter_found = 0;
+				break;
+			}
+
+		}
+		if (is_letter_found == -1)
+		{
+			// assigne not found letter in new-string and increment it't index
+			new_string[new_string_index++] = s1[i];
+		}
+
+		i++;
+	}
+	new_string[new_string_index] = '\0';
+	return new_string; 
+
+}
+
+```
+
+### Exercise 2-5
+
+Write the function any(s1,s2), which returns the first location in a string s1
+where any character from the string s2 occurs, or -1 if s1 contains no characters from s2.
+(The standard library function strpbrk does the same job but returns a pointer to the
+location.)
+
+```c
+#include <stdio.h>
+
+int any(const char s1[], const char s2[]);
+
+int main(void)
+{
+        char baz[4] = "helb";
+        char bar[3] = "hel";
+
+        int foo = squeeze(baz, bar);
+        printf("%d\n", foo);
+        return 0;
+}
+
+int any(const char s1[], const char s2[])
+{
+        for (int i = 0; s1[i] != '\0'; i++)
+        {
+                for (int j = 0; s2[j] != '\0'; j++)
+                {
+                        if (s1[i] == s2[j])
+                        {
+                                return i;
+                        }
+
+                }
+
+        }
+        return -1;
+}
+
+```
+
+## 2.9 Bitwise Operators
+
+### what is Bitwise manipulation?
+
+using bitwise operators you can manipulate bits in C
+
+I don't get this :) .
+
+## 2.10 Assignment Operators and Expressions
+
+### Exercise 2-9
+
+In a two's complement number system, x &= (x-1) deletes the rightmost 1-bit
+in x. Explain why. Use this observation to write a faster version of bitcount.
+
+I'll explain why `x &= (x-1)` deletes the rightmost 1-bit in a two's complement number 
+
+system, and then use this concept to develop a faster version of the `bitcount` function.
+
+**Explanation:**
+
+1. **Subtracting 1:** Subtracting 1 from a binary number flips all bits from (and including) the rightmost 1-bit to the left, until the least significant bit (LSB). For example:
+    - `x = 1011 (decimal 11)`
+    - `x - 1 = 1010 (decimal 10)`
+2. **Bitwise AND (x & (x-1)):** When you perform a bitwise AND operation between `x` and `x-1`, the following happens:
+    - Bits that are 1 in both `x` and `x-1` (all bits except the rightmost 1 in `x`) result in a 1 after the AND.
+    - The rightmost 1-bit in `x` and the flipped 0-bit in `(x-1)` at that same position result in a 0 after the AND. This effectively clears the rightmost 1-bit in `x`.
+
+**Example:**
+
+Let's see how this works with the example from step 1:
+
+- `x = 1011 (decimal 11)`
+- `x - 1 = 1010 (decimal 10)`
+- `x & (x-1) = 1010 (decimal 10)`
+
+As you can see, the rightmost 1-bit in `x` (1011) has been cleared, resulting in 1010.
+
+**Faster bitcount function:**
+
+We can use this property to create a more efficient `bitcount` function that counts the number of set (1) bits in a number. Here's the approach:
+
+1. Initialize a counter variable `count` to 0.
+2. While `x` is not zero (i.e., there are still set bits):
+    - Perform `x &= (x-1)`, effectively clearing the rightmost 1-bit in `x`.
+    - Increment the `count` to indicate one set bit has been processed.
+3. Return the final value of `count`, which represents the total number of set bits in the original `x`.
+
+Here's the C code for the faster `bitcount` function:
+
+**C**
+
+`int bitcount_fast(unsigned x) {
+  int count = 0;
+  while (x) {
+    x &= (x - 1);
+    count++;
+  }
+  return count;
+}`
+
+**Use code [with caution.](https://gemini.google.com/faq#coding)content_copy**
+
+This approach is faster than a loop that iterates through each bit and checks if it's set because it leverages the bitwise operations to efficiently isolate and clear the rightmost 1-bit in each iteration.
+
+## 2.11 Conditional Expressions
+
+The ternary operator works the same as `if` `else` condition flow.
+
+### Exercise 2-10
+
+Rewrite the function lower, which converts upper case letters to lower case,
+with a conditional expression instead of if-else
+
+```c
+#include <stdio.h>
+
+char lower(char letter);
+int main(void)
+{
+	char my_upper = 'A';
+	printf("%c\n", lower(my_upper));
+
+	char foo = 'F';
+	printf("%c\n", lower(foo));
+}
+
+// 
+char lower(char letter) 
+{
+	return (letter >= 'A' && letter <= 'Z') ? letter + 32: letter;
+}
+
+```
+
+## 2.12 Precedence and Order of Evaluation
+
+```c
+Operators Associativity
+() [] -> .                        left to right
+! ~ ++ -- + - * (type) sizeof     right to left
+* / %                             left to right
++ -                               left to right
+<< >>                             left to right
+< <= > >=                         left to right
+== !=                             left to right
+&                                 left to right
+^                                 left to right
+|                                 left to right
+&&                                left to right
+||                                left to right
+?:                                right to left
+= += -= *= /= %= &= ^= |= <<= >>= right to left
+,                                 left to right
+```
+
+The moral is that writing code that depends on order of evaluation is a bad programming
+practice in any language.
+
+the order in which function arguments are evaluated is not specified, so the
+statement
+
+```c
+printf("%d %d\n", ++n, power(2, n)); /* WRONG */
+```
+
+can produce different results with different compilers, depending on whether n is incremented
+before power is called. The solution, of course, is to write
+
+```c
+++n;
+printf("%d %d\n", n, power(2, n));
 ```
