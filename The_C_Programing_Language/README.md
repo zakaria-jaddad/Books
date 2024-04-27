@@ -6,7 +6,7 @@
 
 The only way to learn a new programming language is by writing programs in it, so the first program we will write is the popular **Hello, World!** program
 
-In the **C language** printing **"Hello, World!”** is like this 
+In the **C language** printing **"Hello, World!”** is like this
 
 ```c
 #include <stdio.h>
@@ -35,19 +35,19 @@ in the above example we have a function with the name `main` so the name main in
 
 main usually call other functions to preform it's job, as you can see in the example above we have a `printf` function inside `main`, this function is not implemented in our example, so where is it?
 
-In the top of our code there is the `#include <stdio.h>`  a header that tells the compiler to include information about the `Standard input/output library` where the `printf` function is defined and implemented.
+In the top of our code there is the `#include <stdio.h>` a header that tells the compiler to include information about the `Standard input/output library` where the `printf` function is defined and implemented.
 
-Functions communicate and share data with each other using *arguments* inside `()`*,* in our `main` implementation we didn't provide any arguments to it.
+Functions communicate and share data with each other using _arguments_ inside `()`_,_ in our `main` implementation we didn't provide any arguments to it.
 
 A function can be called by using it's name and parentheses `printf()` , this function takes a lot of arguments but in out example it takes just the string **"Hello, World!”.**
 
-The `\n` is a C notation of new line, it's *escape sequence character,* we will know more about those later, so `\n` informs `printf` to print a new line to understand it more we can implement the same Hello, World! program like this ways
+The `\n` is a C notation of new line, it's _escape sequence character,_ we will know more about those later, so `\n` informs `printf` to print a new line to understand it more we can implement the same Hello, World! program like this ways
 
 ```c
 #include <stdio.h>
 
 main() {
-	printf("hello, ");  // no new line 
+	printf("hello, ");  // no new line
 	printf("world!");    // no new line
 	printf("\n");       // new line here
 }
@@ -57,7 +57,7 @@ main() {
 #include <stdio.h>
 
 main() {
-	printf("hello, World!");  // no new line 
+	printf("hello, World!");  // no new line
 	printf("\n");       // new line here
 }
 ```
@@ -71,18 +71,18 @@ Experiment to find out what happens when prints's argument string contains `\c`,
 ```c
 #include <stdio.h>
 
-int main(void) { 
+int main(void) {
 	printf("Hello, world! \c\n");  // Waring here
 }
 
 ```
 
-This program give a compilation Warning for an unknown escape character `\c` 
+This program give a compilation Warning for an unknown escape character `\c`
 
 ## 1.2 Variables and Arithmetic Expressions
 
-In the next program we will use the formula `oC=(5/9)(oF-32)` to print  Fahrenheit
-temperatures and their Celsius equivalents like this 
+In the next program we will use the formula `oC=(5/9)(oF-32)` to print Fahrenheit
+temperatures and their Celsius equivalents like this
 
 ```c
 1   -17
@@ -110,12 +110,12 @@ for fahr = 0, 20, ..., 300 */
 main() {
 	int fahr, celsius;
 	int lower, upper, step;
-	
+
 	lower = 0; /* lower limit of temperature scale */
 	upper = 300; /* upper limit */
 	step = 20; /* step size */
 	fahr = lower;
-	
+
 	while (fahr <= upper) {
 		celsius = 5 * (fahr-32) / 9;
 		printf("%d\t%d\n", fahr, celsius);
@@ -127,21 +127,21 @@ main() {
 so let's break the code piece by piece.
 
 - we know the `#iclude <stdio.h>` to import functions from the standard input/output
-- we have the `/**/`  this sign is a comment when using it the compiler ignores whatever is written inside it, in this example it describes the purpose of the function
+- we have the `/**/` this sign is a comment when using it the compiler ignores whatever is written inside it, in this example it describes the purpose of the function
 - `int fahr, celsius;` and `int lower, upper, step;` these are declaration statement in C all variables must be declared before they are used, usually at the beginning of the function
-    - here the `int`  means that variables value must be of type Integer, this is important and here is why, when compiling the code by the compiler we need to specify what is the type of the variable to know how much memory the compiler should assign to it or allocate to it i don't know wish term should i use here
-    - C provides several data types beside `int`  here are some of them
-        - `char`: character a single byte
-        - `short`: short integer
-        - `long`: long integer
-        - `double`: double-precision floating point
+  - here the `int` means that variables value must be of type Integer, this is important and here is why, when compiling the code by the compiler we need to specify what is the type of the variable to know how much memory the compiler should assign to it or allocate to it i don't know wish term should i use here
+  - C provides several data types beside `int` here are some of them
+    - `char`: character a single byte
+    - `short`: short integer
+    - `long`: long integer
+    - `double`: double-precision floating point
 - `lower = 0; upper = 300; step = 20; fahr = lower;` those are assignment statements each variable will store a value `fahr` would get the value of `lower` which in this cast the value `0`
 - for the `while loop code` the while loop has a condition statement and a body so
-    - the condition is `(fahr <= upper)` every iteration the program check if `fahr` value is lower of equals to `upper` value if true the body will be executed if false the program continues executing other code
-    - `printf` takes a weird string as a first argument let's break it down
-        - `%d` is specified for printing integers in this case instead of getting %d we will get the value of fahr
-        - `\t` is an escaping character stands for printing a tab which is 4 spaces.
-    - notice in each iteration the fahr's value increments by the step value
+  - the condition is `(fahr <= upper)` every iteration the program check if `fahr` value is lower of equals to `upper` value if true the body will be executed if false the program continues executing other code
+  - `printf` takes a weird string as a first argument let's break it down
+    - `%d` is specified for printing integers in this case instead of getting %d we will get the value of fahr
+    - `\t` is an escaping character stands for printing a tab which is 4 spaces.
+  - notice in each iteration the fahr's value increments by the step value
 
 ```c
 	while (fahr <= upper) {
@@ -151,7 +151,7 @@ so let's break the code piece by piece.
 	}
 ```
 
-The output of the printf is not well organized we can solve that by doing this 
+The output of the printf is not well organized we can solve that by doing this
 
 this prints the first number of each line in a field three digits wide, and the second in a field six
 digits wide, like this.
@@ -198,9 +198,9 @@ int main(void)
 }
 ```
 
-This still the same logic, changing types allows the formula for conversion to be written in a more natural way, remember in the previous example we hade the `int` data type we couldn't do the `5 / 9` operation because this would produce a floating point number and would lead to an compilation error. 
+This still the same logic, changing types allows the formula for conversion to be written in a more natural way, remember in the previous example we hade the `int` data type we couldn't do the `5 / 9` operation because this would produce a floating point number and would lead to an compilation error.
 
-The `printf` conversion specification `%3.0f` specifies that `fahr` should be `foat` and to be printed at least three characters wide, with no decimal point and no fraction digit, instead for `celsius` which want to be printed at least 6 characters wide and 1 digit after the decimal point so the output would look like this: 
+The `printf` conversion specification `%3.0f` specifies that `fahr` should be `foat` and to be printed at least three characters wide, with no decimal point and no fraction digit, instead for `celsius` which want to be printed at least 6 characters wide and 1 digit after the decimal point so the output would look like this:
 
 ```c
   0  -17.8
@@ -226,20 +226,20 @@ The `printf` conversion specification `%3.0f` specifies that `fahr` should be `f
 
 ```
 
-here are some examples of with and precision: 
+here are some examples of with and precision:
 
-| %d | print as decimal integer |
-| --- | --- |
-| %6d | print as decimal integer, at least 6 characters wide |
-| %f | print as a floating point number  |
-| %6f | print as a floating point number, at least 6 characters width |
-| %.2f | print as a floating point number with 2 characters after decimal |
-| %6.2f | print as a floating point number with 2 characters after decimal, at least 6 chars with  |
-| %o | print as octal |
-| %x | print as hex  |
-| %c | print as char |
-| %c | print as string |
-| %% | print the symbol % |
+| %d    | print as decimal integer                                                                |
+| ----- | --------------------------------------------------------------------------------------- |
+| %6d   | print as decimal integer, at least 6 characters wide                                    |
+| %f    | print as a floating point number                                                        |
+| %6f   | print as a floating point number, at least 6 characters width                           |
+| %.2f  | print as a floating point number with 2 characters after decimal                        |
+| %6.2f | print as a floating point number with 2 characters after decimal, at least 6 chars with |
+| %o    | print as octal                                                                          |
+| %x    | print as hex                                                                            |
+| %c    | print as char                                                                           |
+| %c    | print as string                                                                         |
+| %%    | print the symbol %                                                                      |
 
 There are more than these precisions.
 
@@ -267,7 +267,7 @@ int main(void)
   // print Heading above Table
   printf("Termpurature conversion program");
 
-  
+
   while (fahr <= upper)
   {
     celsius = (5.0 / 9.0) * (fahr - 32.0);
@@ -295,10 +295,10 @@ int main(void) {
   // assignment
   lower = 0;
   upper = 300;
-  step = 20; 
+  step = 20;
 
   printf("Termpurature conversion program from Celsuis to Fah.\n");
-  
+
   while (celsius <= upper)
   {
     fahr = (celsius + 32) * (9.0 / 5.0);
@@ -325,7 +325,7 @@ This example has the same output as the previous one.
 
 but here we have used a for loop and we the conversion operation is inserted as an argument to `printf` .
 
-The `for` statement is the same as the `while` loop but more cleaner where we don't need to think about the variables and updating them all operations happens inside the `()` , it contains three parts 
+The `for` statement is the same as the `while` loop but more cleaner where we don't need to think about the variables and updating them all operations happens inside the `()` , it contains three parts
 
 1. `fahr = 0` : this is the assignment of the initial value of the `fahr` inside the loop.
 2. `fahr <= 300` : a condition that is evaluated if true the body of the loop get executed if false the body of it won't get executed
@@ -363,7 +363,7 @@ int main(void)
   }
   printf("==========\n");
 
-  
+
   for (int celsius = 300; celsius >= 0; celsius = celsius - 20)
   {
     printf("fahr: %3.0f | celsius: %6d\n", (celsius + 32) * (9.0 / 5.0), celsius);
@@ -391,7 +391,7 @@ main()
 
 so the `LOWER` `UPPER` are symbolic constants it's best practice to write them in uppercase.
 
-notice that the end of definition there is no `;` 
+notice that the end of definition there is no `;`
 
 ## 1.5 Character Input and Output
 
@@ -399,18 +399,18 @@ Input is just some data that the user prompt to the program.
 
 output is the data that the program returns. these are my definition i could be wrong though 🙂
 
-so the get an input or output in C you could use the `stdio` library using `getchar and putchar` 
+so the get an input or output in C you could use the `stdio` library using `getchar and putchar`
 
-`getchar`  get a character form the user.
+`getchar` get a character form the user.
 
 `putchar` print a character to the user
 
-using this you can write a lot of fun programs like a file copying program 
+using this you can write a lot of fun programs like a file copying program
 
-where user write a charter and the program print it 
+where user write a charter and the program print it
 
 ```c
-// psudocode 
+// psudocode
 /*
 read a character
 	while (charater is not end-of-file indicator)
@@ -418,7 +418,7 @@ read a character
 		read a character
 		Converting this into C gives:
 */
-	
+
 #include <stdio.h>
 /* copy input to output; 1st version */
 main()
@@ -431,10 +431,10 @@ main()
 	}
 }
 
-// or this 
+// or this
 int main() {
 	int c;
-	
+
 	while ((c == getchar()) != EOF) {
 		putchar(c);
 	}
@@ -443,7 +443,7 @@ int main() {
 
 so here we prompt the user for a char then we check if it is equal to `EOF` but what is EOF?
 
-`EOF` represent *End Of File* it is a constant in the `stdio.h` library and it has the value of `-1` .
+`EOF` represent _End Of File_ it is a constant in the `stdio.h` library and it has the value of `-1` .
 
 char are represented as a numbers from 0 to 255 as 1 byte that's why we specified an `int` type for `c` , notice that `EOF`is not included this is why check to it .
 
@@ -479,7 +479,7 @@ main()
 {
 	long nc;
 	nc = 0;
-	
+
 	while (getchar() != EOF)
 		++nc;
 	printf("%ld\n", nc); // ld conversion means long
@@ -490,7 +490,7 @@ Here we count how many chars in the input .
 
 The `++nc` is to increment the `nc` by one, the `++nc` and `nc++` both increment value by one but in a different way
 
-To explain here is this code: 
+To explain here is this code:
 
 ```c
 #include <stdio.h>
@@ -500,7 +500,7 @@ main()
 	int c = 0;
 	printf("%d", ++c) // --> This would increment value by one and print it 1
 	printf("%d", c++) // --> This would print value and incremented so 1
-	printf("%d", c)   // --> This is 2 
+	printf("%d", c)   // --> This is 2
 }
 ```
 
@@ -538,13 +538,13 @@ int main(void)
       ++line_counter;
     }
   }
-  printf("%d\n", line_counter); 
+  printf("%d\n", line_counter);
 }
 ```
 
 Inside the `while` loop we have an `if` statement either `true` or `false` .
 
-if you notice we compare number to char but a char is represented in C as an ASCCI value so the value of `'A' = 65` so, the escape sequence like `'\n'` note this is just a character and it is represented as 10 in ASCCI 
+if you notice we compare number to char but a char is represented in C as an ASCCI value so the value of `'A' = 65` so, the escape sequence like `'\n'` note this is just a character and it is represented as 10 in ASCCI
 
 ### Exercise 1-8
 
@@ -703,7 +703,7 @@ likely to uncover bugs if there are any?
 
 1. There is a type on the second if statement when checking if c equals to ‘\t’
 
-This is the only problem in the code 
+This is the only problem in the code
 
 ### Exercise 1-12
 
@@ -785,7 +785,7 @@ int main(void)
 }
 ```
 
- `int ndigit[10];` This is an array declaration of type integer, in C we declare an array and give it's length.
+`int ndigit[10];` This is an array declaration of type integer, in C we declare an array and give it's length.
 
 using `for` we can traverse the array, using `[i]` to get an index of it in an each iteration.
 
@@ -844,7 +844,7 @@ int main(void)
 
 ```c
 	input: hello hello
-	output: 
+	output:
 	 1 |
 	 2 |
 	 3 |
@@ -907,7 +907,7 @@ int main(void)
 
 ```c
 input: Hello, world! This is a test input for the histogram program.
-	output: 
+	output:
 	   | ##########
 	!  | #
 	,  | #
@@ -935,7 +935,7 @@ input: Hello, world! This is a test input for the histogram program.
 
 ## 1.7 Functions
 
-So far we have used several function `printf` `getchar` `puthcar` but, these functions ared defined in the *Standard input output library.*
+So far we have used several function `printf` `getchar` `puthcar` but, these functions ared defined in the _Standard input output library._
 
 let's make functions, since C has no exponentiation operator, let's make a function to power an integer `power(m, n)`;
 
@@ -977,7 +977,7 @@ return-type function-name(parameter declarations, if any)
 }
 ```
 
-`int power(int base, int n)` : is a definition function 
+`int power(int base, int n)` : is a definition function
 
 ### Exercise 1.15
 
@@ -1014,7 +1014,7 @@ The `fah_to_cels` : is a function produce `double` type and take an `int` type.
 
 This is the part that got me a lot of headache we first covering this topic, it’s the different between passing by value and passing by reference.
 
-in C we pass by value to a function for primitive data types such `int double char...` but, for non primitive like Arrays we pass by reference "*Arrays memory address*” to a function, there is no array's copying.
+in C we pass by value to a function for primitive data types such `int double char...` but, for non primitive like Arrays we pass by reference "_Arrays memory address_” to a function, there is no array's copying.
 
 also in C we can pass primitive data types by reference using a pointer more on that later.
 
@@ -1091,7 +1091,7 @@ void copy(char to[], char from[]);
 
 int main(void)
 {
-  
+
   int length;
   int max;
   char line[MAXLENGTH];
@@ -1271,7 +1271,7 @@ for the sake of not using pointers this took me over 1 day, there is only one bu
 first input: "HelloWorld"
 second input: "1337"
 The output of the second input would be like this
--> "1337\n\0orld" :) 
+-> "1337\n\0orld" :)
 ```
 
 ### Exercise 1-19
@@ -1297,7 +1297,7 @@ int main(void)
   {
     char reversed_line[MAXLENGTH];
     new_string(reversed_line, MAXLENGTH);
-    
+
     reverse_line(s, reversed_line, MAXLENGTH);
     print_line(reversed_line);
   }
@@ -1362,7 +1362,7 @@ the `new_string` function just assign spaces to all array indexes.
 
 ## 1.10 External Variables and Scope
 
-so as an alternative to *automatic variables* it's possible to define variable to be external *global variables* 
+so as an alternative to _automatic variables_ it's possible to define variable to be external _global variables_
 
 external variable must be defined once in outside of any function.
 
@@ -1376,13 +1376,13 @@ int main(void) {
 }
 ```
 
-`extern` word in this example cause storage to be allocated for the variable `foo`  in the `main`  function.
+`extern` word in this example cause storage to be allocated for the variable `foo` in the `main` function.
 
 when it comes to pest practice we can ignore the `extern` word also this kind of global variables we store them in a header.
 
-a header file like `stdio.h`  has declaration of global variables and functions, that we include using the `#include` 
+a header file like `stdio.h` has declaration of global variables and functions, that we include using the `#include`
 
-**You should note that we are using the words definition and declaration carefully here is why:** 
+**You should note that we are using the words definition and declaration carefully here is why:**
 
 - Declaration introduces the name and type of a variable, function, but it doesn't allocate memory or initialize value of variable.
 
@@ -1401,9 +1401,9 @@ int add(int a, int b) {
 
 ```
 
-variables that we declare inside functions are local known as *automatic variables*, it means that we can access them in other functions unless we pass them as a parameters.
+variables that we declare inside functions are local known as _automatic variables_, it means that we can access them in other functions unless we pass them as a parameters.
 
-i start learning `lldb`  debugger it's nice and easy to use, batter than vs shity debugger.
+i start learning `lldb` debugger it's nice and easy to use, batter than vs shity debugger.
 
 ```c
 #include <stdio.h>
@@ -1455,7 +1455,7 @@ void remove_line_tabs(char line[], char new_line[])
   {
     if (tabs_counter <= ntabs)
     {
-      // if current line is space 
+      // if current line is space
       if (line[i] == ' ')
       {
         new_line[j] = ' ';
@@ -1473,7 +1473,7 @@ void remove_line_tabs(char line[], char new_line[])
             ++j;
           }
         }
-        // no space count 
+        // no space count
         else
         {
           new_line[j] = '\0';
@@ -1482,7 +1482,7 @@ void remove_line_tabs(char line[], char new_line[])
         space_counter = 0;
         ++tabs_counter;
       }
-      // if current line is char and not a tab nor a space 
+      // if current line is char and not a tab nor a space
       else
       {
         new_line[j] = line[i];
@@ -1590,7 +1590,7 @@ void remove_line_blanck(char line[], char new_line[])
 
 if these are wrong i'm not gonna repeat them this was my approach.
 
-count number of tabs, when hitting a space replace it by number of tabs passed * a tab.
+count number of tabs, when hitting a space replace it by number of tabs passed \* a tab.
 
 ### Exercise 1-22
 
@@ -1649,7 +1649,7 @@ void formate_line(char line[], char new_line[])
     {
       if (line[i] == ' ')
       {
-        if (no_space_flag == -1) 
+        if (no_space_flag == -1)
         {
           new_line[i] = '\n';
           no_space_flag = 0;
@@ -1767,9 +1767,9 @@ int get_file_input(char s[], int limit)
 
 in C variable are Upper and lower case letters are distinct so `int FOO;` is not the same as `int foo;` .
 
-A variable and a symbolic constants should be named up of letters, number + the first character should be a letter an `_`  counts a letter.
+A variable and a symbolic constants should be named up of letters, number + the first character should be a letter an `_` counts a letter.
 
-The best practice is to 
+The best practice is to
 
 - use lower case letters for variable names.
 - use upper case letters for symbolic constants.
@@ -1780,63 +1780,56 @@ The best practice is to
 
 C qualifiers serve to modify the size or behavior of data types.
 
-In C There are a few data types: 
+In C There are a few data types:
 
-1. Integer Types: 
-    - `int`: Represents integers hole numbers with a typical size of 4 bytes.
-    - `char`: Represents single character typically 1 byte long, represented as a number from 0 → 255.
-2. Floating Point Types: 
-    - `float`: Represents single-precision floating point number with a typical size of 4 bytes.
-    - `double`: Represents double-precision floating point number with a typical size of 8 bytes.
+1. Integer Types:
+   - `int`: Represents integers hole numbers with a typical size of 4 bytes.
+   - `char`: Represents single character typically 1 byte long, represented as a number from 0 → 255.
+2. Floating Point Types:
+   - `float`: Represents single-precision floating point number with a typical size of 4 bytes.
+   - `double`: Represents double-precision floating point number with a typical size of 8 bytes.
 
 In addition there are a number of qualifiers that can be applied these basic types.
 
 - The qualifiers `short` and `long` apply to integers for example:
-    
-    ```c
-    int faz;       // -> int with size of at least 2 bytes to 4 bytes
-    
-    short int foo; // -> short int with a typical size of 2 bytes or less 
-    
-    long int bar;  // -> long int with a typical size of at least 4 to 8 bytes 
-    ```
-    
-    the `int` word can be omitted like this: 
-    
-    ```c
-    int faz;   // -> int with size of at least 2 bytes to 4 bytes
-    
-    short foo; // -> short int with a typical size of 2 bytes or less 
-    
-    long bar;  // -> long int with a typical size of at least 4 to 8 bytes 
-    ```
-    
-    This has the same behavior, i used to think that `long` and `short` are data types just because this.
-    
-    to summarize : `short <= int <= long` .
-    
+
+  ```c
+  int faz;       // -> int with size of at least 2 bytes to 4 bytes
+
+  short int foo; // -> short int with a typical size of 2 bytes or less
+
+  long int bar;  // -> long int with a typical size of at least 4 to 8 bytes
+  ```
+
+  the `int` word can be omitted like this:
+
+  ```c
+  int faz;   // -> int with size of at least 2 bytes to 4 bytes
+
+  short foo; // -> short int with a typical size of 2 bytes or less
+
+  long bar;  // -> long int with a typical size of at least 4 to 8 bytes
+  ```
+
+  This has the same behavior, i used to think that `long` and `short` are data types just because this.
+  to summarize : `short <= int <= long` .
+
 - The qualifiers `unsigned` and `signed` apply to chars or any integer, so what is the difference
-    - unsigned numbers are always positive or 0 for example
-    
-    ```c
-    7 is an unsigned integer, 7 is greater or queal to 0.
-    -7 and +7 are signed intergers, +7 >= 0 >= -7.
-    ```
-    
-    for example, char is 8 bits, 1 byte, so 
-    
-    ```c
-    unsigned char foo; // have values from 0 to 255
-    signed char bar;   // have values from -128 to 127 
-    ```
-    
+  - unsigned numbers are always positive or 0 for example
+  ```c
+  7 is an unsigned integer, 7 is greater or queal to 0.
+  -7 and +7 are signed intergers, +7 >= 0 >= -7.
+  ```
+  for example, char is 8 bits, 1 byte, so
+  ```c
+  unsigned char foo; // have values from 0 to 255
+  signed char bar;   // have values from -128 to 127
+  ```
 
 Printable characters always have positive value.
 
-- `long` for `double`  types
-    
-    The size of long double can varies from a system to another but in the most cases it's typical size 
-    
+- `long` for `double` types
+  The size of long double can varies from a system to another but in the most cases it's typical size
 
 ### Exercise 2-1
 
@@ -1850,7 +1843,7 @@ floating-point types
 #include <limits.h>
 #include <float.h>
 
-/* 
+/*
   Exercise 2-1. Write a program to determine the ranges of char, short, int, and long
   variables, both signed and unsigned, by printing appropriate values from standard headers
   and by direct computation. Harder if you compute them: determine the ranges of the various
@@ -1862,38 +1855,38 @@ int main(void)
   // chars
   printf("max value of signed char:          %30d\n", SCHAR_MAX);
   printf("min value of signed char:          %30d\n", SCHAR_MIN);
-     
+
   printf("min value of unsigned char:        %30d\n", 0);
   printf("max value of unsigned char:        %30d\n", UCHAR_MAX);
-     
+
   printf("min value of char:                 %30d\n", CHAR_MIN);
   printf("max value of char:                 %30d\n", CHAR_MAX);
-     
-  // shorts     
+
+  // shorts
   printf("min value of signed shorts:        %30d\n", SHRT_MIN);
   printf("max value of signed shorts:        %30d\n", SHRT_MAX);
-     
+
   printf("min value of unsigned shorts:      %30d\n", 0);
   printf("max value of unsigned shorts:      %30d\n", USHRT_MAX);
-     
+
   printf("min value of shorts:               %30d\n", SHRT_MIN);
   printf("max value of shorts:               %30d\n", SHRT_MAX);
-     
-  // ints     
+
+  // ints
   printf("min value of unsigned ints:        %30d\n", 0);
   printf("max value of unsigned ints:        %30d\n", UINT_MAX);
-     
+
   printf("min value of signed ints:          %30d\n", INT_MIN);
   printf("max value of signed ints:          %30d\n", INT_MAX);
-     
-  // longs     
+
+  // longs
   printf("min value of unsigned longs:       %30d\n", 0);
   printf("max value of unsigned longs:       %30ld\n", ULONG_MAX);
-     
+
   printf("min value of signed longs:         %30ld\n", LONG_MIN);
   printf("max value of signed longs:         %30ld\n", LONG_MAX);
 
-  // long longs 
+  // long longs
   printf("min value of unsigned long longs:  %30d\n", 0);
   printf("max value of unsigned long longs:  %30lld\n", ULLONG_MAX);
 
@@ -1905,22 +1898,22 @@ int main(void)
 
 ## 2.3 Constants
 
-specifying type in constants: 
+specifying type in constants:
 
 ```c
 #define INT_NUMBER 1337
-#define LONG_NUMBER 42l or 42L 
-#define UNSIGNED_LONG_NUMBER 42ul or 42UL 
+#define LONG_NUMBER 42l or 42L
+#define UNSIGNED_LONG_NUMBER 42ul or 42UL
 #define FLOAT_NUMBER 42.1337f or 42.1337F
 #define FLOAT_NUMBER 42.1337lf or 42.1337LF // indicates long double
-#define HEX_NUMBER 0x1f or 0x1F 
+#define HEX_NUMBER 0x1f or 0x1F
 ```
 
 Constants should be evaluated in compilation not inn run time.
 
 Strings is a sequence of zero or more characters surrounded by double quotes
 
-you should notice `"x"` is not `'x'` 
+you should notice `"x"` is not `'x'`
 
 - `"x"`: is an array of chars first character is `x` and second one is null `\0`.
 - `'x'`: this is an integers used to represent the value of x in ascii
@@ -1932,7 +1925,7 @@ Enumeration is one of the way to make multiple constants more meaning full
 
 enum Days {Sun = 1, Mon = 2, Tue = 3, Wed = 4, Thu = 5, Fri = 6, Sat = 7};
 
-int main(void) 
+int main(void)
 {
 	// today
 	enum Days today = Sun;
@@ -1941,7 +1934,7 @@ int main(void)
 	{
 		printf("Yay it's Weekend\n");
 	}
-	else 
+	else
 	{
 		printf("Time for some work\n");
 	}
@@ -1950,7 +1943,7 @@ int main(void)
 
 ```
 
-enums helps us to create multiple constants and represent them by their category for example 
+enums helps us to create multiple constants and represent them by their category for example
 
 - Trafic Light
 - Month Names
@@ -1963,7 +1956,7 @@ all variables should be declared before any usage .
 we can declare a variable then initialize it or we can do both at the same time
 
 ```c
-// declare a variable then initialize 
+// declare a variable then initialize
 int foo;
 foo = 1337;
 
@@ -1986,7 +1979,7 @@ we also can use `const` with arguments to indicates that function do not change 
 int strlen(const char[]);
 ```
 
-Example: 
+Example:
 
 ```c
 #include <stdio.h>
@@ -2007,7 +2000,7 @@ void change_int(const int foo)
 }
 ```
 
-Output: 
+Output:
 
 ```c
 ╰─ gcc const.c -o const
@@ -2048,7 +2041,7 @@ int main(void)
 		{
 			i = MAX_LENGHT;
 		}
-		else 
+		else
 		{
 			s[i] = c;
 		}
@@ -2068,21 +2061,21 @@ If either operand is long double, convert the other to long double.
 - Otherwise, convert char and short to int.
 - Then, if either operand is long, convert the other to long.
 
-Type casting is way to convert a type to another type in C it’s automatic like 
+Type casting is way to convert a type to another type in C it’s automatic like
 
 ```c
 double foo = 9.5;
-int bar = foo; // this is casting 
+int bar = foo; // this is casting
 ```
 
-this is equivalent to 
+this is equivalent to
 
 ```c
 double foo = 9.5;
-int bar = (int) foo; // -> this is the casting 
+int bar = (int) foo; // -> this is the casting
 ```
 
-casting can also help the function to get the right argument type  for example 
+casting can also help the function to get the right argument type for example
 
 the function `sqrt` from `math.h` is a function that produce a double output but obviously, it can take multiple types argument such as like int double short and more but we can type cast them in the beginning like this
 
@@ -2113,7 +2106,7 @@ int main(void)
 	return 0;
 }
 
-int htoi(const char s[]) 
+int htoi(const char s[])
 {
 	int signe;
 	signe = 1;
@@ -2124,12 +2117,12 @@ int htoi(const char s[])
 	int i, r;
 	i = r = 0;
 
-	// get length of given string 
+	// get length of given string
 	while(s[string_length] != '\0')
 		++string_length;
 
-	// if negative number 
-	if (s[0] == '-') 
+	// if negative number
+	if (s[0] == '-')
 	{
 
 		if (string_length < 4 || (s[1] != '0' && tolower(s[2]) != 'x'))
@@ -2141,7 +2134,7 @@ int htoi(const char s[])
 			signe = -1;
 		}
 	}
-	
+
 	// if string is less then 3 or doesn't have 0x or 0X in it.
 	else if (string_length < 3 || (s[0] != '0' && tolower(s[1]) != 'x'))
 	{
@@ -2151,15 +2144,15 @@ int htoi(const char s[])
 	// current string is a hex number.
 	for (i = 0; s[i] != '\0'; ++i)
 	{
-		// checking for number 
+		// checking for number
 		if (s[i] >= '0' && s[i] <= '9')
 		{
 			r = (r * 16) + s[i] - '0';
 		}
 		// checking for a digit to lower wouldn't efeect a number character 1 would be 1 by A wouldb be a.
-		char lower_character = tolower(s[i]); 
+		char lower_character = tolower(s[i]);
 
-		if (lower_character >= 'a' && lower_character <= 'f') 
+		if (lower_character >= 'a' && lower_character <= 'f')
 		{
 			// add 10 becuase a has a value of 10 in hex
 			r = (r * 16) + (lower_character - 'a') + 10;
@@ -2194,29 +2187,29 @@ int main(void)
 	char baz[4] = "helb";
 	char bar[3] = "hel";
 
-	char *foo = squeeze(baz, bar);	
+	char *foo = squeeze(baz, bar);
 	printf("%c\n", foo[0]);
 	return 0;
 }
 
-char * squeeze(char s1[], const char s2[]) 
+char * squeeze(char s1[], const char s2[])
 {
 	int lenght = 0;
 	for (int i = 0; s1[i] != '\0'; i++)
 		lenght++;
-	
-	// new array 
+
+	// new array
 	char new_string[lenght + 1];
-	
+
 	int i, new_string_index;
 	i = new_string_index = 0;
 
 	while(s1[i] != '\0')
 	{
 		int is_letter_found = -1;
-		for (int j = 0; s2[j] != '\0'; j++) 
+		for (int j = 0; s2[j] != '\0'; j++)
 		{
-			if (s1[i] == s2[j]) 
+			if (s1[i] == s2[j])
 			{
 				is_letter_found = 0;
 				break;
@@ -2232,7 +2225,7 @@ char * squeeze(char s1[], const char s2[])
 		i++;
 	}
 	new_string[new_string_index] = '\0';
-	return new_string; 
+	return new_string;
 
 }
 
@@ -2294,18 +2287,18 @@ I don't get this :) .
 In a two's complement number system, x &= (x-1) deletes the rightmost 1-bit
 in x. Explain why. Use this observation to write a faster version of bitcount.
 
-I'll explain why `x &= (x-1)` deletes the rightmost 1-bit in a two's complement number 
+I'll explain why `x &= (x-1)` deletes the rightmost 1-bit in a two's complement number
 
 system, and then use this concept to develop a faster version of the `bitcount` function.
 
 **Explanation:**
 
 1. **Subtracting 1:** Subtracting 1 from a binary number flips all bits from (and including) the rightmost 1-bit to the left, until the least significant bit (LSB). For example:
-    - `x = 1011 (decimal 11)`
-    - `x - 1 = 1010 (decimal 10)`
+   - `x = 1011 (decimal 11)`
+   - `x - 1 = 1010 (decimal 10)`
 2. **Bitwise AND (x & (x-1)):** When you perform a bitwise AND operation between `x` and `x-1`, the following happens:
-    - Bits that are 1 in both `x` and `x-1` (all bits except the rightmost 1 in `x`) result in a 1 after the AND.
-    - The rightmost 1-bit in `x` and the flipped 0-bit in `(x-1)` at that same position result in a 0 after the AND. This effectively clears the rightmost 1-bit in `x`.
+   - Bits that are 1 in both `x` and `x-1` (all bits except the rightmost 1 in `x`) result in a 1 after the AND.
+   - The rightmost 1-bit in `x` and the flipped 0-bit in `(x-1)` at that same position result in a 0 after the AND. This effectively clears the rightmost 1-bit in `x`.
 
 **Example:**
 
@@ -2323,8 +2316,8 @@ We can use this property to create a more efficient `bitcount` function that cou
 
 1. Initialize a counter variable `count` to 0.
 2. While `x` is not zero (i.e., there are still set bits):
-    - Perform `x &= (x-1)`, effectively clearing the rightmost 1-bit in `x`.
-    - Increment the `count` to indicate one set bit has been processed.
+   - Perform `x &= (x-1)`, effectively clearing the rightmost 1-bit in `x`.
+   - Increment the `count` to indicate one set bit has been processed.
 3. Return the final value of `count`, which represents the total number of set bits in the original `x`.
 
 Here's the C code for the faster `bitcount` function:
@@ -2366,8 +2359,8 @@ int main(void)
 	printf("%c\n", lower(foo));
 }
 
-// 
-char lower(char letter) 
+//
+char lower(char letter)
 {
 	return (letter >= 'A' && letter <= 'Z') ? letter + 32: letter;
 }
@@ -2412,3 +2405,686 @@ before power is called. The solution, of course, is to write
 ++n;
 printf("%d %d\n", n, power(2, n));
 ```
+
+# Chapter 3 - Control Flow
+
+## 3.3 Else if
+
+### Exercise 3-1
+
+Our binary search makes two tests inside the loop, when one would suffice (at
+the price of more tests outside.) Write a version with only one test inside the loop and
+measure the difference in run-time.
+
+```c
+#include  <stdio.h>
+
+int binsearch(const int x, const int v[], int n);
+
+int main(void)
+{
+	int x = 0;
+	int bar[7] = {1, 2, 3, 4, 5, 6, 7};
+	int n = 7;
+
+	int result;
+
+	result = binsearch(x, bar, n);
+	printf("value is: %d\n", result); // value is -1
+	return 0;
+}
+
+int binsearch(const int x, const int v[], int n)
+{
+	int low, high, mid;
+
+	low = 0;
+	high = n - 1;
+
+	while (low < high) {
+		mid = (low + high) / 2;
+		if (x <= v[mid]) {
+			high = mid;
+		}
+		else {
+			low = mid + 1;
+		}
+	}
+
+	return (v[mid] == x) ? mid : -1;
+}
+
+```
+
+## 3.4 Switch
+
+The `switch` operator serve the same purpose of `if......else if......else`
+
+it't structured like this:
+
+```c
+switch (expression) {
+	case const-expr:
+		statements
+	case const-expr:
+		statements
+	default:
+		statements
+}
+```
+
+for example this is a basic program i wrote about traffic lights:
+
+```c
+    1 #include <stdio.h>
+    2
+    3 enum TRAFIC_LIGHT {RED = 0, YELLOW = 1, GREEN = 2};·
+    4
+    5 int main(void)
+    6 {
+    7 »       int current_light = 0;
+    8
+    9 »       // switch·
+   10 »       switch (current_light) {
+   11 »       »       case RED :·
+   12 »       »       »       printf("current light is red\n");
+   13 »       »       »       break;
+   14 »       »       case GREEN :·
+   15 »       »       »       printf("current light is green\n");
+   16 »       »       »       break;
+   17 »       »       default :·
+   18 »       »       »       printf("current light is red\n");
+   19 »       »       »       break;
+   20 »       }
+   21 »       return 0;
+   22 }
+
+```
+
+the `break` statement insure breaking from the case after executing the program without the it would execute all print statement.
+
+`break` helps breaking from `switch for while do while` .
+
+### Exercise 3-2
+
+Write a function escape(s,t) that converts characters like newline and tab
+into visible escape sequences like \n and \t as it copies the string t to s. Use a switch. Write
+a function for the other direction as well, converting escape sequences into the real characters.
+
+```c
+#include <stdio.h>
+
+void escape(const char string[], char new_string[]);
+
+/*
+Exercise 3-2. Write a function escape(s,t) that converts characters like newline and tab
+into visible escape sequences like \n and \t as it copies the string t to s. Use a switch. Write
+a function for the other direction as well, converting escape sequences into the real characters.
+*/
+
+int main(void)
+{
+	char s1[15] = "Hello, \\World!\n";
+	char s2[30];
+
+	// convert new string.
+	escape(s1, s2);
+
+	// print convered string.
+	printf("%s", s2);
+	return 0;
+}
+
+void escape(const char string[], char new_string[])
+{
+	int new_string_index, i;
+	new_string_index = 0;
+
+	for (i = 0; string[i] != '\0'; i++) {
+		switch (string[i]) {
+			// i'm to lazy to do all escaping but i get the idea :)
+			case '\n':
+			// for new line.
+				new_string[new_string_index++] = '\\';
+				new_string[new_string_index++] = 'n';
+				break;
+			case '\t':
+			// for tab.
+				new_string[new_string_index++] = '\\';
+				new_string[new_string_index++] = 't';
+				break;
+			case '\\':
+			// for slash.
+				new_string[new_string_index++] = '\\';
+				new_string[new_string_index++] = '\\';
+				break;
+			default:
+			// for all character.
+				new_string[new_string_index++] = string[i];
+		}
+	}
+	new_string[i] = '\0';
+}
+
+```
+
+This is not all the solution i didn't include all escaping characters.
+
+## 3.5 Loops - While and For
+
+loops are one of the essentials in any programing language
+
+1. The `for` statement
+
+   ```c
+   for (expr1; expr2; expr3)
+   	statement
+   ```
+
+2. is equivalent to using `while`
+
+   ```c
+   expr1;
+   while (expr2) {
+   	statement
+   	expr3;
+   }
+   ```
+
+### Exercise 3-3
+
+Write a function expand(s1,s2) that expands shorthand notations like a-z in
+the string s1 into the equivalent complete list abc...xyz in s2. Allow for letters of either
+case and digits, and be prepared to handle cases like a-b-c and a-z0-9 and -a-z. Arrange
+that a leading or trailing - is taken literally.
+
+```c
+/*
+
+  Write a function expand(s1,s2) that expands shorthand notations like a-z in
+  the string s1 into the equivalent complete list abc...xyz in s2. Allow for
+  letters of either case and digits, and be prepared to handle cases like a-b-c
+  and a-z0-9 and -a-z. Arrange that a leading or trailing - is taken literally.
+
+  input: a-z output: abcd......xyz
+  input: a-z0-9 output:  abcd......xyz012..789
+
+*/
+#include <stdio.h>
+
+#define MAX_LENGHT 100
+
+void expand(const char s1[], char s2[]);
+
+int main(void) {
+  char s1[MAX_LENGHT] = "a-b-c";
+  char s2[MAX_LENGHT];
+
+  expand(s1, s2);
+
+  printf("%s\n", s2);
+  return 0;
+}
+
+void expand(const char s1[], char s2[]) {
+
+  // get s1 lenght.
+  int lenght;
+  for (lenght = 0; s1[lenght] != '\0'; lenght++) {
+  }
+
+  if (lenght < 3) {
+    printf("invalid input\n");
+    return;
+  }
+
+  int i, j;
+  j = 0;
+
+  int start, end;
+  start = end = -1;
+
+  for (i = 0; s1[i] != '\0'; i++) {
+    if (s1[i] != '-') {
+      if (start == -1) {
+        start = s1[i];
+      } else if (end == -1) {
+        end = s1[i];
+      }
+    } else {
+    }
+
+    // start copying
+    if (end != -1) {
+      int temp = start;
+      while (temp != end) {
+        s2[j++] = temp++;
+      }
+      // assigne the last letter.
+      s2[j++] = temp;
+      start = end = -1;
+
+    }
+    // if a-b-c case
+    else if (start != -1 && s1[i + 1] == '\0') {
+      s2[j++] = start;
+      start = end = -1;
+    }
+  }
+}
+
+```
+
+## 3.6 Loops - Do-While
+
+previously we knew that `for` and `while` test the termination condition at the top but, the `do while` loop which is the same as the `while` loop but make the termination test after executing in the bottom.
+
+It's syntax is like this:
+
+```c
+do
+	statement
+while (expression);
+```
+
+The statement get executed then expression is evaluated if `true` continue if `false` it stops.
+
+Technically the `do while` loop is not used ofter rater than `for` `while` .
+
+Here is an example of a function `itoa` which convert integer to ascii, it's the alternative of `atoi`.
+
+**The job is slightly more complicated than might be thought at first, because the easy methods of generating the digits generate them in the wrong order. We have chosen to generate the string backwards, then reverse it**
+
+```c
+/* itoa: convert n to characters in s */
+void itoa(int n, char s[])
+{
+	int i, sign;
+	if ((sign = n) < 0) /* record sign */
+		n = -n; /* make n positive */
+	i = 0;
+	do { /* generate digits in reverse order */
+		s[i++] = n % 10 + '0'; /* get next digit */
+	} while ((n /= 10) > 0); /* delete it */
+
+	if (sign < 0)
+		s[i++] = '-';
+	s[i] = '\0';
+	reverse(s);
+}
+```
+
+`itoa` is a challenge for beginners i tried re write it and understand it.
+
+i avoid using pointers since the book until now didn't cover them that is why i used `temp_string`
+
+```c
+#include <stdio.h>
+
+#define EXIT_SUCCESS 0
+void reverse(char string[], char new_string[]);
+void itoa(int n, char string[]);
+
+int main(void) {
+  int number = -200;
+  char ascii_number[20];
+
+  // convert intever to string ascii number
+  itoa(number, ascii_number);
+
+  // printing the converted number
+  printf("This is the number: %d = %s\n", number, ascii_number);
+  // without reversing the string output of -200 should be 002-
+
+  return EXIT_SUCCESS;
+}
+
+void itoa(int n, char string[]) {
+  char temp_string[20];
+  int i, sign;
+
+  // get sing from number
+  // if number is less then 0, make it positive.
+  if ((sign = n) < 0) {
+    n = -n;
+  }
+
+  i = 0;
+  do {
+    temp_string[i++] = n % 10 + '0';
+  } while ((n = n / 10) > 0);
+
+  // add sing if number is negative
+  if (sign < 0) {
+    temp_string[i++] = '-';
+  }
+  temp_string[i] = '\0';
+
+  // all you need to do now is to reverse the string
+  reverse(temp_string, string);
+  return;
+}
+
+void reverse(char string[], char new_string[]) {
+  /*
+    i only thing of one algo is to count lenght of string
+    and terevce it using that lenght.
+  */
+
+  // calculate string lenght.
+  int lenght;
+  for (lenght = 0; string[lenght] != '\0'; lenght++)
+    ;
+
+  int j = 0;
+  for (int i = lenght - 1; i >= 0; i--, j++) {
+    new_string[j] = string[i];
+  }
+  new_string[j] = '\0';
+  return;
+}
+
+```
+
+### Exercise 3-4
+
+In a two's complement number representation, our version of itoa does not handle the largest negative number, that is, the value of n equal to -(2ˆ(wordsize-1)). Explain why
+not. Modify it to print that value correctly, regardless of the machine on which it runs.
+
+```c
+/*
+since the itoa function accept integer as parameter that is why it can't handel long negative number because int is just 4 bytes to handel long negaitve number we can use long integers or long long integers. 8 or 10 bytes.
+============
+That is my take i could be wrong :)
+it's indeed memorry buffer overflow i had to convert the number from long long to unsigned long long so it can store more positve values after converting it.
+*/
+```
+
+The new code would be like this
+
+```c
+#include <stdio.h>
+
+#define EXIT_SUCCESS 0
+void reverse(char string[], char new_string[]);
+void itoa(long long n, char string[]);
+
+int main(void) {
+  long long number = -20000000000000000;
+  char ascii_number[200];
+
+  // convert intever to string ascii number
+  itoa(number, ascii_number);
+
+  // printing the converted number
+  printf("This is the number: %lld = %s\n", number, ascii_number);
+  // without reversing the string output of -200 should be 002-
+
+  return EXIT_SUCCESS;
+}
+
+void itoa(long long n, char string[]) {
+  char temp_string[200];
+  int i;
+  long long sign;
+
+  // get sing from number
+  // if number is less then 0, make it positive.
+  if ((sign = n) < 0) {
+    n = -n;
+  }
+
+  // why n is negative ??????
+  unsigned long long current_number = n;
+  i = 0;
+  do {
+    temp_string[i++] = current_number % 10 + '0';
+  } while ((current_number = current_number / 10) > 0);
+
+  // add sing if number is negative
+  if (sign < 0) {
+    temp_string[i++] = '-';
+  }
+  temp_string[i] = '\0';
+
+  // all you need to do now is to reverse the string
+  reverse(temp_string, string);
+  return;
+}
+
+void reverse(char string[], char new_string[]) {
+  /*
+    i only thing of one algo is to count lenght of string
+    and terevce it using that lenght.
+  */
+
+  // calculate string lenght.
+  int lenght;
+  for (lenght = 0; string[lenght] != '\0'; lenght++)
+    ;
+
+  int j = 0;
+  for (int i = lenght - 1; i >= 0; i--, j++) {
+    new_string[j] = string[i];
+  }
+  new_string[j] = '\0';
+  return;
+}
+
+```
+
+### Exercise 3-5
+
+Write the function `itob(n, s, b)` that converts the integer n into a base b character representation in the string s. In particular, `itob(n, s, 16)` formats s as a hexadecimal integer in s.
+
+```c
+#include <stdio.h>
+void itob(long long number, char string[], int base);
+/*
+  Exercise 3-5. Write the function itob(n,s,b) that converts the integer n into
+  a base b character representation in the string s. In particular, itob(n,s,16)
+  formats s as a hexadecimal integer in s.
+*/
+void reverse(char temp_string[], char new_string[]);
+
+int main(void) {
+
+  long long number = 157;
+
+  char string_number[200];
+  int base = 8;
+
+  // convert number to it's base
+  itob(number, string_number, base);
+  printf("number is: %lld = %s\n", number, string_number);
+  return 0;
+}
+
+/*
+  I'm going to use just the bases in the man helper
+  we have:
+    - octal
+    - hex
+
+  I'm not gonna do the binary case i just don't
+*/
+void itob(long long number, char string[], int base) {
+  char temp_string[200];
+
+  // check if number is negative.
+  long long sign;
+  if ((sign = number) < 0) {
+    number *= -1;
+  }
+  unsigned long long current_number = number;
+
+  int i = 0;
+  do {
+    temp_string[i++] = current_number % base + '0';
+
+  } while ((current_number = (unsigned long long)current_number / base) > 0);
+
+  // add hex prefixer
+  if (base == 16) {
+    temp_string[i++] = 'x';
+    temp_string[i++] = '0';
+  } else if (base == 8) {
+    temp_string[i++] = 'o';
+    temp_string[i++] = '0';
+  }
+  temp_string[i] = '\0';
+  reverse(temp_string, string);
+
+  return;
+}
+
+void reverse(char temp_string[], char new_string[]) {
+  // calculate string lenght.
+  int lenght;
+  for (lenght = 0; temp_string[lenght] != '\0'; lenght++)
+    ;
+  // declare a temp array
+
+  int j = 0;
+  for (int i = lenght - 1; i >= 0; i--, j++) {
+    new_string[j] = temp_string[i];
+  }
+  new_string[j] = '\0';
+  return;
+}
+```
+
+### Exercise 3-6
+
+Write a version of itoa that accepts three arguments instead of two. The third
+argument is a minimum field width; the converted number must be padded with blanks on the
+left if necessary to make it wide enough.
+
+```c
+#include <stdio.h>
+
+#define EXIT_SUCCESS 0
+void reverse(char string[], char new_string[]);
+void itoa(long long n, char string[], int width);
+
+int main(void) {
+  long long number = -200000000;
+  char ascii_number[200];
+
+  // convert intever to string ascii number
+  itoa(number, ascii_number, 10);
+
+  // printing the converted number
+  printf("This is the number: %lld = %s\n", number, ascii_number);
+  // without reversing the string output of -200 should be 002-
+
+  return EXIT_SUCCESS;
+}
+
+void itoa(long long n, char string[], int width) {
+  char temp_string[200];
+  int i;
+  long long sign;
+
+  // get sing from number
+  // if number is less then 0, make it positive.
+  if ((sign = n) < 0) {
+    n = -n;
+  }
+
+  // why n is negative ??????
+  unsigned long long current_number = n;
+  i = 0;
+  do {
+    temp_string[i++] = current_number % 10 + '0';
+  } while ((current_number = current_number / 10) > 0);
+
+  // add sing if number is negative
+  if (sign < 0) {
+    temp_string[i++] = '-';
+  }
+
+  // add widths
+  int end_width_index = width + i;
+  for (; i < end_width_index; i++) {
+    temp_string[i] = ' ';
+  }
+  temp_string[i] = '\0';
+
+  // all you need to do now is to reverse the string
+  reverse(temp_string, string);
+
+  return;
+}
+
+void reverse(char string[], char new_string[]) {
+  /*
+    i only thing of one algo is to count length of string
+    and terevce it using that length.
+  */
+
+  // calculate string length.
+  int length;
+  for (length = 0; string[length] != '\0'; length++)
+    ;
+
+  int j = 0;
+  for (int i = length - 1; i >= 0; i--, j++) {
+    new_string[j] = string[i];
+  }
+  new_string[j] = '\0';
+  return;
+}
+
+output is:
+╰─ ./itoa2
+This is the number: -200000000 =           -200000000
+
+```
+
+## 3.7 Break and Continue
+
+`break` statement breaks from a loop
+
+`continue` ignores the current index and continue
+
+## 3.8 Got and labels
+
+This is the first time i have heard about `Goto` , it's like a `break` statement but, there is a bit difference:
+
+- break: break out of the current loop
+  Ex:
+
+  ```c
+     1   #include <stdio.h>
+     1
+     2   int main(void) {
+     3   │ char foo[10] = "0000110000";
+     4   │
+     5   │ // break
+     6   │ for (int i = 0; foo[i] != '\0'; i++) {
+     7   │ │ if (foo[i] == '1') {
+     8   │ │ │ break;
+     9   │ │ }
+    10   │ }
+    11   │
+
+  ```
+
+- goto just get out of all existing loops that are inside
+  Ex:
+  ```c
+    12   │ for (int i = 0; foo[i] != '\0'; i++) {
+    13   │ │ for (;;) {
+    14   │ │ │ goto huh;
+    15   │ │ }
+    16   │ │ if (foo[i] == '1') {
+    17   │ │ │ break;
+    18   │ │ }
+    19   │ }
+    20   huh:
+    21   │ printf("what even is thsi");
+    22   │
+    23   │ return 0;
+    24   }
+  ```
