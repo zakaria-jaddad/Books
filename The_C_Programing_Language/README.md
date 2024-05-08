@@ -3088,3 +3088,992 @@ This is the first time i have heard about `Goto` , it's like a `break` statement
     23   │ return 0;
     24   }
   ```
+
+# Chapter 4 - Functions and Program Structure
+
+### 4.1 Basics of Functions
+
+function helps us break a big code to smaller block of codes to easily deal with.
+
+each function definition has the form of
+
+```c
+return-type function-name(argument declarations)
+{
+	declarations and statements
+}
+```
+
+this is a break down of the `strindex` function
+
+```c
+/* strindex: return index of t in s, -1 if none */
+int strindex(char s[], char t[])
+{
+	int i, j, k;
+
+	// itterate over the string s until end
+	for (i = 0; s[i] != '\0'; i++) {
+
+		// in every character of string s loop over the string t until end of t and each character of t is equal to s
+		for (j=i, k=0; t[k]!='\0' && s[j]==t[k]; j++, k++)
+			;
+
+		if (k > 0 && t[k] == '\0')
+			return i;
+	}
+return -1;
+}
+```
+
+in function if the return type is omitted the return type by default in this case is `int`
+
+In a case of this example
+
+```c
+int foo(void)
+{
+	// no return statement
+]
+```
+
+in this case if there is no return statement aka a function that should return something, it didn't
+
+it's value certain to be garbage.
+
+### Exercise 4-1
+
+Write the function `strindex(s,t)` which returns the position of the rightmost occurrence of t in s, or -1 if there is none.
+
+```c
+#include <stdio.h>
+
+// function declaration
+int strindex(const char s[], const char t[]);
+int get_lenght(const char s[]);
+
+int main(void) {
+
+  const char s[] = "hello world";
+  const char t[] = "world";
+
+  int result = strindex(s, t);
+
+  if (result != -1) {
+    printf("'%s' found at index %d in '%s'\n", t, result, s);
+  } else {
+    printf("'%s' not found in '%s'\n", t, s);
+  }
+
+  return 0;
+}
+
+int strindex(const char s[], const char t[]) {
+  // get strings lenght
+  int s_lenght = get_lenght(s);
+  int t_lenght = get_lenght(t);
+
+  int i, j, k;
+  int index = -1;
+
+  for (i = s_lenght - t_lenght; i > 0; i--) {
+    for (j = i, k = 0; t[k] == s[j] && t[k] != '\0'; j++, k++)
+      ;
+
+    if (t[k] == '\0' && k > 0) {
+      index = i;
+    }
+  }
+  return index;
+}
+
+int get_lenght(const char s[]) {
+  int lenght;
+
+  for (lenght = 0; s[lenght] != '\0'; lenght++)
+    ;
+
+  return lenght;
+}
+```
+
+Output:
+
+```bash
+'world' found at index 6 in 'hello world'
+```
+
+### 4.2 Functions Returning Non-integers
+
+`atof.c`
+
+```c
+/*
+  sum += atof(line) for first look of the atof function we have no idea what
+  type it returns so we assume it's an int plus we don't know nothing about it's
+  argument no informations
+
+  for example this function **double atof()**
+  if we look at it we would know that this function doesn't take any arguments
+  at all, but in the modern C we use the void keyword to diterman that so use
+  void
+
+  Example:
+  // atoi: convert string s to integer using atof
+  // notice that we cast the return statement to the type of the function before
+  it's taken.
+  int atoi(char s[]) {
+    double atof(char s[]);
+    return (int) atof(s);
+  }
+
+*/
+
+#include <ctype.h>
+#include <stdio.h>
+#define MAXLINE 100
+
+// %g is an equalifier for double
+
+int main(void) {
+  double sum, atof(const char[]);
+  char line[MAXLINE] = "44444.323323254523";
+
+  printf("%g\n", atof(line));
+  sum = 0;
+  return 0;
+}
+
+/*
+  so the function convert ascii to floating point number
+  it's the same as atoi but we add the part of the floating points after the .
+  in the part after the condition for the .
+  for example if we have as input "20.4"
+  we would get 20 we check for the dot and skip it.
+  for the 4 it's the same put we add the power variable so we would get
+    - val = 204
+    - power = 10
+  then devide 204 by the 10 and you would get 20.4
+  and voila
+*/
+double atof(const char string[]) {
+  int i, sign;
+  double val, power;
+
+  // skip white spaces
+  for (i = 0; string[i] == ' '; i++)
+    ;
+
+  // check for the sign
+  sign = (string[i] == '-') ? -1 : 1;
+  if (string[i] == '+' || string[i] == '-')
+    i++;
+
+  // start itterating
+  for (val = 0.0; isdigit(string[i]); i++)
+    val = val * 10 + (string[i] - '0');
+
+  if (string[i] == '.')
+    i++;
+
+  for (power = 1.0; isdigit(string[i]); i++) {
+    val = val * 10 + (string[i] - '0');
+    power *= 10;
+  }
+
+  return sign * val / power;
+}
+
+// output is this 44444.3 IDK why?
+
+```
+
+### Exercise 4-2
+
+Extend `atof` to handle scientific notation of the form `123.45e-6`
+
+```c
+// i just don't get the idea how this works plus the why it prints the number uncomplite cuz of the quantifier %g should be %f
+/*
+  sum += atof(line) for first look of the atof function we have no idea what
+  type it returns so we assume it's an int plus we don't know nothing about it's
+  argument no informations
+
+  for example this function **double atof()**
+  if we look at it we would know that this function doesn't take any arguments
+  at all, but in the modern C we use the void keyword to diterman that so use
+  void
+
+  Example:
+  // atoi: convert string s to integer using atof
+  // notice that we cast the return statement to the type of the function before
+  it's taken.
+  int atoi(char s[]) {
+    double atof(char s[]);
+    return (int) atof(s);
+  }
+
+*/
+
+#include <ctype.h>
+#include <stdio.h>
+#define MAXLINE 100
+
+// %g is an equalifier for double
+
+int main(void) {
+  double sum, atof(const char[]);
+  char line[MAXLINE] = "44444.323323254523";
+
+  printf("%f\n", atof(line));
+  return 0;
+}
+
+/*
+  so the function convert ascii to floating point number
+  it's the same as atoi but we add the part of the floating points after the .
+  in the part after the condition for the .
+  for example if we have as input "20.4"
+  we would get 20 we check for the dot and skip it.
+  for the 4 it's the same put we add the power variable so we would get
+    - val = 204
+    - power = 10
+  then devide 204 by the 10 and you would get 20.4
+  and voila
+*/
+double atof(const char string[]) {
+  int i, sign;
+  double val, power;
+
+  // skip white spaces
+  for (i = 0; string[i] == ' '; i++)
+    ;
+
+  // check for the sign
+  sign = (string[i] == '-') ? -1 : 1;
+  if (string[i] == '+' || string[i] == '-')
+    i++;
+
+  // start itterating
+  for (val = 0.0; isdigit(string[i]); i++)
+    val = val * 10.0 + (string[i] - '0');
+
+  if (string[i] == '.')
+    i++;
+
+  for (power = 1.0; isdigit(string[i]); i++) {
+    val = val * 10.0 + (string[i] - '0');
+    power *= 10;
+  }
+  // printf("wtf is this: %f\n", sign * val / power);
+  return sign * val / power;
+}
+
+```
+
+## 4.3 External Variables
+
+This is one of the hardest long exercises i have done
+
+```c
+#include <ctype.h>
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXOP 100
+#define BUFSIZE 100
+#define NUMBER '0'
+#define MAXVAL 100
+#define MAX_LETTERS 25
+#define NOVALUE 0
+
+int getop(char s[]);
+int getch(void);
+double pop(void);
+double get_head(void);
+void ungetch(int c);
+void clear_stack(void);
+void swap_top(void);
+void push(double element);
+void assign_variable(void);
+double get_variable(void);
+void empty_array(double array[], int limit);
+void ungets(const char s[]);
+/* global */
+double variables[MAX_LETTERS];
+
+int main(void) {
+  int type;
+  double op2, operation_resualt, last_value;
+  char s[MAXOP];
+
+  last_value = NOVALUE;
+
+  empty_array(variables, MAX_LETTERS);
+  while ((type = getop(s)) != EOF) {
+    switch (type) {
+    case NUMBER:
+      push(atof(s));
+      printf("\n");
+      break;
+    case '+':
+      printf("\n");
+      last_value = pop() + pop();
+      push(last_value);
+      break;
+    case '*':
+      printf("\n");
+      last_value = pop() * pop();
+      push(last_value);
+      break;
+    case '-':
+      printf("\n");
+      op2 = pop();
+      last_value = pop() - op2;
+      push(last_value);
+      break;
+    case '/':
+      printf("\n");
+      op2 = pop();
+      if (op2 == 0) {
+        printf("error: zero divisor\n");
+        break;
+      }
+      last_value = pop() / op2;
+      push(last_value);
+      break;
+    case '%':
+      printf("\n");
+      op2 = pop();
+      if (op2 == 0) {
+        printf("error: zero divisor\n");
+        break;
+      }
+      last_value = (int)pop() % (int)op2;
+      push(last_value);
+      break;
+    case '\n':
+      last_value = pop();
+      printf("\t%.8g\n", last_value);
+      break;
+    case 't':
+      printf("\n");
+      last_value = get_head();
+      printf("The top element of the stack: %g\n", last_value);
+      break;
+    case 'c':
+      printf("\n");
+      clear_stack();
+      printf("Stack has been cleared\n");
+      break;
+    case 's':
+      printf("\n");
+      swap_top();
+      break;
+    case 'S':
+      printf("\n");
+      last_value = sin(pop());
+      push(last_value);
+      break;
+    case 'E':
+      printf("\n");
+      last_value = exp(pop());
+      push(last_value);
+      break;
+    case 'P':
+      printf("\n");
+      op2 = pop();
+      last_value = pow(pop(), op2);
+      push(last_value);
+      break;
+    case '=':
+      printf("\n");
+      assign_variable();
+      break;
+    case '?':
+      printf("\n");
+      last_value = get_variable();
+      break;
+    case 'l':
+      printf("\n");
+      if (last_value == NOVALUE) {
+        printf("No last element\n");
+        break;
+      }
+      printf("last printed value: %g\n", last_value);
+      break;
+    default:
+      printf("error: unknown command %s\n", s);
+      break;
+    }
+  }
+  return 0;
+}
+
+/*
+  = means i want to add a variable
+  ? get the value of the variable
+*/
+void assign_variable(void) {
+  char s[MAXOP], c;
+  int letter_index, type;
+  printf("What is the name of the variable: \n");
+
+  while (!isalpha(c = getch())) {
+    printf("This is not a letter! \n");
+  }
+  letter_index = tolower(c) - 'a';
+
+  printf("The variable %c should have a value write a value :)\n", tolower(c));
+  while ((type = getop(s)) != NUMBER) {
+    printf("That is not a number!\n");
+  }
+  variables[letter_index] = atof(s);
+  printf("variable is assigned\n");
+}
+
+double get_variable(void) {
+  char c;
+  while (!isalpha(c = getch())) {
+    printf("This is not a letter! \n");
+  }
+  int index = tolower(c) - 'a';
+  if (variables[index] == NOVALUE) {
+    printf("error: variable %c has no value\n", tolower(c));
+  }
+  printf("%c: %g\n", tolower(c) - 'a', variables[index]);
+  return variables[index];
+}
+
+int sp = 0;
+double val[MAXVAL];
+
+void push(double element) {
+  if (sp < MAXVAL) {
+    val[sp++] = element;
+  } else {
+    printf("error stack overflow can't push %g\n", element);
+  }
+}
+
+double pop() {
+  if (sp > 0) {
+    return val[--sp];
+  }
+  printf("Error Stack is Empty\n");
+  return 0.0;
+}
+
+int getop(char s[]) {
+  int i, c;
+  int sign_flag = 0;
+  while ((s[0] = c = getch()) == ' ' || c == '\t')
+    ;
+  s[1] = '\0';
+
+  if (!isdigit(c) && c != '.' && c != '-' && c != '+') {
+    return c;
+  }
+
+  i = 0;
+  if (c == '-' || c == '+') {
+    char temp = c;
+    c = getch();
+    if (isdigit(c)) {
+      s[++i] = c;
+    } else {
+      return temp;
+    }
+  }
+
+  if (isdigit(c)) {
+    while (isdigit(s[++i] = c = getch()))
+      ;
+  }
+
+  if (c == '.') {
+    while (isdigit(s[++i] = c = getch()))
+      ;
+  }
+
+  s[i] = '\0';
+
+  if (c != EOF) {
+    ungetch(c);
+  }
+  return NUMBER;
+}
+
+double get_head(void) {
+
+  if (sp > 0) {
+    return val[sp - 1];
+  }
+  return -1;
+}
+
+void clear_stack(void) { sp = 0; }
+
+void swap_top(void) {
+
+  printf("sp: %d\n", sp);
+  if (sp >= 2) {
+    int temp = val[sp - 1];
+    val[sp - 1] = val[sp - 2];
+    val[sp - 2] = temp;
+
+    printf("The top two elements has been swapped\n");
+  } else {
+    printf("error: The stack is not full enough.\n");
+  }
+}
+/*
+  getch and ungetch
+*/
+
+/*
+  Ex 4-9 char doesn't handel EOF becuase it's -1 char values from 0 -> 255
+  so change the type of pb_char to int that all .
+
+  int pb_char = '\0';
+  int pb_flag = 0;
+*/
+
+/*
+  Ex 4-10
+  int pb_char = '\0';
+  int pb_flag = 0;
+
+  int getch(void) { return (pb_flag == 1) ? pb_flag = 0, pb_char : getchar(); }
+
+  void ungetch(int c) {
+    pb_char = c;
+    pb_flag = 1;
+  }
+*/
+
+void ungets(const char s[]) {
+  int i, c;
+  i = 0;
+  while ((c = s[i++]) != '\0') {
+    ungetch(s[i++]);
+  }
+}
+
+void empty_array(double array[], int limit) {
+  for (int i = 0; i < limit; i++) {
+    array[i] = NOVALUE;
+  }
+}
+
+```
+
+## 4.4 Scope Rules
+
+for programs that are getting bigger it's good practice to divide them to smaller pieces such definition in one place and declaration in other
+
+for example :
+
+```c
+in file1:
+	extern int sp;
+	extern double val[];
+	void push(double f) { ... }
+	double pop(void) { ... }
+
+in file2:
+	int sp = 0;
+	double val[MAXVAL];
+```
+
+## 4.5 Header Files
+
+The previous calculator program would be divided like this
+
+![Screenshot 2024-05-04 at 17.17.40.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/9993905c-51b5-4b76-bff2-778e9ef69272/750ac9be-e53a-4c7c-81e5-1fdafd92eeef/Screenshot_2024-05-04_at_17.17.40.png)
+
+## 4.6 Static Variables
+
+`static` variable can only be used in the in the scope where it got defined.
+
+so a `static global` variable con only be used in a file where which is defined.
+
+so for example in the code `getch.c`
+
+```c
+static char buf[BUFSIZE]; /* buffer for ungetch */
+static int bufp = 0; /* next free position in buf */
+
+int getch(void) { ... }
+void ungetch(int c) { ... }
+```
+
+the tow variables `buf and bufp` wouldn't be accessible outside of the file.
+
+`static` is most often used to function either, the function it self is global it self but, using the `static` key word it would only accessible in ht current file
+
+### Exercise 4-11
+
+Modify `getop` so that it doesn't need to use `ungetch`. Hint: use an internal
+`static` variable.
+
+just add static to variables used in `ungetch` and put them in the condition of `getop`
+
+```c
+static int pb_char = '\0';
+static int pb_flag = 0;
+
+int getop(char s[]) {
+  int i, c;
+  int sign_flag = 0;
+  while ((s[0] = c = getch()) == ' ' || c == '\t')
+    ;
+  s[1] = '\0';
+  if (!isdigit(c) && c != '.' && c != '-' && c != '+') {
+    return c;
+  }
+  i = 0;
+  if (c == '-' || c == '+') {
+    char temp = c;
+    c = getch();
+    if (isdigit(c)) {
+      s[++i] = c;
+    } else {
+      return temp;
+    }
+  }
+  if (isdigit(c)) {
+    while (isdigit(s[++i] = c = getch()))
+      ;
+  }
+  if (c == '.') {
+    while (isdigit(s[++i] = c = getch()))
+      ;
+  }
+  s[i] = '\0';
+  if (c != EOF) {
+    pb_char = c;
+    pb_flag = 1;
+  }
+  return NUMBER;
+}
+
+int getch(void) { return (pb_flag == 1) ? pb_flag = 0, pb_char : getchar(); }
+
+```
+
+## 4.7 Register Variables
+
+`register` advice the compiler that the variable is going to be user heavily will be user in this program
+
+## 4.10 Recursion
+
+The `static` key work helps a lot in recursive function it allows to set a global variables for all function scopes
+
+### Exercise 4-12.
+
+Adapt the ideas of `printd` to write a recursive version of `itoa`; that is, convert an integer into a string by calling a recursive routine.
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXVALUE 100
+
+void itoa(int number, char nstring[]);
+
+int main(void) {
+  const int number = -200;
+  char nstring[MAXVALUE];
+  itoa(number, nstring);
+  printf("This is the value of number: %s\n", nstring);
+}
+
+/*
+  itoa recursive
+  - input : int
+  - ouptut: char[]
+*/
+void itoa(int number, char nstring[]) {
+
+  static int i = 0;
+
+  if (number / 10) {
+    itoa(number / 10, nstring);
+  } else {
+    i = 0;
+    if (number < 0) {
+      nstring[i++] = '-';
+    }
+  }
+
+  nstring[i++] = (number % 10) * -1 + '0';
+  nstring[i] = '\0';
+}
+
+```
+
+### Exercise 4-13.
+
+Write a recursive version of the function reverse(s), which reverses the string s in place
+
+This is simple but it makes me go wield just to say
+
+```c
+#include <stddef.h>
+#include <stdio.h>
+#include <string.h>
+
+#define MAXLENGHT 100
+
+void reverse(char s[], char news[]);
+
+int main(void) {
+  char s[] = ".esrever rof tset elpmis a si sihT";
+  char new_s[strlen(s)];
+
+  char t[] = "KO";
+  char new_t[strlen(t)];
+
+  printf("Reversing '%s': ", s);
+  reverse(s, new_s);
+  printf("%s\n", new_s);
+
+  printf("Reversing '%s': ", t);
+  reverse(t, new_t);
+  printf("%s\n", new_t);
+
+  return 0;
+}
+
+void reverse(char s[], char news[]) {
+  static int i = 0;
+
+  if (strlen(s) < 2)
+    return;
+
+  if (s[0] != '\0') {
+    reverse(s + 1, news);
+    news[i++] = s[0];
+  }
+}
+
+```
+
+## 4.11 The C Preprocessor
+
+C provides certain language facilities by means of a preprocessor, which is conceptionally a
+separate first step in compilation. The two most frequently used features are:
+
+- `#include` to include the contents of a file during compilation.
+- `#define`, to replace a token by an arbitrary sequence of characters.
+- Other features described in this section include conditional compilation and macros with arguments.
+
+### 4.11.1 File Inclusion
+
+File inclusion makes it easy to handle collections of #defines and declarations (among other things). Any source line of the form:
+
+```c
+#include "filename"
+
+// or
+
+#include <filename>
+```
+
+is replaced by the contents of the file filename.
+
+If the filename is quoted, searching for the file typically begins where the source program was found.
+
+if it is not found there, or if the name is enclosed in `< and >` searching follows an implementation-defined rule to find the file.
+
+An included file may itself contain #include lines.
+
+### 4.11.2 Macro Substitution
+
+```c
+#define FOO "This is a long string fooooooooooooooooooooooooooooooooooooooo \
+							Now i'm finishing the string in the next line fooooooooo\n"
+```
+
+Using `\` i have continued the definition onto several lines
+
+Any name may be defined with any replacement text. For example
+
+```c
+#define forever for (;;) /* infinite loop */
+```
+
+now forever is infinite loop.
+
+It is also possible to define macros with arguments, so the replacement text can be different
+for different calls of the macro. As an example, define a macro called max:
+
+```c
+#define max(A, B) ((A) > (B) ? (A) : (B))
+```
+
+it's like a function but this expands into line code. for example
+
+```c
+x = max((p + q), (r + s));
+```
+
+will be replaced by the line
+
+```c
+x = ((p + q) > (r + s) ? (p + q) : (r + s));
+```
+
+So long as the arguments are treated consistently, this macro will serve for any data type;
+there is no need for different kinds of max for different data types, as there would be with
+functions.
+
+If you examine the expansion of max, you will notice some pitfalls. The expressions are
+evaluated twice; this is bad if they involve side effects like increment operators or input and
+output. For instance
+
+```c
+max(i++, j++) /* WRONG */
+
+#define square(x) x * x /* WRONG */
+is invoked as square(z+1).
+```
+
+Names may be undefined with `#undef`, usually to ensure that a routine is really a function, not a macro:
+
+```c
+#undef getchar
+int getchar(void) { ... }
+```
+
+Formal parameters are not replaced within quoted strings. If, however, a parameter name is
+preceded by a `#` in the replacement text, the combination will be expanded into a quoted string
+with the parameter replaced by the actual argument. This can be combined with string
+concatenation to make, for example, a debugging print macro:
+
+```c
+#define dprint(expr) printf(#expr " = %g\n", expr)
+```
+
+When this is invoked, as in, notice the `#expr` has been expanded into a quoted string
+
+```c
+dprint(x/y)
+/* the macro is expanded into */
+
+printf("x/y" " = &g\n", x/y);
+/* and the strings are concatenated, so the effect is */
+
+printf("x/y = &g\n", x/y);
+```
+
+The preprocessor operator ## provides a way to concatenate actual arguments during macro
+expansion. If a parameter in the replacement text is adjacent to a `##`, the parameter is replaced
+by the actual argument, the `## and surrounding white space are removed`, and the result is re-scanned. For example, the macro paste concatenates its two arguments for example:
+
+```c
+#define paste(front, back) front ## back
+
+/* so paste(name, 1) creates the token name1. */
+```
+
+### Exercise 4-14.
+
+Define a macro `swap(t, x, y)` that interchanges two arguments of type t.
+(Block structure will help.)
+
+i haven't understood this problem so i asked gbt to explain it to me:
+
+> **Understanding the Macro**:
+> The exercise asks you to define a macro named `swap` that will interchange two arguments of type `t`.
+>
+> 1. **Macro Syntax**:
+>    In C programming, a macro is defined using the `#define` directive. It allows you to define a symbol or a snippet of code that gets replaced by a specified expression when it appears in the code. For this exercise, you'll be defining a macro named `swap`.
+> 2. **Macro Arguments**:
+>    The macro `swap` will take three arguments: `t`, `x`, and `y`. - `t` is a type specifier. This allows `swap` to be used with different data types. - `x` and `y` are the two variables whose values need to be interchanged.
+> 3. **Interchanging the Values**:
+>    The goal of the `swap` macro is to interchange the values of `x` and `y`. This means that whatever `x` holds initially will be swapped with the value of `y`, and vice versa.
+> 4. **Block Structure**:
+>    The exercise mentions that block structure will help. This suggests that you should encapsulate the operations of the macro within a block of code, using curly braces `{}`. This ensures that any temporary variables used within the macro don't interfere with other variables in the program.
+
+```c
+#include <stdio.h>
+
+#define EXIT_SUCCESS 0
+#define swap(t, x, y)                                                        \
+  { t var_t = x, x = y, y = var_t; }
+
+int main(int argc, char *argv[]) {
+  int x = 20;
+  int y = 30;
+
+  printf("x is: %d\n", x);
+  printf("y is: %d\n", y);
+  swap(int, x, y);  // --> { t var_t = x, x = y, y = var_t; }  the t is going to be replaced by int
+  printf("swaped x is: %d\n", x);
+  printf("swaped y is: %d\n", y);
+
+  return EXIT_SUCCESS;
+}
+```
+
+```c
+╰─ ./a.out
+x is: 20
+y is: 30
+swaped x is: 20
+swaped y is: 30
+```
+
+### 4.11.3 Conditional Inclusion
+
+It is possible to control preprocessing itself with conditional statements that are evaluated
+during preprocessing. This provides a way to include code selectively, depending on the value of conditions evaluated during compilation
+
+The `#if` line evaluates a constant integer expression (which may not include `sizeof`, `casts`, or`enum` constants), If the expression is non-zero, subsequent lines until an `#endif` or `#elif` or `#else` are included.
+
+(The preprocessor statement `#elif` is like `else if ()` .) The expression `defined(name)` in a `#if` is 1 if the name has been defined, and 0 otherwise.
+
+for example to make sure that the header file `hdr.h` is included only once the constants of the files are surrounded with a conditional like this:
+
+```c
+#if !defined(HDR)
+#define HDR
+/* contents of hdr.h go here */
+#endif
+```
+
+if the `her.h` file is defined then it will skip the block until `#endfi`
+
+```c
+#if SYSTEM == SYSV
+#define HDR "sysv.h"
+#elif SYSTEM == BSD
+#define HDR "bsd.h"
+#elif SYSTEM == MSDOS
+#define HDR "msdos.h"
+#else
+#define HDR "default.h"
+#endif
+#include HDR
+```
+
+In this example we include a specific file based on the value of the `SYSTEM` .
+
+This `#if !defined(HDR)` in the earlier example can be represented in a different way, so that block of code means that we check if HDR is not defined but we can do it like this: `#ifndef HDR` it's a bit pythonic `# if n def` also, there is `#ifdef HDR` and voila
+
+```c
+#if !defined(HDR)
+#define HDR
+/* contents of hdr.h go here */
+#endif
+
+// ==============
+
+#ifndef HDR
+#define HDR
+/* contents of hdr.h go here */
+#endif
+```

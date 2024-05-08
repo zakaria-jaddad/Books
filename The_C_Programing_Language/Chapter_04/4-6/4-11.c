@@ -187,46 +187,6 @@ double pop() {
   return 0.0;
 }
 
-int getop(char s[]) {
-  int i, c;
-  int sign_flag = 0;
-  while ((s[0] = c = getch()) == ' ' || c == '\t')
-    ;
-  s[1] = '\0';
-
-  if (!isdigit(c) && c != '.' && c != '-' && c != '+') {
-    return c;
-  }
-
-  i = 0;
-  if (c == '-' || c == '+') {
-    char temp = c;
-    c = getch();
-    if (isdigit(c)) {
-      s[++i] = c;
-    } else {
-      return temp;
-    }
-  }
-
-  if (isdigit(c)) {
-    while (isdigit(s[++i] = c = getch()))
-      ;
-  }
-
-  if (c == '.') {
-    while (isdigit(s[++i] = c = getch()))
-      ;
-  }
-
-  s[i] = '\0';
-
-  if (c != EOF) {
-    ungetch(c);
-  }
-  return NUMBER;
-}
-
 double get_head(void) {
 
   if (sp > 0) {
@@ -250,30 +210,47 @@ void swap_top(void) {
     printf("error: The stack is not full enough.\n");
   }
 }
-/*
-  getch and ungetch
-*/
 
-/*
-  Ex 4-9 char doesn't handel EOF becuase it's -1 char values from 0 -> 255
-  so change the type of pb_char to int that all .
+/* Answer of 4-11 */
+static int pb_char = '\0';
+static int pb_flag = 0;
 
-  int pb_char = '\0';
-  int pb_flag = 0;
-*/
-
-/*
-  Ex 4-10
-  int pb_char = '\0';
-  int pb_flag = 0;
-
-  int getch(void) { return (pb_flag == 1) ? pb_flag = 0, pb_char : getchar(); }
-
-  void ungetch(int c) {
+int getop(char s[]) {
+  int i, c;
+  int sign_flag = 0;
+  while ((s[0] = c = getch()) == ' ' || c == '\t')
+    ;
+  s[1] = '\0';
+  if (!isdigit(c) && c != '.' && c != '-' && c != '+') {
+    return c;
+  }
+  i = 0;
+  if (c == '-' || c == '+') {
+    char temp = c;
+    c = getch();
+    if (isdigit(c)) {
+      s[++i] = c;
+    } else {
+      return temp;
+    }
+  }
+  if (isdigit(c)) {
+    while (isdigit(s[++i] = c = getch()))
+      ;
+  }
+  if (c == '.') {
+    while (isdigit(s[++i] = c = getch()))
+      ;
+  }
+  s[i] = '\0';
+  if (c != EOF) {
     pb_char = c;
     pb_flag = 1;
   }
-*/
+  return NUMBER;
+}
+
+int getch(void) { return (pb_flag == 1) ? pb_flag = 0, pb_char : getchar(); }
 
 void ungets(const char s[]) {
   int i, c;
