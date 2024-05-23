@@ -3691,7 +3691,7 @@ in file2:
 
 The previous calculator program would be divided like this
 
-![Screenshot 2024-05-04 at 17.17.40.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/9993905c-51b5-4b76-bff2-778e9ef69272/750ac9be-e53a-4c7c-81e5-1fdafd92eeef/Screenshot_2024-05-04_at_17.17.40.png)
+![Headers](./Media/headers.png)
 
 ## 4.6 Static Variables
 
