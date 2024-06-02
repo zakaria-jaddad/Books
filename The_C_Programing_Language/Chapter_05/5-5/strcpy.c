@@ -1,20 +1,20 @@
 #include <string.h>
 #include <unistd.h>
 
-void my_strcat(char *s, char *t);
+void my_strcpy(char *s, char *t);
 
 int main(void) {
 
   char *foo = "Hello, World!\n";
   char bar[14];
 
-  my_strcat(bar, foo);
+  my_strcpy(bar, foo);
 
   write(1, bar, strlen(foo));
   return 0;
 }
 
-void my_strcat(char *s, char *t) {
+void my_strcpy(char *s, char *t) {
 
   while ((*s++ = *t++)) /* redundant checking for '\0' */
     ;
