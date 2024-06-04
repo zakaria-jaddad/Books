@@ -2,9 +2,9 @@
 
 // function declaration
 int strindex(const char s[], const char t[]);
-int get_lenght(const char s[]);
+int get_length(const char s[]);
 
-// this is the same i have never thought about it wierd hummmmm
+// this is the same i have never thought about it weird hummmmm
 int hello;
 
 int main(void) {
@@ -24,14 +24,14 @@ int main(void) {
 }
 
 int strindex(const char s[], const char t[]) {
-  // get strings lenght
-  int s_lenght = get_lenght(s);
-  int t_lenght = get_lenght(t);
+  // get strings length
+  int s_length = get_length(s);
+  int t_length = get_length(t);
 
   int i, j, k;
   int index = -1;
 
-  for (i = s_lenght - t_lenght; i > 0; i--) {
+  for (i = s_length - t_length; i > 0; i--) {
     for (j = i, k = 0; t[k] == s[j] && t[k] != '\0'; j++, k++)
       ;
 
@@ -42,7 +42,7 @@ int strindex(const char s[], const char t[]) {
   return index;
 }
 
-int get_lenght(const char s[]) {
+int get_length(const char s[]) {
   int lenght;
 
   for (lenght = 0; s[lenght] != '\0'; lenght++)
