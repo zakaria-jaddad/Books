@@ -10,7 +10,6 @@ int main(void) {
   int y = 1984, m = 6, d = 30, yd = 366;
   int *pm, *pd;
 
-  printf("Day: %d\n", day_of_year(y, m, d));
   month_day(y, yd, pm, pd);
   printf("Month: %d, Day: %d\n", *pm, *pd);
   return 0;
