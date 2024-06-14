@@ -24,12 +24,12 @@ void month_day(int year, int yearday, int *pmonth, int *pday) {
          year % 400 == 0; /* leap is either 0 or 1 */
 
   if (leap) {
-    if (yearday > 365) {
+    if (yearday > 366) {
       printf("error: not a valid day\n");
       return;
     }
   } else {
-    if (yearday > 366) {
+    if (yearday > 365) {
       printf("error: not a valid day\n");
       return;
     }
