@@ -1,67 +1,96 @@
-/*
-  Exercise 1-21. Write a program entab that replaces strings of blanks by the minimum
-  number of tabs and blanks to achieve the same spacing. Use the same tab stops as for detab.
-  When either a tab or a single blank would suffice to reach a tab stop, which should be given
-  preference?
+/* Exercise 5-11. Modify the programs entab and detab (written as exercise in
+ * Chapter 1) to accept a list of tab stops as arguments. Use the default tab
+ * settings if there are no arguments.
  */
 
+/* General Idea:
+
+   Since the exercise requires us modify the programs entab/detab, we will
+   retain the logic of the entab/detab operations. 
+
+   The modification that we will apply is only for the number of tabstops since
+   that number will depend on the arguments.
+
+   Our code structure will look as follows:
+
+   		Get the total arguments
+		while(next character is not end-of-file)
+			if(tab)
+				if(there are remaining arguments)
+					set the current argument as the tabstop
+					remove the current argument from the list
+				else
+					set default as the tabstop
+
+			Perform the entab/detab operation
+*/
+
+/* This is code copied from "https://github.com/zer0325/KnR-Exercise-Solution/blob/master/Chapter/05/Exercise/5-11.c" */
 #include <stdio.h>
-#include "../header/tab.h"
+#define MAX 1000
+#define DEFAULT 8
 
-void remove_line_blanck(char s[], char formated_line[]);
-
-int nspaces = 3;
-
-int main(void)
+int main(int argc, char *argv[])
 {
-  char s[MAXLENGTH];
-  while (get_user_line(s, MAXLENGTH) == 0)
-  {
-    char formated_line[MAXLENGTH];
-    remove_line_blanck(s, formated_line);
-    print_line(formated_line);
-  }
-  return 0;
-}
+	int c, col, i, x;
+	char s[MAX];
+	int N;		/* tabstop value */
+	int t_tabstops = 0;		/* total tabstops */
 
-void remove_line_blanck(char line[], char new_line[])
-{
-  int current_index, new_line_index, tabs_counter, space_counter;
-  current_index = new_line_index = tabs_counter = space_counter = 0;
+	/* The code inside ----- are the mofications */
 
-  while (line[current_index] != '\n')
-  {
-    if (space_counter <= nspaces)
-    {
-      if (line[current_index] == '\t')
-      {
-        new_line[new_line_index] = line[current_index];
-        ++new_line_index;
-        ++tabs_counter;
-      }
-      else if (line[current_index] == ' ' && tabs_counter > 0)
-      {
-        int space_index = new_line_index;
-        while (new_line_index < space_index + tabs_counter)
-        {
-          new_line[new_line_index] = '\t';
-          ++new_line_index;
-        }
-        space_counter =  tabs_counter = 0;
-      }
-      else
-      {
-        new_line[new_line_index] = line[current_index];
-        ++new_line_index;
-      }
-    }
-    else
-    {
-      new_line[new_line_index] = line[current_index];
-      ++new_line_index;
-    }
-    ++current_index;
-  }
-  new_line[new_line_index] = '\n';
-  new_line[new_line_index + 1] = '\0';
+	/* -----------------------------------------*/
+	while(--argc > 0)
+		t_tabstops++;
+	/* -----------------------------------------*/
+
+	i = 0;
+	col = 1;
+	while ((c = getchar()) != EOF) {
+		if (c == '\t') {
+			/* ------------------------------------- */
+			if(t_tabstops){
+				N = atoi(*++argv);
+				--t_tabstops;
+			}else
+				N = DEFAULT;
+			/* -------------------------------------- */
+
+			x = ((col - 1) / N) + 1;
+			while (col <= x * N) {
+				s[i] = '*';		/* The character "*" is 
+								 * used to see the effect
+								 * since a blank line will
+								 * not be seen on the
+								 * display */
+				++i;
+				/* Overflow  check */
+				if (i == MAX - 1) {
+					s[i] = '\0';
+					printf("%s", s);
+					i = 0;
+				}
+				++col;
+			}
+		} else {
+			s[i] = c;
+			++i;
+			++col;
+		}
+
+		if (c == '\n') 
+			col = 1;
+
+		/* Process the input when the array is full */
+		if (i == MAX - 1) {
+			s[i] = '\0';
+			printf("%s", s);
+			i = 0;
+		}
+	}
+	/* Process the remaining input */
+	s[i] = '\0';
+	printf("%s", s);
+
+	return 0;
 }
