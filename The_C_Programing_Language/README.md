@@ -5307,7 +5307,7 @@ respectively.
 
 The first optional argument is `argv[1]` and the last is `argv[argc];` additionally, the standard requires that `argv[argc]` be a null pointer.
 
-![argv.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/9993905c-51b5-4b76-bff2-778e9ef69272/d7c3c502-c49e-4954-a1ff-95a7e2172ed5/argv.png)
+![argv.png](https://file.notion.so/f/f/9993905c-51b5-4b76-bff2-778e9ef69272/d7c3c502-c49e-4954-a1ff-95a7e2172ed5/argv.png?table=block&id=450e1480-c457-492e-ad8c-ea9c38fa91ec&spaceId=9993905c-51b5-4b76-bff2-778e9ef69272&expirationTimestamp=1725148800000&signature=xmvkHpESd3nN-P5xn8oFugbj5UkYFyhqhs57GP0kFuM&downloadName=argv.png)
 
 So it's implementations should be like this:
 
@@ -5731,4 +5731,4 @@ illustrates the problem: `*` is a prefix operator and it has lower precedence th
 
 This is starting to blow my head
 
-![Screenshot 2024-07-08 at 16.08.51.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/9993905c-51b5-4b76-bff2-778e9ef69272/702009ef-253e-45e7-afd0-b2eb0d8181c1/Screenshot_2024-07-08_at_16.08.51.png)
+![Complicated Declarations](https://file.notion.so/f/f/9993905c-51b5-4b76-bff2-778e9ef69272/702009ef-253e-45e7-afd0-b2eb0d8181c1/Screenshot_2024-07-08_at_16.08.51.png?table=block&id=c752d193-03be-42e1-ba11-db3e2f3c0f58&spaceId=9993905c-51b5-4b76-bff2-778e9ef69272&expirationTimestamp=1725148800000&signature=p9jVOO0Aa6tDl9nt7m3N96zn_XO353upaAJUkTnRd5o&downloadName=Screenshot+2024-07-08+at+16.08.51.png)
