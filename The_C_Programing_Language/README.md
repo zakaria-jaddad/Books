@@ -1,7 +1,3 @@
-# The C Programing Language
-
-# Chapter 01
-
 ## 1.1 Getting Started
 
 The only way to learn a new programming language is by writing programs in it, so the first program we will write is the popular **Hello, World!** program
@@ -1761,7 +1757,9 @@ int get_file_input(char s[], int limit)
 
 **At this point we have covered what might be called the conventional core of C. With this handful of building blocks, it's possible to write useful programs of considerable size, and it would probably be a good idea if you paused long enough to do so. These exercises suggest programs of somewhat greater complexity than the ones earlier in this chapter** 💜.
 
-# Chapter 02
+$$
+                                                         \Large\textsf{Chapter 02}
+$$
 
 ## 2.1 Variable Names
 
@@ -2274,7 +2272,7 @@ int any(const char s1[], const char s2[])
 
 ## 2.9 Bitwise Operators
 
-### what is Bitwise manipulation?
+# what is Bitwise manipulation?
 
 using bitwise operators you can manipulate bits in C
 
@@ -3691,7 +3689,7 @@ in file2:
 
 The previous calculator program would be divided like this
 
-![Headers](./Media/headers.png)
+![Screenshot 2024-05-04 at 17.17.40.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/9993905c-51b5-4b76-bff2-778e9ef69272/750ac9be-e53a-4c7c-81e5-1fdafd92eeef/Screenshot_2024-05-04_at_17.17.40.png)
 
 ## 4.6 Static Variables
 
@@ -3872,7 +3870,7 @@ separate first step in compilation. The two most frequently used features are:
 
 ### 4.11.1 File Inclusion
 
-File inclusion makes it easy to handle collections of #defines and declarations (among other things). Any source line of the form:
+File inclusion makes it easy to handle collections of `#defines`and declarations (among other things). Any source line of the form:
 
 ```c
 #include "filename"
@@ -4077,3 +4075,1660 @@ This `#if !defined(HDR)` in the earlier example can be represented in a differen
 /* contents of hdr.h go here */
 #endif
 ```
+
+# Chapter 5 - Pointers and Arrays
+
+A pointer is a variable that it's value contains the address in the memory for Example:
+
+```c
+int bar = 50; // this is just a variable
+
+int *foo = &bar // this is a pointer points to bars adress
+```
+
+Pointer dereferencing allow to get the value of the of the pointed variable
+
+```c
+int newBarValue = (*foo)++;
+printf("%d\n", newBarValue); // this would print 51
+```
+
+### Exercise 5-1.
+
+```c
+/*
+	As written, getint treats a + or - not followed by a digit as a valid
+	representation of zero. Fix it to push such a character back on the input.
+*/
+#include <ctype.h>
+#include <stdio.h>
+
+#define EXIT_SUCCESS 0
+
+int getch(void);
+void ungetch(int c);
+int getint(int *pn);
+
+int main(int argc, char *argv[]) {
+  //   a;sdlfjasd;lfkj
+  return EXIT_SUCCESS;
+}
+
+/* getint() */
+int getint(int *pn) {
+
+  int c, sign;
+
+  while (isspace((c = getch())))
+    ;
+
+  if (!isdigit(c) && c != '+' && c != '-' && c != EOF) {
+    ungetch(c);
+    return 0;
+  }
+
+  sign = (sign == '-') ? -1 : 1;
+
+  if (c == '-' || c == '+') {
+    while (!isdigit(c = getch())) {
+      sign = 0;
+    }
+  }
+
+  for (*pn = 0; isdigit(c);) {
+    c = getch();
+    *pn = 10 * *pn + (c - 0);
+  }
+
+  *pn *= sign;
+
+  if (c != EOF) {
+    ungetch(c);
+  }
+  return c;
+}
+
+/* global variables */
+static int pb_char = '\0';
+static int pb_flag = 0;
+
+/* getch() */
+int getch(void) { return (pb_flag == 1) ? pb_flag = 0, pb_char : getchar(); }
+
+/* ungetch() */
+void ungetch(int c) {
+  pb_char = c;
+  pb_flag = 1;
+}
+
+```
+
+### Exercise 5-2.
+
+```c
+/*
+	Write getfloat, the floating-point analog of getint. What type does
+	getfloat return as its function value?
+
+	i didn't understand this and this is not a solution just a scrumb of code
+*/
+#include <ctype.h>
+#include <stdio.h>
+
+#define SIZE 100
+
+int getch(void);
+void ungetch(int c);
+
+int main(void) {
+
+  int n, getfloat(float *);
+  float array[SIZE];
+
+  for (n = 0; n < SIZE && getfloat(&array[n]) != EOF; n++)
+    ;
+
+  for (int i = 0; i < n; i++) {
+    printf("%f\n", array[i]);
+  }
+  return 0;
+}
+
+int getfloat(float *number) {
+
+  int c, sign;
+  int floatDivision = 1;
+  int afterDot = 0;
+
+  while (isspace(c = getch()))
+    ;
+  if (!isdigit(c = getch() && c != '-' && c != '+' && c != EOF)) {
+    ungetch(c);
+    return c;
+  }
+
+  // a use case if there are more than a sign like this ++--+-50
+  while ((c = getch()) == '-' || c == '+') {
+    sign = (c == '-') ? -1 : 1;
+  }
+
+  for (*number = 0.0; isdigit(c); c = getch()) {
+    *number *= (*number) * 10.0 + (c - '0');
+  }
+  *number *= sign;
+
+  // after dot
+  if (c == '.') {
+    for (afterDot = 0.0; isdigit(c); c = getch()) {
+      afterDot *= afterDot * 10.0 + (c - '0');
+      floatDivision *= 10.0;
+    }
+  }
+
+  afterDot /= floatDivision;
+  *number *= afterDot;
+
+  if (c != EOF) {
+    ungetch(c);
+  }
+  return c;
+}
+
+/* global variables */
+static int pb_char = '\0';
+static int pb_flag = 0;
+
+/* getch() */
+int getch(void) { return (pb_flag == 1) ? pb_flag = 0, pb_char : getchar(); }
+
+/* ungetch() */
+void ungetch(int c) {
+  pb_char = c;
+  pb_flag = 1;
+}
+
+```
+
+## 5.3 Pointers and Arrays
+
+In C Arrays and pointers share some points, so
+
+`int a[10];` is an array with 10 elements inside it, in other hand `int *pa = &a[0];` is a pointer that points to the first element of the array.
+
+![array.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/9993905c-51b5-4b76-bff2-778e9ef69272/ee41a5bf-ec10-42c9-8d74-e5668ebeaf76/array.png)
+
+By incrementing the pointer we can traverse the array `*(pa+1);`
+
+There is one difference between an array name and a pointer that must be kept in mind. A
+pointer is a variable, so `pa = a` and `pa++` are legal. But an array name is not a variable;
+constructions like `a = pa` and `a++` are illegal.
+
+When an array name is passed to a function, what is passed is the location of the initial
+element. Within the called function, this argument is a local variable, and so an array name
+parameter is a pointer, that is, a variable containing an address. We can use this fact to write
+another version of strlen, which computes the length of a string.
+
+![array&pointer.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/9993905c-51b5-4b76-bff2-778e9ef69272/1063b9e9-fd5f-4e32-a7a8-44f7aae69d8b/arraypointer.png)
+
+```c
+/* strlen: return length of string s */
+int strlen(char *s)
+{
+	int n;
+	for (n = 0; *s != '\0', s++)
+		n++;
+	return n;
+}
+```
+
+Since s is a pointer, incrementing it is perfectly legal; `s++` has no effect on the character string
+in the function that called strlen, but merely increments strlen's private copy of the
+pointer. That means that calls like
+
+```c
+strlen("hello, world"); /* string constant **/
+strlen(array); /** char array[100]; **/*
+strlen(ptr); /* char *ptr; */
+```
+
+all work.
+
+As formal parameters in a function definition,
+are equivalent; we prefer the latter because it says more explicitly that the variable is a
+pointer. When an array name is passed to a function, the function can at its convenience
+
+```c
+char s[];
+and
+char *s;
+```
+
+believe that it has been handed either an `array or a pointer`, and manipulate it accordingly. It
+can even use both notations if it seems appropriate and clear.
+It is possible to pass part of an array to a function, by passing a pointer to the beginning of the
+subarray. For example, if a is an array,
+
+```c
+f(&a[2])
+and
+f(a+2)
+```
+
+both pass to the function f the address of the subarray that starts at a[2]. Within f, the
+parameter declaration can read
+So as far as f is concerned, the fact that the parameter refers to part of a larger array is of no
+consequence.
+
+```c
+f(int arr[]) { ... }
+or
+f(int *arr) { ... }
+```
+
+If one is sure that the elements exist, it is also possible to index backwards in an array; p[-1],
+p[-2], and so on are syntactically legal, and refer to the elements that immediately precede
+p[0]. Of course, it is illegal to refer to objects that are not within the array bounds.
+
+## 5.4 Address Arithmetic
+
+If p is a pointer to some element of an array, then `p++` increments p to point to the next
+element, and `p += i` increments it to point i elements beyond where it currently does. These
+and similar constructions are the simples forms of pointer or address arithmetic.
+
+In this example we are going to implement a simple version of `malloc and free` function, the idea is to create an array only accessible to the tow function in the file using `sttic` key word where `alloc` allocate slots and returns a pointer and `afree` free slots from the given number
+
+![alloc-afree.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/9993905c-51b5-4b76-bff2-778e9ef69272/a1f877ca-9d87-467b-bbb0-b7ec50b88af8/alloc-afree.png)
+
+```c
+#define ALLOCSIZE 10000
+
+char *alloc(int n);
+
+static char allocbuff[ALLOCSIZE]; /* storage for allocation */
+static char *allocp = allocbuff;  /* next free position */
+
+char *alloc(int n) {
+
+  if (allocbuff + ALLOCSIZE - allocp >= n) {
+    allocp += n;       /* alloc n slots */
+    return allocp - n; /* return the starting position of new allocation */
+  }
+  return 0;
+}
+
+void afree(char *p) {
+  /*
+   * p should be greater current index of buff and p less than full sizze of
+   * allocbuff array
+   */
+  if (p >= allocbuff && p < allocbuff + ALLOCSIZE) {
+    allocp = p;
+  }
+}
+
+```
+
+you can see in `alloc` we return 0 if there is no space left to alloc so in `C` zero for a pointer means `NULL`
+
+```c
+#include <stddef.h>
+#include <stdio.h>
+
+size_t my_strlen(char *s);
+
+int main(void) {
+  int length = my_strlen("Hello, World!");
+  printf("length of length : %d\n", length);
+
+  return 0;
+}
+
+size_t my_strlen(char *s) {
+
+  char *p = s;
+
+  while (*p != '\0')
+    p++;
+
+  return p - s;
+}
+
+```
+
+The valid pointer operations are assignment of pointers of the same type, adding or
+subtracting a pointer and an integer, subtracting or comparing two pointers to members of the
+same array, and assigning or comparing to zero. All other pointer arithmetic is illegal. It is not
+legal to add two pointers, or to multiply or divide or shift or mask them, or to add float or
+double to them, or even, except for void \*, to assign a pointer of one type to a pointer of
+another type without a cast.
+
+## 5.5 Character Pointers and Functions
+
+- Example of `strcpy` using pointers
+
+  ```c
+  #include <string.h>
+  #include <unistd.h>
+
+  void my_strcpy(char *s, char *t);
+
+  int main(void) {
+
+    char *foo = "Hello, World!\n";
+    char bar[14];
+
+    my_strcpy(bar, foo);
+
+    write(1, bar, strlen(foo));
+    return 0;
+  }
+
+  void my_strcpy(char *s, char *t) {
+
+    while ((*s++ = *t++)) /* redundant checking for '\0' */
+      ;
+  }
+
+  /*
+    This is a bit understandable
+    strcpy: copy t to s; pointer version
+    void strcpy(char *s, char *t)
+    {
+      int i;
+      i = 0;
+      while ((*s = *t) != '\0') {
+        s++;
+        t++;
+      }
+    }
+   * */
+  ```
+
+- Example of `strcmp` using pointers
+
+  ```c
+  #include <stdio.h>
+  #include <unistd.h>
+
+  int my_strcmp(char *s, char *t);
+
+  int main(void) {
+
+    char *foo = "Hello, World!\n";
+    char *bar = "Hello, C Language!\n";
+
+    return 0;
+  }
+
+  int my_strcmp(char *s, char *t) {
+
+    for (; *s == *t; s++, t++) {
+      if (*s == '\0') {
+        return 0;
+      }
+    }
+    return *s - *t;
+  }
+
+  /*
+    This is a bit understandable
+    strcmp: return <0 if s<t, 0 if s==t, >0 if s>t
+    int strcmp(char *s, char *t)
+    {
+      int i;
+      for (i = 0; s[i] == t[i]; i++)
+        if (s[i] == '\0')
+          return 0;
+      return s[i] - t[i];
+    }
+   * */
+  ```
+
+### Exercise 5-3.
+
+Write a pointer version of the function strcat that we showed in Chapter 2:
+`strcat(s,t)` copies the string t to the end of `s`.
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+
+char *my_strcat(char *s, char *t);
+
+int main(void) {
+
+  char *foo = "Hello, World!\n";
+  char *bar = "Is This Even The End!\n";
+
+  char *foobar = my_strcat(foo, bar);
+
+  printf("%s", foobar);
+
+  return 0;
+}
+
+char *my_strcat(char *s, char *t) {
+
+  int length_s = strlen(s);
+  int length_t = strlen(t);
+
+  char *new_strcat = malloc(sizeof(char) * (length_s + length_s + 1));
+  char *new_strcatp = new_strcat;
+
+  while (*s != '\0' && (*new_strcat++ = *s++))
+    ;
+
+  while ((*new_strcat++ = *t++))
+    ;
+
+  return new_strcatp;
+}
+
+```
+
+### Exercise 5-4.
+
+Write the function `strend(s,t)` which returns 1 if the string t occurs at the
+end of the string s, and zero otherwise
+
+```c
+#include <stdio.h>
+#include <string.h>
+#include <unistd.h>
+
+int my_strend(char *s, char *t);
+int my_strcmp(char *s, char *t);
+
+int main(void) {
+
+  char *foo = "Hello, World!\n";
+  char *bar = "World!\n";
+
+  int is_end = my_strend(foo, bar);
+
+  printf("%d\n", is_end);
+
+  return 0;
+}
+
+int my_strend(char *s, char *t) {
+  int s_length = strlen(s);
+  int t_length = strlen(t);
+
+  // set s to point to starting end
+  s += s_length - t_length;
+
+  if (my_strcmp(s, t) == 0) {
+    return 1;
+  }
+  return 0;
+}
+
+int my_strcmp(char *s, char *t) {
+
+  while (*s++ == *t++) {
+    if (*s == '\0') {
+      return 0;
+    }
+  }
+  return *s - *t;
+}
+
+```
+
+### Exercise 5-5.
+
+Write versions of the library functions `strncpy`, `strncat`, and `strncmp`, which
+operate on at most the first n characters of their argument strings. For example,
+`strncpy(s,t,n)` copies at most n characters of `t` to `s`.
+
+1. `strncpy`
+
+   ```c
+   #include <stdio.h>
+   #include <string.h>
+   #include <unistd.h>
+
+   #define MAXLENGTH 1000
+
+   void my_strncpy(char *s, char *t, const size_t n);
+
+   int main(void) {
+
+     char foo[MAXLENGTH] = "Hello, World!\n";
+     char *bar = "Hello, C Book\n";
+
+     my_strncpy(foo, bar, 5);
+     printf("%s", foo);
+
+     // my_strncpy(foo, bar, 3000);
+     // printf("%s", foo);
+     return 0;
+   }
+
+   void my_strncpy(char *s, char *t, const size_t n) {
+
+     int length_t = strlen(t);
+     int length_s = strlen(s);
+
+     if (n > length_t) {
+       printf("Error");
+       return;
+     }
+
+     while (*s != '\0') {
+       s++;
+     }
+
+     for (int i = 0; i < n; i++) {
+       *s++ = *t++;
+     }
+   }
+
+   ```
+
+2. `strncat`
+
+   ```c
+   #include <stdio.h>
+   #include <string.h>
+
+   #define EXIT_SUCCESS 0
+   #define MAXLENGTH 1000
+
+   void my_strncat(char *s1, const char *s2, size_t n);
+
+   int main(void) {
+
+     char foo[MAXLENGTH] = "Hello, Strncat";
+     char bar[] = ", I must say hay\n";
+
+     my_strncat(foo, bar, strlen(bar));
+
+     printf("%s", foo);
+
+     return EXIT_SUCCESS;
+   }
+
+   void my_strncat(char *s1, const char *s2, size_t n) {
+
+     int length_s1 = strlen(s1);
+     int length_s2 = strlen(s2);
+
+     if (MAXLENGTH < length_s1 + length_s2) {
+       return;
+     }
+
+     while (*s1 != '\0')
+       s1++;
+
+     for (int i = 0; i < n; i++) {
+       *s1++ = *s2++;
+     }
+
+     *++s1 = '\0';
+   }
+
+   ```
+
+3. `strncmp`
+
+   ```c
+   #include <stdio.h>
+   #include <string.h>
+
+   #define EXIT_SUCCESS 0
+
+   int my_strncmp(const char *s1, const char *s2, size_t n);
+
+   int main(void) {
+
+     char foo[] = "abca;lkdsfja;lsdkfj";
+     char bar[] = "abcalkdsfhj";
+
+     int cmp = my_strncmp(foo, bar, strlen(bar) + 2);
+
+     printf("This should be 0: %d\n", cmp);
+
+     return EXIT_SUCCESS;
+   }
+
+   int my_strncmp(const char *s1, const char *s2, size_t n) {
+
+     int length_s1 = strlen(s1);
+     int length_s2 = strlen(s2);
+
+     if (n > length_s2) {
+       return -1;
+     }
+
+     for (int i = 0; i < n && *s1 == *s2; i++, s1++, s2++)
+       ;
+
+     if (*s2 == '\0') {
+       return 0;
+     }
+
+     return *s1 - *s2;
+   }
+
+   ```
+
+### Exercise 5-6.
+
+Rewrite appropriate programs from earlier chapters and exercises with pointers
+instead of array indexing. Good possibilities include `getline` (Chapters 1 and 4), `atoi`, `itoa`, and their variants (Chapters 2, 3, and 4), `reverse` (Chapter 3), and `strindex` and `getop`(Chapter 4).
+
+1. `getline`
+
+   ```c
+   #include <stdio.h>
+
+   #define EXIT_SUCCESS 0
+   #define MAXLENGTH 1000
+
+   int my_getline(char *s, int limit);
+
+   int main(void) {
+
+     char foo[MAXLENGTH];
+
+     int foonumber = my_getline(foo, MAXLENGTH);
+
+     printf("%s", foo);
+     return EXIT_SUCCESS;
+   }
+
+   /*
+     my_getline clone of getline function
+     return int number of characters
+    */
+   int my_getline(char *s, int limit) {
+
+     int c, i;
+
+     for (i = 0; i < limit - 1 && (c = getchar()) != EOF && c != '\n'; i++) {
+       *(s + i) = c;
+     }
+
+     if (c == '\n') {
+       *(s + i) = c;
+       i++;
+     }
+     *(s + i) = '\0';
+     s -= i;
+
+     return i;
+   }
+
+   ```
+
+2. `atoi`
+
+   ```c
+   #include <ctype.h>
+   #include <stdio.h>
+   #include <unistd.h>
+
+   int my_atoi(const char *str);
+
+   int main(void) {
+     // int number = my_atoi("hello world++-1337");
+     int number = my_atoi("---00300hello");
+     printf("%d\n", number);
+     return 0;
+   }
+
+   int my_atoi(const char *str) {
+
+     int result = 0;
+     int sign = 1;
+
+     while (!isdigit(*str)) {
+       if (*str == '-' || *str == '+') {
+         sign *= (*str == '-') ? -1 : 1;
+       }
+       str++;
+     }
+
+     while (isdigit(*str)) {
+       result = result * 10 + (*str++ - '0');
+     }
+
+     return sign * result;
+   }
+
+   ```
+
+3. `itoa` and `reverse`
+
+   ```c
+   #include <stdio.h>
+   #include <string.h>
+
+   #define MAXLENGTH 10000
+
+   void my_itoa(char *str, int number);
+   void reverse(char *str);
+
+   int main(void) {
+
+     char number[MAXLENGTH];
+     my_itoa(number, 1337);
+     reverse(number);
+     printf("The value should be 1337 = %s\n", number);
+
+     my_itoa(number, -1337);
+     // printf("this should be 7331- = %s\n", number);
+     reverse(number);
+     printf("The value should be -1337 = %s\n", number);
+     return 0;
+   }
+
+   void my_itoa(char *str, int number) {
+
+     int result = 0;
+
+     int sign = (number < 0) ? -1 : 1;
+     if (sign == -1)
+       number *= -1;
+
+     do {
+       *str++ = (number % 10) + '0';
+     } while (((int)(number /= 10)) > 0);
+
+     if (sign == -1)
+       *str++ = '-';
+     *str = '\0';
+   }
+
+   void reverse(char *str) {
+
+     int str_length = strlen(str);
+
+     char placeholder[str_length + 1];
+     strcpy(placeholder, str);
+
+     for (int i = str_length - 1, j = 0; i >= 0 && placeholder[j] != '\0';
+          i--, j++) {
+       *(str + i) = placeholder[j];
+     }
+     *(str + str_length + 1) = '\0';
+   }
+
+   ```
+
+4. `strindex`
+
+   ```c
+   #include <stdio.h>
+
+   int my_strindex(char *str1, const char *str2);
+
+   int main(void) {
+
+     int index = my_strindex("do Hello, World\n", "Hello, ");
+     printf("should be 4: %d\n", index);
+
+     int anotherIndex = my_strindex("h", "h");
+     printf("should be 1: %d\n", anotherIndex);
+
+     int anotherAnotherIndex = my_strindex("dd", "hello");
+     printf("should be -1: %d\n", anotherAnotherIndex);
+     return 0;
+   }
+
+   /*
+      strindex return's the first index of str1 if n chars equals -1 is they are
+      not what is my algo
+   */
+   int my_strindex(char *str1, const char *str2) {
+
+     int i = 0;
+     while (*str1 != '\0') {
+       i++;
+       int counter = 1;
+       while (*str1++ == *str2++ && *str1 != '\0') {
+         if (*str2 == '\0')
+           return i;
+         counter++;
+       }
+       str2 = str2 - counter;
+     }
+     return -1;
+   }
+
+   ```
+
+5. `getop`
+
+   ```c
+   Ahh Ya getop, Ahh Ya London hhhh
+   ```
+
+## 5.6 Pointer Arrays; Pointers to Pointers
+
+This part i found it pretty hard and i did like, basically it's a program that takes buffer inputs and sort them in an alphabetical order.
+
+## 5.7 Multi-dimensional Arrays
+
+C provides rectangular multi-dimensional arrays, although in practice they are much less used than arrays of pointers. In this section, we will show some of their properties.
+
+let's consider the problem of data conversion from day of months to day o the year and vise versa so from example _March 1st_ is the 60th day of a non leap year otherwise it's the 61 day of a leap year.
+
+So let's create tow function
+
+1. `day_of_year`convert the month and day to a day of the year.
+2. `month_day` convert the day of the year to the month and day
+
+`month_day` would be like this
+
+```c
+month_day(1988, 60, &m, &d)
+// sets m to 2 and d to 29 (February 29th).
+```
+
+`day_of_year` :
+
+```c
+/* representation of number of days each month has for leap and non leap year */
+static char daytab[2][13] = {{0, 31, 28, 31, 30, 31, 31, 31, 30, 31, 30, 31},
+                             {0, 31, 29, 31, 30, 31, 31, 31, 30, 31, 30, 31}};
+
+/* day of year: set day of the year from month and day */
+int day_of_year(int year, int month, int day);
+
+int main(void) { return 0; }
+
+/* day of year: set day of the year from month and day */
+int day_of_year(int year, int month, int day) {
+
+  int i, leap;
+  leap = year % 4 == 0 && year % 100 != 0 || year % 400 == 0;
+
+  for (i = 1; i < month; i++) {
+    day += daytab[leap][i];
+  }
+  return day;
+}
+```
+
+`month_year` :
+
+```c
+/* representation of number of days each month has for leap and non leap year */
+static char daytab[2][13] = {{0, 31, 28, 31, 30, 31, 31, 31, 30, 31, 30, 31},
+                             {0, 31, 29, 31, 30, 31, 31, 31, 30, 31, 30, 31}};
+
+/* month day: set month, day, from day of the year */
+void month_day(int year, int yearday, int *pmonth, int *pday);
+
+int main(void) { return 0; }
+
+/* month day: set month, day, from day of the year */
+void month_day(int year, int yearday, int *pmonth, int *pday) {
+
+  int i, leap;
+
+  leap = year % 4 == 0 && year % 100 != 0 ||
+         year % 400 == 0; /* leap is either 0 or 1 */
+
+  for (i = 1; yearday > daytab[leap][i];
+       i++) { /* this checks if there is more days than a month */
+    yearday -= daytab[leap][i];
+  }
+  *pmonth = i;
+  *pday = yearday;
+}
+
+```
+
+There is a zero months numbers, we used 1 as the first index that is way.
+
+`daytab` is the first two-dimensional array we have dealt with. In `C`, a two-dimensional array is really a one-dimensional array, each of whose elements is an array. Hence subscripts,
+
+This definition somehow confused me but it's like this
+
+```c
+        j   j + 1
+i     |    |     |    |     |    |     |
+i + 1 |    |     |    |     |    |     |
+```
+
+```c
+        0     1     2    3     4     5
+0     |    |     |    |     |     |     |
+1     |    |     |    |     |     |     |
+```
+
+are written as
+
+```c
+daytab[i][j] /* [row][col] */
+
+rather than
+
+daytab[i,j] /* WRONG */
+```
+
+If a two-dimensional array is to be passed to a function, the parameter declaration in the function must include the number of columns; the number of rows is irrelevant, since what is passed is, as before, a pointer to an array of rows, where each row is an array of 13 ints. In this particular case, it is a pointer to objects that are arrays of 13 ints. Thus if the array `daytab` is to be passed to a function `f`, the declaration of `f` would be:
+
+```c
+f(int daytab[2][13]) { ... }
+/* It could also be */
+
+f(int daytab[][13]) { ... }
+/*
+	since the number of rows is irrelevant, or it could be
+*/
+
+f(int (*daytab)[13]) { ... }
+/*
+which says that the parameter is a pointer to an array of 13 integers. The parentheses are necessary since brackets [] have higher precedence than *. Without parentheses, the declaration
+*/
+```
+
+```c
+int *daytab[13]
+```
+
+is an array of 13 pointers to integers. More generally, only the first dimension `(subscript)` of an array is free; all the others have to be specified.
+
+### Exercise 5-8.
+
+There is no error checking in `day_of_year` or `month_day`. Remedy this defect.
+
+```c
+#include <stdio.h>
+
+/* representation of number of days each month has for leap and non leap year */
+static char daytab[2][13] = {{0, 31, 28, 31, 30, 31, 31, 31, 30, 31, 30, 31},
+                             {0, 31, 29, 31, 30, 31, 31, 31, 30, 31, 30, 31}};
+
+/* day of year: set day of the year from month and day */
+int day_of_year(int year, int month, int day);
+
+int main(void) {
+  int y = 1984, m = 6, d = 30, yd = 366;
+  int *pm, *pd;
+
+  printf("Day: %d\n", day_of_year(y, m, d));
+  return 0;
+}
+
+/* day of year: set day of the year from month and day */
+int day_of_year(int year, int month, int day) {
+
+  int i, leap;
+  leap = year % 4 == 0 && year % 100 != 0 || year % 400 == 0;
+  if (month < 1 && month > 12) {
+    printf("error: invalid month\n");
+    return -1;
+  }
+  if (day < 0 || day > daytab[leap][month]) {
+    printf("error: invalid day\n");
+    return -1;
+  }
+
+  for (i = 1; i < month; i++) {
+    day += daytab[leap][i];
+  }
+  return day;
+}
+
+```
+
+```c
+/* representation of number of days each month has for leap and non leap year */
+#include <stdio.h>
+static char daytab[2][13] = {{0, 31, 28, 31, 30, 31, 31, 31, 30, 31, 30, 31},
+                             {0, 31, 29, 31, 30, 31, 31, 31, 30, 31, 30, 31}};
+
+/* month day: set month, day, from day of the year */
+void month_day(int year, int yearday, int *pmonth, int *pday);
+
+int main(void) {
+  int y = 1984, m = 6, d = 30, yd = 366;
+  int *pm, *pd;
+
+  month_day(y, yd, pm, pd);
+  printf("Month: %d, Day: %d\n", *pm, *pd);
+  return 0;
+}
+
+/* month day: set month, day, from day of the year */
+void month_day(int year, int yearday, int *pmonth, int *pday) {
+
+  int i, leap;
+
+  leap = year % 4 == 0 && year % 100 != 0 ||
+         year % 400 == 0; /* leap is either 0 or 1 */
+
+  if (leap) {
+    if (yearday > 365) {
+      printf("error: not a valid day\n");
+      return;
+    }
+  } else {
+    if (yearday > 366) {
+      printf("error: not a valid day\n");
+      return;
+    }
+  }
+
+  for (i = 1; yearday > daytab[leap][i];
+       i++) { /* this checks if there is more days than a month */
+    yearday -= daytab[leap][i];
+  }
+  *pmonth = i;
+  *pday = yearday;
+}
+
+```
+
+## 5.8 Initialization of Pointer Arrays
+
+we want to make a function that return the month name based from the given month number
+
+```c
+/*
+	input  : 3
+	output: Mars
+*/
+/*
+	input  : -20
+	output: Illegal month
+*/
+```
+
+So instead of creating a globale variable to main instead let's create a globale array of strings variable for the current function `month_name()` and return the current index of it:
+
+```c
+#include <stdio.h>
+
+/* month_name: return name of n-th month */
+char *month_name(int n);
+
+int main(void) {
+  char *myMonth = month_name(10);
+  printf("My Month: %s\n", myMonth);
+  return 0;
+}
+
+char *month_name(int n) {
+  static char *name[] = {
+      "Illegal month",
+      "January",
+      "Faburary",
+      "Mars",
+      "April",
+      "May",
+      "Jun",
+      "July",
+      "August",
+      "Octobre",
+      "Novomber",
+      "December",
+  };
+
+  return (n < 1 || n > 12) ? name[0] : name[n];
+}
+
+```
+
+## 5.9 Pointers vs. Multi-dimensional Arrays
+
+Newcomers to C are sometimes confused about the difference between a two-dimensional
+array and an array of pointers, such as name in the example above. Given the definitions`int a[10][20]; int *b[10];`
+then `a[3][4]` and `b[3][4]` are both syntactically legal references to a single int. But a is a true two-dimensional array: 200 int-sized locations have been set aside, and the conventional
+
+### Exercise 5-9.
+
+Rewrite the routines `day_of_year` and `month_day` with pointers instead of
+indexing.
+
+1. `day_of_year`
+
+   ```c
+   #include <stdio.h>
+
+   /* representation of number of days each month has for leap and non leap year */
+   int leap[] = {0, 31, 28, 31, 30, 31, 31, 31, 30, 31, 30, 31};
+   int unleap[] = {0, 31, 29, 31, 30, 31, 31, 31, 30, 31, 30, 31};
+
+   static int *daytab[2] = {leap, unleap};
+
+   /* day of year: set day of the year from month and day */
+   int day_of_year(int year, int month, int day);
+
+   int main(void) {
+     int y = 1984, m = 6, d = 30, yd = 366;
+     int *pm, *pd;
+
+     printf("Day: %d\n", day_of_year(y, m, d));
+     return 0;
+   }
+
+   /* day of year: set day of the year from month and day */
+   int day_of_year(int year, int month, int day) {
+
+     int i, leap;
+     leap = year % 4 == 0 && year % 100 != 0 || year % 400 == 0;
+     if (month < 1 && month > 12) {
+       printf("error: invalid month\n");
+       return -1;
+     }
+     if (day < 0 || day > *(*(daytab + leap) + month)) {
+       printf("error: invalid day\n");
+       return -1;
+     }
+
+     for (i = 1; i < month; i++) {
+       day += *(*(daytab + leap) + i);
+     }
+     return day;
+   }
+   ```
+
+2. `month_day`
+
+   ```c
+   /* representation of number of days each month has for leap and non leap year */
+   #include <stdio.h>
+   int leap[] = {0, 31, 29, 31, 30, 31, 31, 31, 30, 31, 30, 31};
+   int unleap[] = {0, 31, 28, 31, 30, 31, 31, 31, 30, 31, 30, 31};
+   static int *daytab[2] = {leap, unleap};
+
+   /* month day: set month, day, from day of the year */
+   void month_day(int year, int yearday, int *pmonth, int *pday);
+
+   int main(void) {
+     int y = 1984, m = 6, d = 30, yd = 366;
+     int *pm, *pd;
+
+     month_day(y, yd, pm, pd);
+     printf("Month: %d, Day: %d\n", *pm, *pd);
+     return 0;
+   }
+
+   /* month day: set month, day, from day of the year */
+   void month_day(int year, int yearday, int *pmonth, int *pday) {
+
+     int i, leap;
+
+     leap = year % 4 == 0 && year % 100 != 0 ||
+            year % 400 == 0; /* leap is either 0 or 1 */
+
+     if (leap) {
+       if (yearday > 366) {
+         printf("error: not a valid day\n");
+         return;
+       }
+     } else {
+       if (yearday > 365) {
+         printf("error: not a valid day\n");
+         return;
+       }
+     }
+
+     /* this checks if there is more days than a month */
+     for (i = 1; yearday > (*(*daytab + leap) + i); i++) {
+       yearday -= (*(*daytab + leap) + i);
+     }
+     *pmonth = i;
+     *pday = yearday;
+   }
+   ```
+
+## 5.10 Command-line Arguments
+
+In environments that support C, there is a way to pass command-line arguments or parameters to a program when it begins executing.
+
+When main is called it's called with 2 parameters `argc` : argument counter, has number of parameters given to the program, `argv` : argument vector which is a pointer to an array of characters strings.
+
+We customarily use multiple levels of pointers to manipulate these character strings.
+
+The simplest illustration is the program `echo`, which echoes its command-line arguments on a single line, separated by blanks. That is, the command
+
+```c
+/*
+	echo hello, world
+	prints
+	hello, world
+*/
+```
+
+By convention, `argv[0]` is the name by which the program was invoked, so `argc` is at least `1` If `argc` is `1`, there are no command-line arguments after the program name.
+
+In the example above, `argc` is `3`, and `argv[0],` `argv[1],` and `argv[2]` are `"echo",` `"hello,"`, and `"world"`
+respectively.
+
+The first optional argument is `argv[1]` and the last is `argv[argc];` additionally, the standard requires that `argv[argc]` be a null pointer.
+
+![argv.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/9993905c-51b5-4b76-bff2-778e9ef69272/d7c3c502-c49e-4954-a1ff-95a7e2172ed5/argv.png)
+
+So it's implementations should be like this:
+
+```c
+#include <stdio.h>
+
+int main(int argc, char *argv[]) {
+  int i;
+
+  for (i = 1; i < argc; i++) {
+    printf("%s%s", argv[i], (i < argc - 1) ? " " : "");
+  }
+  printf("\n");
+
+  return 0;
+}
+/*
+	-> gcc echo.c -o myecho # myecho to not conflict with the built in echo
+	-> ./myecho Hello, World
+		-> Hello, World
+*/
+```
+
+Since `argv` is a pointer to an array we can manipulate the pointer instead of the index to the array.
+
+```c
+#include <stdio.h>
+
+/* echo command-line argument : 2nd version */
+int main(int argc, char *argv[]) {
+  int i;
+
+  while (--argc > 0) {
+    printf("%s%s", *(++argv), (argc > 1) ? " " : "");
+  }
+  printf("\n");
+
+  return 0;
+}
+/*
+	-> gcc echo.c -o myecho # myecho to not conflict with the built in echo
+	-> ./myecho Hello, World
+		-> Hello, World
+*/
+
+```
+
+Example 2 `find` somewhat like `grep UNIX program`
+
+```c
+#include <stdio.h>
+#include <string.h>
+
+#define MAXLINE 1000
+
+int my_getline(char *s, int limit);
+
+/*
+ The standard lbrary function strstr(s, t) return a pointer to the first
+ accurence of the string t in the string s or NULL
+*/
+int main(int argc, char *argv[]) {
+  char line[MAXLINE];
+  int found = 0;
+
+  if (argc != 2) {
+    printf("Usage: find patter\n");
+  } else {
+    while (my_getline(line, MAXLINE) > 0) {
+      if (strstr(line, *(argv + 1)) != NULL) {
+        printf("%s", line);
+        found++;
+      }
+    }
+  }
+  return found;
+}
+
+/*
+  my_getline clone of getline function
+  return int number of characters
+ */
+int my_getline(char *s, int limit) {
+
+  int c, i;
+
+  for (i = 0; i < limit - 1 && (c = getchar()) != EOF && c != '\n'; i++) {
+    *(s + i) = c;
+  }
+
+  if (c == '\n') {
+    *(s + i) = c;
+    i++;
+  }
+  *(s + i) = '\0';
+  s -= i;
+
+  return i;
+}
+
+```
+
+### Exercise 5-10.
+
+Write the program `expr`, which evaluates a reverse Polish expression from the command line, where each operator or operand is a separate argument. For example,
+
+```c
+expr 2 3 4 + *
+evaluates 2 * (3+4).
+```
+
+```c
+#include <ctype.h>
+#include <stdio.h>
+
+/* define */
+#define EXIT_SUCCESS 0
+#define MAXLENGTH 10000
+
+/* functions declarations */
+void push(double c);
+int pop(void);
+
+int main(int argc, char *argv[]) {
+  double result = 0;
+  int second_operation;
+  char c;
+
+  if (argc < 4) {
+    printf("Not Enough Arguments\n");
+    return 1;
+  }
+  while (--argc > 0) {
+    c = *(*(++argv));
+    printf("%c\n", c);
+
+    if (isdigit(c)) {
+      push(c - '0');
+    } else {
+      switch (c) {
+      case '+':
+        push(pop() + pop());
+        break;
+      case '*':
+        push(pop() * pop());
+        break;
+      case '-':
+        second_operation = pop();
+        push(pop() - second_operation);
+        break;
+      case '/':
+        second_operation = pop();
+        if (second_operation == 0) {
+          printf("Error: No Zero Devition\n");
+          break;
+        }
+        push((int)pop() / (int)second_operation);
+        break;
+      }
+    }
+  }
+  result = pop();
+  printf("result is : %f\n", result);
+  return EXIT_SUCCESS;
+}
+
+int stack_index = -1;
+double expretion[MAXLENGTH];
+
+void push(double c) {
+  // printf("push: %d\n", c);
+  if (stack_index == MAXLENGTH) {
+    printf("Error Stack Overflow\n");
+    return;
+  }
+  *(expretion + (++stack_index)) = c;
+}
+
+int pop(void) {
+  if (stack_index == -1) {
+    printf("Error Nothing To Pop\n");
+    return 0;
+  }
+  int temp = *(expretion + (stack_index--));
+  // printf("pop: %d\n", temp);
+  return temp;
+}
+
+```
+
+```bash
+gcc expr -o my_expr
+./my_expr 6 2 3 + - 4 2 / *
+	-> result is : 2
+
+```
+
+### Exercise 5-11 and 5-12.
+
+I'm Sorry :(
+
+### Exercise 5-13.
+
+Write the program `tail`, which prints the last `n` lines of its input. By default, `n`
+is set to `10`, let us say, but it can be changed by an optional argument so that.
+
+prints the last `n` lines. The program should behave rationally no matter how unreasonable the input or the value of `n`. Write the program so it makes the best use of available storage; lines should be stored as in the sorting program of Section 5.6, not in a two-dimensional array of fixed size.
+
+```c
+/*
+  This is a todo
+*/
+/*
+  In this Exercise we need to make a programme that prints the last n lines
+  given by the user Example: ./tail -2
+
+  Since The program ask for input lines i am going to use getline function
+  -2 is number of lines
+    -> hello, sir
+    -> hello, world
+    -> hello, man
+
+  output:
+  -> hello, world
+  -> hello, man
+*/
+
+#include <ctype.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAXLINE 1000
+#define MAXCHAR 1000
+
+int readlines(char **lineptr, int max_nlines);
+int my_getline(char *s, int limit);
+void writenlines(char *lineptr[], int line_index, int nlines);
+char *alloc(int n);
+void my_qsort(void *lineptr[], int left, int right,
+              int (*comp)(void *, void *));
+
+int numcmp(char *, char *);
+
+int main(int argc, char **argv) {
+
+  /* line_number is -n == 10 */
+  int line_number = 10;
+  int current_nlines = 0;
+  int numeric = 0; /* 1 if numeric sort */
+
+  char *lines[MAXLINE];
+  char *tail = *lines;
+
+  /* get line number from the given flag */
+  if (argc == 2) {
+    if (*(*(++argv))++ == '-' && isdigit(**argv)) {
+      line_number = atoi(*argv);
+    } else {
+      printf("Error: Unknown flag\n");
+    }
+  }
+
+  if ((current_nlines = readlines(lines, MAXLINE)) >= 0) {
+
+    if (current_nlines < line_number) {
+      printf("Error: flag -%d too big\n", line_number);
+      return -1;
+    }
+    if (current_nlines < line_number) {
+      printf("Error: -n is 10 by default\n");
+      return -1;
+    }
+    my_qsort((void **)lines, 0, current_nlines - 1,
+             (int (*)(void *, void *))(numeric ? numcmp : strcmp));
+    writenlines(lines, current_nlines - line_number, line_number);
+  }
+
+  return 0;
+}
+
+int readlines(char **lineptr, int max_nlines) {
+
+  int nlines = 0, len;
+  char *p, line[MAXCHAR];
+  int hello;
+
+  while ((len = my_getline(line, MAXCHAR)) > 0 &&
+         (nlines < max_nlines && (p = alloc(len)) != NULL)) {
+
+    line[len - 1] = '\0';
+    strcpy(p, line);
+    lineptr[nlines++] = p;
+  }
+
+  return nlines;
+}
+
+/*
+  my_getline clone of getline function
+  return int number of characters
+ */
+int my_getline(char *s, int limit) {
+
+  int c, i;
+
+  for (i = 0; (c = getchar()) != EOF && c != '\n'; i++) {
+    if (i + 1 == limit - 1) {
+      printf("Warning: Too Much Characters\n");
+      return i;
+    }
+
+    *s++ = c;
+  }
+
+  if (c == '\n') {
+    *s++ = c;
+    i++;
+  }
+  return i;
+}
+
+/*
+  Print all Lines
+ */
+void writenlines(char *lineptr[], int line_index, int nlines) {
+
+  int i = 0;
+  while (i++ < nlines) {
+    printf("%s\n", *(lineptr + (line_index++)));
+  }
+}
+
+/* Alloc part ------ */
+#define ALLOCSIZE 10000
+
+char *alloc(int n);
+
+static char allocbuff[ALLOCSIZE]; /* storage for allocation */
+static char *allocp = allocbuff;  /* next free position */
+
+char *alloc(int n) {
+
+  if (allocbuff + ALLOCSIZE - allocp >= n) {
+    allocp += n;       /* alloc n slots */
+    return allocp - n; /* return the starting position of new allocation */
+  }
+  return 0;
+}
+
+/*
+  INFO:
+  int *comp(void *, void*) This is a function returning an int pointer
+  int (*cmp)(void *, void*) This is int pointer pointing to a function
+*/
+
+/* qsort part ------ */
+void my_qsort(void *v[], int left, int right, int (*comp)(void *, void *)) {
+
+  int i, last;
+  void swap(void *v[], int, int);
+
+  if (left >= right)
+    return;
+
+  swap(v, left, (left + right) / 2);
+  last = left;
+  for (i = left + 1; i <= right; i++) {
+    if ((*comp)(v[i], v[left]) < 0)
+      swap(v, ++last, i);
+  }
+
+  swap(v, left, last);
+  my_qsort(v, last, last - 1, comp);
+  my_qsort(v, last + 1, right, comp);
+}
+
+```
+
+getting closer to 1337 pool so no need to complete the exercises of this topic i need to learn `structse`
+
+## 5.11 Pointers to Functions
+
+In `C` a function is not a variable but rather a place of instructions in the memory, so we can make a pointer to have the address of the function for example:
+
+```c
+#include <stdio.h>
+
+void display(int number1, int number2, int (*function)(int, int));
+int multiply_numbers(int number1, int number2);
+int sum(int, int);
+
+int main(int argc, char *argv[]) {
+  display(20, 10, multiply_numbers);
+
+  display(20, 10, sum);
+  return 0;
+}
+
+void display(int number1, int number2, int (*function)(int, int)) {
+  printf("This is a value: %d\n", function(number1, number2));
+}
+int multiply_numbers(int number1, int number2) { return number1 * number2; }
+int sum(int a, int b) { return a + b; }
+
+```
+
+This is a simple program to understand the concept of function to pointers
+
+## 5.12 Complicated Declarations
+
+Declarations in `C` can't be read left to right so that's why we use `()` so for example:
+
+```c
+int *f(); /* f: function returning pointer to int */
+
+int (*pf)();/* pf: pointer to function returning int */
+```
+
+illustrates the problem: `*` is a prefix operator and it has lower precedence than `()`, so parentheses are necessary to force the proper association.
+
+This is starting to blow my head
+
+![Screenshot 2024-07-08 at 16.08.51.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/9993905c-51b5-4b76-bff2-778e9ef69272/702009ef-253e-45e7-afd0-b2eb0d8181c1/Screenshot_2024-07-08_at_16.08.51.png)

@@ -35,6 +35,7 @@ int numcmp(char *, char *);
 
 int main(int argc, char **argv) {
 
+	printf("hello!"); //  add ;
   /* line_number is -n == 10 */
   int line_number = 10;
   int current_nlines = 0;
