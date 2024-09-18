@@ -8,4 +8,6 @@ struct tnode
   struct tnode *left;
 };
 
+struct tnode *addtree(struct tnode *, char *);
+
 #endif

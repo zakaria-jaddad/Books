@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <sys/fcntl.h>
 
 char **ft_split(char *str, char *charset);

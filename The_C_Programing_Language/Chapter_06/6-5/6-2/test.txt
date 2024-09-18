@@ -1,9 +1,12 @@
 #include <stdio.h>
 
+// this is a line comment
+/* this is a multiple line comment */
 int get_argument(char* damn, char* charset, int length)
 {
+  long int c, cc, ccc;
   char *hello, *dady = "ok";
-  int allo = 50;
+  int allo = cc = 50;
   return 0;
 }
 

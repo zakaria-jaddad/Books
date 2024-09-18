@@ -5,7 +5,7 @@ HELPERS = ./helpers/count_words.c ./helpers/ft_split.c ./helpers/ft_strchr.c ./h
 
 all : $(NAME)
 
-$(NAME) : 
+$(NAME) : clean
 	$(CC) main.c $(HELPERS) $(CFLAGC) main -g
 
 clean : 
