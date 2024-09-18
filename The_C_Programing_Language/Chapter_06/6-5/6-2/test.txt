@@ -1,0 +1,17 @@
+#include <stdio.h>
+
+int get_argument(char* damn, char* charset, int length)
+{
+  char *hello, *dady = "ok";
+  int allo = 50;
+  return 0;
+}
+
+int main(int argc, char *argv[])
+{
+  int hello = 0;
+
+  hello = 50;
+  printf("hello is : %d\n", hello);
+  return 0;
+}
