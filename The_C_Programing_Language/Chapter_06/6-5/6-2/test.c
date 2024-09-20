@@ -5,7 +5,9 @@
 
 #define MAX_WORD_LEN 100
 #define NR_OF_TYPES sizeof(data_types) / sizeof(data_types[0])
+// int blabloy = 0;
 
+/**/
 /*
  * int blablabou, bibaloubla = 10;
  */
