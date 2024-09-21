@@ -6250,6 +6250,6 @@ group of variable names that are identical in the first 6 characters, but differ
 thereafter. Don't count words within strings and comments. Make 6 a parameter that can be
 set from the command line.
 
-[Check Chapter 6 Solution](./Chapter_06/6-4/)
+[Check Chapter 6 Solution](./Chapter_06/6-5/6-2/)
 
 ## 6.6 Table Lookup
