@@ -68,7 +68,7 @@ Experiment to find out what happens when prints's argument string contains `\c`,
 #include <stdio.h>
 
 int main(void) {
-	printf("Hello, world! \c\n");  // Waring here
+	printf("Hello, world! \c\n");  // Warning here
 }
 
 ```
@@ -122,7 +122,7 @@ main() {
 
 so let's break the code piece by piece.
 
-- we know the `#iclude <stdio.h>` to import functions from the standard input/output
+- we know the `#include <stdio.h>` to import functions from the standard input/output
 - we have the `/**/` this sign is a comment when using it the compiler ignores whatever is written inside it, in this example it describes the purpose of the function
 - `int fahr, celsius;` and `int lower, upper, step;` these are declaration statement in C all variables must be declared before they are used, usually at the beginning of the function
   - here the `int` means that variables value must be of type Integer, this is important and here is why, when compiling the code by the compiler we need to specify what is the type of the variable to know how much memory the compiler should assign to it or allocate to it i don't know wish term should i use here
@@ -293,7 +293,7 @@ int main(void) {
   upper = 300;
   step = 20;
 
-  printf("Termpurature conversion program from Celsuis to Fah.\n");
+  printf("Termpurature conversion program from Celsius to Fah.\n");
 
   while (celsius <= upper)
   {
@@ -349,7 +349,7 @@ int main(void)
   upper = 300;
   step = 20;
 
-  printf("Termpurature conversion program from Celsuis to Fah.\n");
+  printf("Termpurature conversion program from Celsius to Fah.\n");
 
   while (celsius <= upper)
   {
@@ -406,10 +406,10 @@ using this you can write a lot of fun programs like a file copying program
 where user write a charter and the program print it
 
 ```c
-// psudocode
+// pseudocode
 /*
 read a character
-	while (charater is not end-of-file indicator)
+	while (character is not end-of-file indicator)
 		output the character just read
 		read a character
 		Converting this into C gives:
@@ -1207,7 +1207,7 @@ and to delete entirely blank lines
 #define MAXLENGTH 300
 
 int get_user_line(char s[], int limit);
-void formate_line(char line[], char new_line[]);
+void format_line(char line[], char new_line[]);
 void print_line(char line[]);
 
 int main(void)
@@ -1215,9 +1215,9 @@ int main(void)
   char line[MAXLENGTH];
   while (get_user_line(line, MAXLENGTH) == 0)
   {
-    char formated_line[MAXLENGTH];
-    formate_line(line, formated_line);
-    print_line(formated_line);
+    char formatted_line[MAXLENGTH];
+    format_line(line, formatted_line);
+    print_line(formatted_line);
   }
   return 0;
 }
@@ -1234,7 +1234,7 @@ int get_user_line(char s[], int limit)
   return 0;
 }
 
-void formate_line(char line[], char new_line[])
+void format_line(char line[], char new_line[])
 {
   int i, j;
   i = j = 0;
@@ -1406,21 +1406,21 @@ i start learning `lldb` debugger it's nice and easy to use, batter than vs shity
 
 #define MAXLENGTH 400
 
-// Global varibales
+// Global variables
 int ntabs = 3;
 
 int get_user_line(char s[], int limit);
-void remove_line_tabs(char s[], char fomrated_line[]);
-void print_line(char formated_line[]);
+void remove_line_tabs(char s[], char formatted_line[]);
+void print_line(char formatted_line[]);
 
 int main(void)
 {
   char s[MAXLENGTH];
   while (get_user_line(s, MAXLENGTH) == 0)
   {
-    char formated_line[MAXLENGTH];
-    remove_line_tabs(s, formated_line);
-    print_line(formated_line);
+    char formatted_line[MAXLENGTH];
+    remove_line_tabs(s, formatted_line);
+    print_line(formatted_line);
   }
 }
 
@@ -1525,7 +1525,7 @@ preference?
 #include <stdio.h>
 #include "../tab_header/tab.h"
 
-void remove_line_blanck(char s[], char formated_line[]);
+void remove_line_blank(char s[], char formatted_line[]);
 
 int nspaces = 3;
 
@@ -1534,14 +1534,14 @@ int main(void)
   char s[MAXLENGTH];
   while (get_user_line(s, MAXLENGTH) == 0)
   {
-    char formated_line[MAXLENGTH];
-    remove_line_blanck(s, formated_line);
-    print_line(formated_line);
+    char formatted_line[MAXLENGTH];
+    remove_line_blank(s, formatted_line);
+    print_line(formatted_line);
   }
   return 0;
 }
 
-void remove_line_blanck(char line[], char new_line[])
+void remove_line_blank(char line[], char new_line[])
 {
   int current_index, new_line_index, tabs_counter, space_counter;
   current_index = new_line_index = tabs_counter = space_counter = 0;
@@ -1597,7 +1597,7 @@ the last non-blank character that occurs before the `n-th` column of input. Make
 #include <stdio.h>
 #include "../header/tab.h"
 
-void formate_line(char line[], char new_line[]);
+void format_line(char line[], char new_line[]);
 
 int ncolumn = 14;
 
@@ -1607,13 +1607,13 @@ int main(void)
 
   while (get_user_line(s, MAXLENGTH) == 0)
   {
-    char formated_line[MAXLENGTH];
-    formate_line(s, formated_line);
-    print_line(formated_line);
+    char formatted_line[MAXLENGTH];
+    format_line(s, formatted_line);
+    print_line(formatted_line);
   }
 }
 
-void formate_line(char line[], char new_line[])
+void format_line(char line[], char new_line[])
 {
   int i, last_space, no_space_flag;
 
@@ -1693,11 +1693,11 @@ int main(void)
   get_file_input(s, MAXLENGTH);
 
   // remove comments
-  char formated_input[MAXLENGTH];
-  remove_comments(s, formated_input);
+  char formatted_input[MAXLENGTH];
+  remove_comments(s, formatted_input);
 
-  // print new file input witout any comment
-  print_line(formated_input);
+  // print new file input without any comment
+  print_line(formatted_input);
   return 0;
 }
 
@@ -1713,7 +1713,7 @@ void remove_comments(char line[], char new_line[])
       if (line[i] == '/' && line[i + 1] == '/') {
         is_single_comment = i;
       }
-      // if mulitple line comment detected
+      // if multiple line comment detected
       else if (line[i] == '/' && line[i + 1] == '*') {
         is_multiple_comment = i;
       }
@@ -1723,7 +1723,7 @@ void remove_comments(char line[], char new_line[])
       }
     }
     else {
-    // if end of mulitple line comment
+    // if end of multiple line comment
       if (line[i - 1] == '*' && line[i] == '/')
       {
         is_multiple_comment = -1;
@@ -1743,7 +1743,7 @@ int get_file_input(char s[], int limit)
   {
     if (i > limit - 1)
     {
-      printf("File Max lenght is: %d", limit);
+      printf("File Max length is: %d", limit);
       return -1;
     }
     s[i] = c;
@@ -1816,7 +1816,7 @@ In addition there are a number of qualifiers that can be applied these basic typ
   - unsigned numbers are always positive or 0 for example
   ```c
   7 is an unsigned integer, 7 is greater or queal to 0.
-  -7 and +7 are signed intergers, +7 >= 0 >= -7.
+  -7 and +7 are signed integers, +7 >= 0 >= -7.
   ```
   for example, char is 8 bits, 1 byte, so
   ```c
@@ -1943,7 +1943,7 @@ int main(void)
 
 enums helps us to create multiple constants and represent them by their category for example
 
-- Trafic Light
+- Traffic Light
 - Month Names
 - etc
 
@@ -2018,7 +2018,7 @@ const.c:14:2: error: use of undeclared identifier 'bar'
 ```c
 #include <stdio.h>
 
-#define MAX_LENGHT 20
+#define MAX_LENGTH 20
 // question Exercise 2-2. Write a loop equivalent to the for loop above without using && or ||.
 // for (i=0; i < lim-1 && (c=getchar()) != '\n' && c != EOF; ++i)
 // 	s[i] = c;
@@ -2026,18 +2026,18 @@ const.c:14:2: error: use of undeclared identifier 'bar'
 int main(void)
 {
 	int i, c;
-	char s[MAX_LENGHT];
+	char s[MAX_LENGTH];
 
-	for (i = 0; i < MAX_LENGHT - 1; ++i)
+	for (i = 0; i < MAX_LENGTH - 1; ++i)
 	{
 		c = getchar();
 		if (c == '\n')
 		{
-			i = MAX_LENGHT;
+			i = MAX_LENGTH;
 		}
 		else if (c == EOF)
 		{
-			i = MAX_LENGHT;
+			i = MAX_LENGTH;
 		}
 		else
 		{
@@ -2045,7 +2045,7 @@ int main(void)
 		}
 	}
 	s[i] = '\0';
-	retunr 0;
+	return 0;
 }
 
 ```
@@ -2152,7 +2152,7 @@ int htoi(const char s[])
 
 		if (lower_character >= 'a' && lower_character <= 'f')
 		{
-			// add 10 becuase a has a value of 10 in hex
+			// add 10 because a has a value of 10 in hex
 			r = (r * 16) + (lower_character - 'a') + 10;
 
 		}
@@ -2166,7 +2166,7 @@ int htoi(const char s[])
 
 ## 2.8 Increment and Decrement Operators
 
-prefix : `++varibel;`
+prefix : `++variable;`
 
 postfix: `variable++;`
 
@@ -2192,12 +2192,12 @@ int main(void)
 
 char * squeeze(char s1[], const char s2[])
 {
-	int lenght = 0;
+	int length = 0;
 	for (int i = 0; s1[i] != '\0'; i++)
 		lenght++;
 
 	// new array
-	char new_string[lenght + 1];
+	char new_string[length + 1];
 
 	int i, new_string_index;
 	i = new_string_index = 0;
@@ -2216,7 +2216,7 @@ char * squeeze(char s1[], const char s2[])
 		}
 		if (is_letter_found == -1)
 		{
-			// assigne not found letter in new-string and increment it't index
+			// assign not found letter in new-string and increment it't index
 			new_string[new_string_index++] = s1[i];
 		}
 
@@ -2243,8 +2243,8 @@ int any(const char s1[], const char s2[]);
 
 int main(void)
 {
-        char baz[4] = "helb";
-        char bar[3] = "hel";
+        char baz[4] = "help";
+        char bar[3] = "help";
 
         int foo = squeeze(baz, bar);
         printf("%d\n", foo);
@@ -2476,7 +2476,7 @@ for example this is a basic program i wrote about traffic lights:
 ```c
     1 #include <stdio.h>
     2
-    3 enum TRAFIC_LIGHT {RED = 0, YELLOW = 1, GREEN = 2};·
+    3 enum TRAFFIC_LIGHT {RED = 0, YELLOW = 1, GREEN = 2};·
     4
     5 int main(void)
     6 {
@@ -2528,7 +2528,7 @@ int main(void)
 	// convert new string.
 	escape(s1, s2);
 
-	// print convered string.
+	// print convert string.
 	printf("%s", s2);
 	return 0;
 }
@@ -2610,13 +2610,13 @@ that a leading or trailing - is taken literally.
 */
 #include <stdio.h>
 
-#define MAX_LENGHT 100
+#define MAX_LENGTH 100
 
 void expand(const char s1[], char s2[]);
 
 int main(void) {
-  char s1[MAX_LENGHT] = "a-b-c";
-  char s2[MAX_LENGHT];
+  char s1[MAX_LENGTH] = "a-b-c";
+  char s2[MAX_LENGTH];
 
   expand(s1, s2);
 
@@ -2626,12 +2626,12 @@ int main(void) {
 
 void expand(const char s1[], char s2[]) {
 
-  // get s1 lenght.
-  int lenght;
-  for (lenght = 0; s1[lenght] != '\0'; lenght++) {
+  // get s1 length.
+  int length;
+  for (length = 0; s1[length] != '\0'; lenght++) {
   }
 
-  if (lenght < 3) {
+  if (length < 3) {
     printf("invalid input\n");
     return;
   }
@@ -2658,7 +2658,7 @@ void expand(const char s1[], char s2[]) {
       while (temp != end) {
         s2[j++] = temp++;
       }
-      // assigne the last letter.
+      // assign the last letter.
       s2[j++] = temp;
       start = end = -1;
 
@@ -2687,7 +2687,7 @@ while (expression);
 
 The statement get executed then expression is evaluated if `true` continue if `false` it stops.
 
-Technically the `do while` loop is not used ofter rater than `for` `while` .
+Technically the `do while` loop is not used after rater than `for` `while` .
 
 Here is an example of a function `itoa` which convert integer to ascii, it's the alternative of `atoi`.
 
@@ -2765,17 +2765,17 @@ void itoa(int n, char string[]) {
 
 void reverse(char string[], char new_string[]) {
   /*
-    i only thing of one algo is to count lenght of string
-    and terevce it using that lenght.
+    i only thing of one algo is to count length of string
+    and terevce it using that length.
   */
 
-  // calculate string lenght.
-  int lenght;
-  for (lenght = 0; string[lenght] != '\0'; lenght++)
+  // calculate string length.
+  int length;
+  for (length = 0; string[length] != '\0'; lenght++)
     ;
 
   int j = 0;
-  for (int i = lenght - 1; i >= 0; i--, j++) {
+  for (int i = length - 1; i >= 0; i--, j++) {
     new_string[j] = string[i];
   }
   new_string[j] = '\0';
@@ -2791,10 +2791,10 @@ not. Modify it to print that value correctly, regardless of the machine on which
 
 ```c
 /*
-since the itoa function accept integer as parameter that is why it can't handel long negative number because int is just 4 bytes to handel long negaitve number we can use long integers or long long integers. 8 or 10 bytes.
+since the itoa function accept integer as parameter that is why it can't handle long negative number because int is just 4 bytes to handle long negaitve number we can use long integers or long long integers. 8 or 10 bytes.
 ============
 That is my take i could be wrong :)
-it's indeed memorry buffer overflow i had to convert the number from long long to unsigned long long so it can store more positve values after converting it.
+it's indeed memorry buffer overflow i had to convert the number from long long to unsigned long long so it can store more positive values after converting it.
 */
 ```
 
@@ -2852,17 +2852,17 @@ void itoa(long long n, char string[]) {
 
 void reverse(char string[], char new_string[]) {
   /*
-    i only thing of one algo is to count lenght of string
-    and terevce it using that lenght.
+    i only thing of one algo is to count length of string
+    and terevce it using that length.
   */
 
-  // calculate string lenght.
-  int lenght;
-  for (lenght = 0; string[lenght] != '\0'; lenght++)
+  // calculate string length.
+  int length;
+  for (length = 0; string[length] != '\0'; lenght++)
     ;
 
   int j = 0;
-  for (int i = lenght - 1; i >= 0; i--, j++) {
+  for (int i = length - 1; i >= 0; i--, j++) {
     new_string[j] = string[i];
   }
   new_string[j] = '\0';
@@ -2937,14 +2937,14 @@ void itob(long long number, char string[], int base) {
 }
 
 void reverse(char temp_string[], char new_string[]) {
-  // calculate string lenght.
-  int lenght;
-  for (lenght = 0; temp_string[lenght] != '\0'; lenght++)
+  // calculate string length.
+  int length;
+  for (length = 0; temp_string[length] != '\0'; lenght++)
     ;
   // declare a temp array
 
   int j = 0;
-  for (int i = lenght - 1; i >= 0; i--, j++) {
+  for (int i = length - 1; i >= 0; i--, j++) {
     new_string[j] = temp_string[i];
   }
   new_string[j] = '\0';
@@ -3081,7 +3081,7 @@ This is the first time i have heard about `Goto` , it's like a `break` statement
     18   │ │ }
     19   │ }
     20   huh:
-    21   │ printf("what even is thsi");
+    21   │ printf("what even is this)";
     22   │
     23   │ return 0;
     24   }
@@ -3110,7 +3110,7 @@ int strindex(char s[], char t[])
 {
 	int i, j, k;
 
-	// itterate over the string s until end
+	// iterate over the string s until end
 	for (i = 0; s[i] != '\0'; i++) {
 
 		// in every character of string s loop over the string t until end of t and each character of t is equal to s
@@ -3148,7 +3148,7 @@ Write the function `strindex(s,t)` which returns the position of the rightmost o
 
 // function declaration
 int strindex(const char s[], const char t[]);
-int get_lenght(const char s[]);
+int get_length(const char s[]);
 
 int main(void) {
 
@@ -3167,14 +3167,14 @@ int main(void) {
 }
 
 int strindex(const char s[], const char t[]) {
-  // get strings lenght
-  int s_lenght = get_lenght(s);
-  int t_lenght = get_lenght(t);
+  // get strings length
+  int s_length = get_length(s);
+  int t_length = get_length(t);
 
   int i, j, k;
   int index = -1;
 
-  for (i = s_lenght - t_lenght; i > 0; i--) {
+  for (i = s_length - t_length; i > 0; i--) {
     for (j = i, k = 0; t[k] == s[j] && t[k] != '\0'; j++, k++)
       ;
 
@@ -3185,13 +3185,13 @@ int strindex(const char s[], const char t[]) {
   return index;
 }
 
-int get_lenght(const char s[]) {
-  int lenght;
+int get_length(const char s[]) {
+  int length;
 
-  for (lenght = 0; s[lenght] != '\0'; lenght++)
+  for (length = 0; s[length] != '\0'; lenght++)
     ;
 
-  return lenght;
+  return length;
 }
 ```
 
@@ -3209,7 +3209,7 @@ Output:
 /*
   sum += atof(line) for first look of the atof function we have no idea what
   type it returns so we assume it's an int plus we don't know nothing about it's
-  argument no informations
+  argument no information
 
   for example this function **double atof()**
   if we look at it we would know that this function doesn't take any arguments
@@ -3251,7 +3251,7 @@ int main(void) {
   for the 4 it's the same put we add the power variable so we would get
     - val = 204
     - power = 10
-  then devide 204 by the 10 and you would get 20.4
+  then divide 204 by the 10 and you would get 20.4
   and voila
 */
 double atof(const char string[]) {
@@ -3267,7 +3267,7 @@ double atof(const char string[]) {
   if (string[i] == '+' || string[i] == '-')
     i++;
 
-  // start itterating
+  // start iterating
   for (val = 0.0; isdigit(string[i]); i++)
     val = val * 10 + (string[i] - '0');
 
@@ -3295,7 +3295,7 @@ Extend `atof` to handle scientific notation of the form `123.45e-6`
 /*
   sum += atof(line) for first look of the atof function we have no idea what
   type it returns so we assume it's an int plus we don't know nothing about it's
-  argument no informations
+  argument no information
 
   for example this function **double atof()**
   if we look at it we would know that this function doesn't take any arguments
@@ -3336,7 +3336,7 @@ int main(void) {
   for the 4 it's the same put we add the power variable so we would get
     - val = 204
     - power = 10
-  then devide 204 by the 10 and you would get 20.4
+  then divide 204 by the 10 and you would get 20.4
   and voila
 */
 double atof(const char string[]) {
@@ -3352,7 +3352,7 @@ double atof(const char string[]) {
   if (string[i] == '+' || string[i] == '-')
     i++;
 
-  // start itterating
+  // start iterating
   for (val = 0.0; isdigit(string[i]); i++)
     val = val * 10.0 + (string[i] - '0');
 
@@ -3631,7 +3631,7 @@ void swap_top(void) {
 */
 
 /*
-  Ex 4-9 char doesn't handel EOF becuase it's -1 char values from 0 -> 255
+  Ex 4-9 char doesn't handle EOF because it's -1 char values from 0 -> 255
   so change the type of pb_char to int that all .
 
   int pb_char = '\0';
@@ -3791,7 +3791,7 @@ int main(void) {
 /*
   itoa recursive
   - input : int
-  - ouptut: char[]
+  - output: char[]
 */
 void itoa(int number, char nstring[]) {
 
@@ -4010,8 +4010,8 @@ int main(int argc, char *argv[]) {
   printf("x is: %d\n", x);
   printf("y is: %d\n", y);
   swap(int, x, y);  // --> { t var_t = x, x = y, y = var_t; }  the t is going to be replaced by int
-  printf("swaped x is: %d\n", x);
-  printf("swaped y is: %d\n", y);
+  printf("swapped x is: %d\n", x);
+  printf("swapped y is: %d\n", y);
 
   return EXIT_SUCCESS;
 }
@@ -4021,8 +4021,8 @@ int main(int argc, char *argv[]) {
 ╰─ ./a.out
 x is: 20
 y is: 30
-swaped x is: 20
-swaped y is: 30
+swapped x is: 20
+swapped y is: 30
 ```
 
 ### 4.11.3 Conditional Inclusion
@@ -4043,7 +4043,7 @@ for example to make sure that the header file `hdr.h` is included only once the 
 #endif
 ```
 
-if the `her.h` file is defined then it will skip the block until `#endfi`
+if the `her.h` file is defined then it will skip the block until `#endif`
 
 ```c
 #if SYSTEM == SYSV
@@ -4083,7 +4083,7 @@ A pointer is a variable that it's value contains the address in the memory for E
 ```c
 int bar = 50; // this is just a variable
 
-int *foo = &bar // this is a pointer points to bars adress
+int *foo = &bar // this is a pointer points to bars address
 ```
 
 Pointer dereferencing allow to get the value of the of the pointed variable
@@ -5732,3 +5732,524 @@ illustrates the problem: `*` is a prefix operator and it has lower precedence th
 This is starting to blow my head
 
 ![Complicated Declarations](./Media/Complicated_Declaration.png)
+
+# Chapter 6 - Structures
+
+A Structure is a collection of one or more variables, might be of same or different type grouped together in a single name.
+
+For example an employee is described by a set of attributes such as a name, address, social security number, salary, etc. So employee can be a struct.
+
+Another example is in computers a ball has tow axis x and y.
+
+## 6.1 Basics of Structures
+
+So Lets use the ball example and create a `structure` from it we will assume that both `x` and `y` axis are `integers` .
+
+![Point Structure](./Media/point.png)
+
+Both components can be placed in a struct like this:
+
+```c
+struct point {
+	int x;
+	int y;
+}
+```
+
+The keyword `struct` introduces a structure declaration, which is a list of declarations
+enclosed in braces.
+
+An optional name called a _structure tag_ may follow the word struct `(as
+with point here)`.
+
+The tag names this kind of structure, and can be used subsequently as a
+shorthand for the part of the declaration in braces.
+
+The variables named in a structure are called members.
+
+A structure `member` or a `tag` or `non-member` variables can have same name without any conflict
+
+A `struct` declaration defines a type. The right brace that terminates the list of members may
+be followed by a list of variables.
+
+just as for any basic type. That is,
+
+```c
+struct { ... } x, y, z;
+
+is syntactically like
+
+int x, y, z;
+```
+
+A structure declaration that is not followed by a list of variables has no storage, it just describe that shape of the structure.
+
+after we call it it behaves the same
+
+```c
+struct point {
+	int x;
+	int y;
+};
+
+int main(void)
+{
+	struct point pt;
+	return 0;
+}
+```
+
+so `pt` is a variable of type `struct point`.
+
+using _structure-name.member_
+The structure member operator `.` connects the `structure` name and `member` name to get member's value
+
+```c
+#include <stdio.h>
+
+struct point {
+  int x;
+  int y;
+} x, y, z;
+
+int main(int argc, char **argv) {
+
+  x.x = 10;
+  x.y = 20;
+
+  printf("x ---> %d\ny ---> %d\n", x.x, x.y);
+  return 0;
+}
+```
+
+This would produce:
+
+```c
+x ---> 10
+y ---> 20
+```
+
+Structure can also be nested, for example we can represent a rectangle using tow points
+
+![rectangle structure](./Media/rectangle.png)
+
+```c
+struct rect {
+	struct point pt1;
+	struct point pt2;
+}
+```
+
+`rect` structure contains two `point` structures, so
+
+```c
+struct rect screen;
+screen.pt1.x
+```
+
+refers to the x coordinate of pt1 in the screen.
+
+## 6.2 Structures and Functions
+
+Let us investigate structures by writing some functions to manipulate points and rectangles.
+There are at least three possible approaches:
+
+Each has its good points and bad points.
+
+```c
+#ifndef POINT_H
+#define POINT_H
+
+#define XMAX 220
+#define YMAX 200
+
+#define min(a, b) ((a) < (b) ? (a) : (b))
+#define max(a, b) ((a) > (b) ? (a) : (b))
+
+struct point makepoint(int x, int y);
+struct point addpoints(struct point p1, struct point p2);
+int ptinrect(struct point p, struct rec r);
+struct rec canonrect(struct rec r);
+
+struct point {
+  int x;
+  int y;
+};
+
+struct rec {
+  struct point p1;
+  struct point p2;
+};
+
+#endif
+```
+
+### Pass components separately & Pass an entire structure.
+
+```c
+#include "header.h"
+
+int main(void) {
+
+  struct rec screen;
+  struct point middle;
+
+  screen.p1 = makepoint(0, 0);
+  screen.p2 = makepoint(XMAX, YMAX);
+
+  int middle_x = (screen.p1.x + screen.p2.x) / 2;
+  int middle_y = (screen.p1.y + screen.p2.y) / 2;
+
+  middle = makepoint(middle_x, middle_y);
+
+  return 0;
+}
+
+/* makepoint: make a point from x and y components */
+struct point makepoint(int x, int y) {
+
+  struct point temp;
+
+  temp.x = x;
+  temp.y = y;
+  return temp;
+}
+
+/* addpoints: add two points */
+struct point addpoints(struct point p1, struct point p2) {
+
+  p1.x += p2.x;
+  p1.y += p2.y;
+  return p1;
+}
+
+/* ptinrect: return 1 if p in r, 0 if not */
+int ptinrect(struct point p, struct rec r) {
+  return p.x >= r.p1.x && p.x < r.p2.x && p.y >= r.p1.y && p.y < r.p2.y;
+}
+
+/* canonrect: canonicalize coordinates of rectangle */
+struct rec canonrect(struct rec r) {
+  struct rec temp;
+  temp.p1.x = min(r.p1.x, r.p2.x);
+  temp.p1.y = min(r.p1.y, r.p2.y);
+  temp.p2.x = max(r.p1.x, r.p2.x);
+  temp.p2.y = max(r.p1.y, r.p2.y);
+  return temp;
+}
+```
+
+### Pass a pointer to it.
+
+If a large `structure` is to be passed to a function, it is generally more efficient to pass a _pointer_ than to copy the whole structure. Structure pointers are just like pointers to ordinary variables. The declaration
+
+```c
+struct point *pp;
+```
+
+so `pp` is a pointer to a structure of type `struct point`.
+
+if `pp` points to a `point struct` then `(*pp)` is the structure it's self, and `(*pp).x` is it's member same thing for y member.
+
+```c
+int main(int argc, char *argv[]) {
+
+  struct point origin, *pp;
+
+  origin = makepoint(10, 20);
+
+  pp = &origin;
+
+  printf("x ---> %d\ny ---> %d\n", (*pp).x, (*pp).y);
+
+  return 0;
+}
+```
+
+in particular pointers to structures are so popular that an alternative notation is provided for them.
+
+instead of dereferencing the pointer then get member of the struct you can make this `p->member-of-structure`
+
+```c
+int main(int argc, char *argv[]) {
+
+  struct point origin, *pp;
+
+  origin = makepoint(10, 20);
+
+  pp = &origin;
+
+  printf("x ---> %d\ny ---> %d\n", pp->x, pp->y);
+
+  return 0;
+}
+```
+
+For example
+
+```c
+struct rec r, *rp = &r;
+```
+
+Then
+
+```c
+/*
+	r.p1.x
+	same as
+	rp->p1.x
+
+	(r.p1).x
+	same as
+	(rp->p1).x
+*/
+```
+
+So we have this struct:
+
+```c
+struct {
+	int len;
+	char *str;
+} *p;
+```
+
+```c
+++p->len
+```
+
+increments `len`, not `p`, because the implied parenthesization is `++(p->len)`. Parentheses can be used to alter binding: `(++p)->len` increments `p` before accessing `len`, and `(p++)->len` increments `p` afterward. (This last set of parentheses is unnecessary.)
+
+## 6.3 Arrays of Structures
+
+```c
+#include "header.h"
+#include <stdio.h>
+
+struct key keytab[] = {{"auto", 0},     {"break", 0},    {"case", 0},
+                       {"char", 0},     {"const", 0},    {"continue", 0},
+                       {"default", 0},  {"unsigned", 0}, {"void", 0},
+                       {"volatile", 0}, {"while", 0}};
+
+#define NKEYS (sizeof(keytab) / sizeof(struct key))
+
+int main(int argc, char *argv[])
+{
+  int n;
+  char word[MAXWORD];
+
+  while (ft_getword(word, MAXWORD) != EOF)
+  {
+    if (isprint(word[0]))
+    {
+      printf("word : %s\n", word);
+      if ((n = binsearch(word, keytab, NKEYS)) >= 0)
+        keytab[n].count++;
+    }
+  }
+
+  /* Print word and it's counter */
+  for (n = 0; n < NKEYS; n++)
+  {
+    if (keytab[n].count > 0)
+      printf("\n%4d %s\n", keytab[n].count, keytab[n].word);
+  }
+  return 0;
+}
+```
+
+```c
+#include "../header.h"
+
+int binsearch(char *word, struct key *tab, int n)
+{
+  int cond = 0;
+  int low, mid, high;
+
+  low = 0;
+  high = n - 1;
+  while (low <= high)
+  {
+    mid = (int)(low + high) / 2;
+    cond = strcmp(word, tab[mid].word);
+    if (cond < 0)
+      high = mid - 1;
+    else if (cond > 0)
+      low = mid + 1;
+    else
+      return mid;
+  }
+  return -1;
+}
+```
+
+```c
+#include "../header.h"
+
+static int pb_char = '\0';
+static int pb_flag = 0;
+
+int getch(void) { return (pb_flag == 1) ? pb_flag = 0, pb_char : getchar(); }
+
+void ungetch(int c)
+{
+  pb_char = c;
+  pb_flag = 1;
+}
+
+void ungets(const char s[])
+{
+  int i, c;
+  i = 0;
+  while ((c = s[i++]) != '\0')
+  {
+    ungetch(s[i++]);
+  }
+}
+
+/* ft_getword: get next word or character from input */
+int ft_getword(char *word, int lim)
+{
+
+  int c;
+  char *w = word;
+
+  while (isspace(c = getch()))
+    ;
+  if (c == EOF)
+  {
+    *w = EOF;
+    return c;
+  }
+  if (!isprint(c))
+  {
+    *w = '\0';
+    return c;
+  }
+  do
+  {
+    if (!isprint(c))
+      break;
+    lim--;
+    *w++ = c;
+    c = getch();
+  } while (lim > 0);
+  *w = '\0';
+  return word[0];
+}
+
+```
+
+### Exercise 6-1.
+
+Our version of getword does not properly handle underscores, string constants,
+comments, or preprocessor control lines. Write a better version.
+
+By changing the `isalpha` function in `getword` to `isprint`, That would do it.
+
+## 6.4 Pointers to Structures
+
+To understand pointer to structure let's create the same program but using pointer to structures
+
+- `getword` stills the same
+- `binsearch.c`
+
+  ```c
+  #include "../header.h"
+
+  struct key *binsearch(char *word, struct key *tab, int n)
+  {
+    int cond = 0;
+    struct key *low = &tab[0];
+    struct key *mid;
+    struct key *high = &tab[n - 1];
+
+    while (low <= high)
+    {
+      mid = (low + (high - low) / 2);
+      cond = strcmp(word, mid->word);
+      if (cond < 0)
+        high = mid - 1;
+      else if (cond > 0)
+        low = mid + 1;
+      else
+        return mid;
+    }
+    return NULL;
+  }
+  ```
+
+- `count_words.c`
+
+  ```c
+  #include "header.h"
+  #include <stdio.h>
+
+  struct key keytab[] = {{"auto", 0},     {"break", 0},    {"case", 0},
+                         {"char", 0},     {"const", 0},    {"continue", 0},
+                         {"default", 0},  {"unsigned", 0}, {"void", 0},
+                         {"volatile", 0}, {"while", 0},    {NULL, 0}};
+
+  #define NKEYS (sizeof(keytab) / sizeof(struct key))
+
+  int main(int argc, char *argv[])
+  {
+    struct key *p;
+    char word[MAXWORD];
+
+    while (ft_getword(word, MAXWORD) != EOF)
+    {
+      if (isprint(word[0]))
+      {
+        printf("word : %s\n", word);
+        if ((p = binsearch(word, keytab, NKEYS)) != NULL)
+          p->count++;
+      }
+    }
+
+    /* Print word and it's counter */
+    for (p = keytab; p->word != NULL; p++)
+    {
+      if (p->count > 0)
+        printf("\n%4d %s\n", p->count, p->word);
+    }
+    return 0;
+  }
+
+  ```
+
+## 6.5 Self-referential Structures
+
+> With arbitrary data, we need an arbitrary data structure.
+
+Suppose we want to handle a big amount of data or an unknown amount of words how can we achieve that?
+
+I a Simple words we will use a data structure, `binary tree`.
+
+The tree contains one node per distinct word, each node contains:
+
+- A pointer to the word
+- A count of The number of occurrence
+- A pointer to the left child node.
+- A pointer to the right child node.
+
+The nodes are maintained so that at any node the left subtree contains only words that are
+lexicographically less than the word at the node, and the right subtree contains only words
+that are greater.
+
+![btree](./Media/btree.png)
+
+To find out whether a new word is already in the tree, start at the root and compare the new word to the word stored at that node. If they match, the question is answered affirmatively. If the new record is less than the tree word, continue searching at the left child, otherwise at the right child. If there is no child in the required direction, the new word is not in the tree, and in fact the empty slot is the proper place to add the new word. This process is recursive, since the search from any node uses a search from one of its children. Accordingly, recursive routines for insertion and printing will be most natural.
+
+**I made this program check it in the files :)**
+
+### Exercise 6-2.
+
+Write a program that reads a C program and prints in alphabetical order each
+group of variable names that are identical in the first 6 characters, but different somewhere
+thereafter. Don't count words within strings and comments. Make 6 a parameter that can be
+set from the command line.
+
+Check Chapter 6 Solution
+
+## 6.6 Table Lookup
