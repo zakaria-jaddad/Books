@@ -6253,3 +6253,137 @@ set from the command line.
 [Check Chapter 6 Solution](./Chapter_06/6-5/6-2/)
 
 ## 6.6 Table Lookup
+
+In this Section we made a data structure called hashmap, it will be represented like this:
+
+![hashmap](./Media/hashmap.png)
+
+### Exercise 6-5 6-6.
+
+[Check Chapter 6 Solution](./Chapter_06/6-6/)
+
+## 6.7 Typedef
+
+In C we have `typedef` for creating a new data type name, hhh i wished knew this in 42 pool
+
+```c
+    typedef int Length;
+```
+
+now `Length` is a synonym for `int`
+
+```c
+    Length len, maxlen;
+    Length *lengths[];
+```
+
+So on like:
+
+```c
+    typedef char *String;
+```
+
+The best use of this is with structs, instead of using `struct` key word
+and `structe name`, we only need to use it's name using `typedef`
+
+```c
+    typedef struct tnode* Treeptr; /* Treeptr is a pointer to struct tnode */
+
+    typedef struct tnode {
+       char *word;
+        int count;
+        struct tnode *left;
+        struct tnode *right;
+    } Treenode; /* Treenode is a type definition of struct tnode */
+
+```
+
+This creates two new keywords `Treenode` a structure and `Treeptr` a pointer to the structure
+so if we want to implement a function that allocates memory for `struct tnode` which is `Treenode`
+would be like this:
+
+```c
+    Treeptr talloc(void)
+    {
+        return (Treeptr) malloc(sizeof(Treenode));
+    }
+```
+
+## 6.8 Unions
+
+```c
+    union u_tag {
+        int ival;
+        float fval;
+        char *sval;
+    } u;
+```
+
+The variable `u` will be large enough to hold the larges of the three
+types.
+
+For example the `u` can hold a value of `int`, `float` or `char *`
+
+Syntactically members of a union are accessed as
+
+_union-name.member_
+
+or
+
+_union-pointer->member_
+
+if the variable `utype` is used to keep track of the current type stored in `u`
+
+then we might see code like this.
+
+```c
+    if (utype == INT)
+        printf("%d\n", u.ival);
+    if (utype == FLOAT)
+        printf("%d\n", u.fval);
+    if (utype == STRING)
+        printf("%d\n", u.sval);
+    else
+        printf("bad type $d in utype\n", utype);
+```
+
+Unions may occur within structures and arrays, and vice versa. The notation for accessing a
+member of a union in a structure (or vice versa) is identical to that for nested structures.
+
+For example in the structure array defined by
+
+```c
+    struct {
+        char *name;
+        int flags;
+        int utype;
+        union {
+            int ival;
+            float fval;
+            char *sval;
+        } u;
+    } symtab[NSYM];
+```
+
+The member `ival` is referred to as
+
+```c
+    symtab[i].u.ival;
+```
+
+And the first character of the string `sval` by either of
+
+```c
+    *symtab[i].u.savl;
+
+    symtab[i].u.savl[0];
+```
+
+In effect, a union is a structure in which all members have offset zero from the base, the
+structure is big enough to hold the ``widest'' member, and the alignment is appropriate for all
+of the types in the union. The same operations are permitted on unions as on structures:
+assignment to or copying as a unit, taking the address, and accessing a member.
+
+## 6.9 Bit-fields
+
+No idea what's that :|
