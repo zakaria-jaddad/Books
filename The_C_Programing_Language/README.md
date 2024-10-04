@@ -6386,3 +6386,199 @@ assignment to or copying as a unit, taking the address, and accessing a member.
 ## 6.9 Bit-fields
 
 No idea what's that :|
+
+# Chapter 7 - Input and Output
+
+Input and output are not part of the `C` language itself.
+
+In this Chapter we are going to understand the **Standard library**.
+
+A set of function that provide input and output, such as:
+
+- String handling
+- Storage management
+- mathematical routines
+- and a variety of other services for `C` programs.
+
+We will concentrate on input and output.
+
+The **ANSI** standard defines these library functions presisely. so that they can exist in
+compatibale form on any stystem where `C` exist.
+
+## 7.1 Standard Input and Output
+
+I hope that we would have a look of how it's implemented.
+
+The simplest input mechanism is to read on character at a time form the _standard input_
+normally the keyboard, using `getchar`:
+
+```c
+int getchar(void);
+```
+
+`getchar` returns the next input character each time it is called or `EOF`
+when it encounter end of file.
+
+Symbolic constant `EOF` is defined in `<stdio.h>`, it's value is `-1`
+
+In many envirmoments, a file may be substituted for the keyboard by using `<` convention
+for input redirection: if a program `main` uses `getchar`, the the command line
+
+```bash
+main < input-file.txt
+```
+
+causes `main` to read characters from `input-file.txt` instead.
+
+The string `< input-file.txt` is not included in `argv`.
+
+Input switching is also invisible if the input comes from another program via a pipe mechanism
+
+```bash
+otherprog | main
+```
+
+runs the two programs, and pipes the standard output of `otherprog` into the standard input of `main`
+
+The function
+
+```c
+int putchar(int);
+```
+
+is used for output `putchar(c)` puts the character c on the `standard output`
+which is by default the screen.
+
+Output produced by `printf` also finds it's way to the standard output.
+
+Each source file that refers to an `input/output` library must contain the line
+
+```c
+#include <stdio.h>
+```
+
+When the name is bracketed by `<>` a search is made for the header in a standard set of places
+for example is `UNIX`systems, typically in the directory `usr/include`
+
+### Exercise 7-1.
+
+Write a program that converts upper case to lower or lower case to upper,
+depending on the name it is invoked with, as found in `argv[0]`.
+
+```c
+#include <ctype.h>
+#include <stdio.h>
+
+int main(int argc, char **argv)
+{
+  char *str = argv[0];
+  while (*str)
+  {
+    if (islower(*str))
+      putchar(toupper(*str));
+    else if (isupper(*str))
+      putchar(tolower(*str));
+    else
+      putchar(*str);
+    str++;
+  }
+  return 0;
+}
+```
+
+## 7.2 Formatted Output - printf
+
+Every one have written `C`, probably used `printf`.
+
+To know it's full story consider reading Appendix B.
+
+```c
+int printf(char *format, arg1, arg2, ...);
+```
+
+`printf` converts `format` and prints it's arguments on the standard output
+under control of `format`.
+
+`printf` returns the number of character printed.
+
+```c
+int hello = printf("%d, %d\n", 10, 20); /* prints "10, 20" */
+printf("%d", hello);                    /* prints "7" -> "10, 20\n" */
+```
+
+The format string contains two types of objects:
+
+- ordinary: character which are copied to the output stream
+- conversion specification each of which causes conversion and printing the next successive argument
+
+Each conversion specification begin with `%` and ends with a conversion character .
+
+Between the `%` and the conversion character they may be in order
+
+- A minus sign. which specifies left adjustment of the converted argument
+- A number that specifies the minimum field with. The converted argument will be
+  printed in a field at least this wide.
+
+  ```c
+   #include <stdio.h>
+
+   int main() {
+       printf("|%-20s| %s|\n", "Name", "Age");
+       printf("|%-20s| %d|\n", "John Doe", 25);
+       return 0;
+   }
+  ```
+
+- A period, which separates the field with from the precision.
+- A number that specifies the maximum number of character to be printed from a string.
+  or the number of digits after the decimal point of a floating-point
+- An `h` if the integer is to be printed as a `short` or `1` letter if as `long`
+
+If the character after `%` is not a conversion specification, the begavior is undefined
+
+| Character | Argument type; Printed As                                                                                                                                                      |
+| --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| d, i      | int; decimal number                                                                                                                                                            |
+| o         | int; unsigned octal number (without a leading zero)                                                                                                                            |
+| x, X      | int; unsigned hexadecimal number (without a leading 0x or 0X), using `abcdef` or `ABCDEF` for 10, ...,15.                                                                      |
+| u         | int; unsigned decimal number                                                                                                                                                   |
+| c         | int; single character                                                                                                                                                          |
+| s         | char \*; print characters from the string until a '\0' or the number of characters given by the precision.                                                                     |
+| f         | double; [-]m.dddddd, where the number of d's is given by the precision (default 6).                                                                                            |
+| e, E      | double; [-]m.dddddde+/-xx or [-]m.ddddddE+/-xx, where the number of d's is given by the precision (default 6).                                                                 |
+| g, G      | double; use %e or %E if the exponent is less than -4 or greater than or equal to the precision; otherwise use %f. Trailing zeros and a trailing decimal point are not printed. |
+| p         | void \*; pointer (implementation-dependent representation).                                                                                                                    |
+| %         | no argument is converted: print a `%`                                                                                                                                          |
+
+Examples of printing `hello world`
+
+| conversion | Output          |
+| ---------- | --------------- |
+| %s         | hello, world    |
+| %10s       | hello, world    |
+| %.10s      | hello, wor      |
+| %-10s      | hello, world    |
+| %.15s      | hello, world    |
+| %-15s      | hello, world--- |
+| %15-10s    | -----hello, wor |
+| %-15.10s   | hello, wor----- |
+
+`-` is a space
+
+`printf` uses it's first argument to decide how many arguments follow and what their type is.
+
+You will get wrong output if it miss count number of arguments from the buffer
+also, you need to know the difference between these two calls
+
+```c
+printf(s); /* FAILS if s contains % */
+printf("%s", s); /* SAFE to use */
+```
+
+`sprintf` is one of `printf`'s family
+
+`sprintf` does that same work as `printf` but instead of printing it, it store it in a buffer
+
+```c
+int sprintf(char *string, char *format, arg1, arg2);
+```
