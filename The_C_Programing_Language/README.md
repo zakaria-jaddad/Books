@@ -6544,8 +6544,8 @@ If the character after `%` is not a conversion specification, the begavior is un
 | u         | int; unsigned decimal number                                                                                                                                                   |
 | c         | int; single character                                                                                                                                                          |
 | s         | char \*; print characters from the string until a '\0' or the number of characters given by the precision.                                                                     |
-| f         | double; [-]m.dddddd, where the number of d's is given by the precision (default 6).                                                                                            |
-| e, E      | double; [-]m.dddddde+/-xx or [-]m.ddddddE+/-xx, where the number of d's is given by the precision (default 6).                                                                 |
+| f         | double; [-]m.dddddd, where the number of d's is given by the precision .                                                                                                       |
+| e, E      | double; [-]m.dddddde+/-xx or [-]m.ddddddE+/-xx, where the number of d's is given by the precision .                                                                            |
 | g, G      | double; use %e or %E if the exponent is less than -4 or greater than or equal to the precision; otherwise use %f. Trailing zeros and a trailing decimal point are not printed. |
 | p         | void \*; pointer (implementation-dependent representation).                                                                                                                    |
 | %         | no argument is converted: print a `%`                                                                                                                                          |
@@ -6582,3 +6582,158 @@ printf("%s", s); /* SAFE to use */
 ```c
 int sprintf(char *string, char *format, arg1, arg2);
 ```
+
+## 7.3 Variable-length Argument Lists
+
+In this section we're going to make a simplt printf.
+
+The proper declaration for `printf` is
+
+```c
+int printf(char *fmt, ...);
+```
+
+The declaration `...` means that the number and types of these arguments maay vary.
+also the declaration can only appert at the end of an argument list
+
+Our `minprintf` is declared as
+
+```c
+void minprintf(char *fmt, ...);
+```
+
+we will not return number of characters like `printf`
+
+`<stdarg.h>` provide a set of macro definitions that define how to step through an argument list
+
+`va_list` is used to declare a variable that will refer to each argument in turn
+in `minprintf` this variable is called `ap`: **argument pointer**.
+
+The macro `va_start` initialize `ap` to point to the first unnamed argument.
+it must be called once before `ap` is used, it must be at least on named argument
+
+Each call of `va_arg` returns one argument and step `ap` to the next argument
+
+`va_arg` uses a type name to determine what type to return an how big a step to take.
+
+`va_end` does whatever cleanup is necessary. it must be called before the program returns.
+
+`minprintf` Example
+
+### Exercise 7-3.
+
+Revise minprintf to handle more of the other facilities of printf.
+
+```c
+#include <stdarg.h>
+#include <stdio.h>
+#include <string.h>
+
+/* minprintf: minimal printf with variable argument list */
+void minprintf(const char *fmt, ...)
+{
+  va_list ap; /* points to each unnamed arg in turn */
+  const char *p;
+  union u_tag
+  {
+    int ival;
+    int cval;
+    float fval;
+    double dval;
+    char *sval;
+    unsigned int uival;
+    unsigned int xval;
+    unsigned int oval;
+    void *pval;
+  } type;
+
+  va_start(ap, fmt); /* make ap point to 1st unnamed arg */
+  for (p = fmt; *p; p++)
+  {
+    if (*p != '%')
+    {
+      putchar(*p);
+      continue;
+    }
+    switch (*++p)
+    {
+    case 'd':
+      type.ival = va_arg(ap, int);
+      printf("%d", type.ival);
+      break;
+    case 'f':
+      type.dval = va_arg(ap, double);
+      printf("%f", type.dval);
+      break;
+    case 'x':
+      type.xval = va_arg(ap, unsigned int);
+      printf("%x", type.xval);
+      break;
+    case 'X':
+      type.xval = va_arg(ap, unsigned int);
+      printf("%X", type.xval);
+      break;
+    case 'u':
+      type.uival = va_arg(ap, unsigned int);
+      printf("%u", type.uival);
+      break;
+    case 'o':
+      type.oval = va_arg(ap, unsigned int);
+      printf("%o", type.oval);
+      break;
+    case 'c':
+      type.cval = va_arg(ap, int);
+      putchar(type.cval);
+      break;
+    case 's':
+      type.sval = va_arg(ap, char *);
+      for (char *s = type.sval; *s; s++)
+        putchar(*s);
+      break;
+    case 'p':
+      type.sval = va_arg(ap, void *);
+      printf("%p", type.pval);
+      break;
+    default:
+      putchar(*p);
+      break;
+    }
+    va_end(ap); /* clean up when done */
+  }
+}
+
+int main(int argc, char *argv[])
+{
+  char *ptr = "42";
+  printf("hello world | %s --> %p | strlen(ptr) = %d = %f | ptr[0] = \'%c\' = "
+         "0x\\%x = 0x\\%x = o\\%o | %u%% \n",
+         ptr, &ptr, (int)strlen(ptr), ((int)strlen(ptr) / 1.0), ptr[0], ptr[0],
+         ptr[0], ptr[0], 4 - 10);
+  minprintf(
+      "hello world | %s --> %p | strlen(ptr) = %d = %f | ptr[0] = \'%c\' = "
+      "0x\\%x = 0x\\%x = o\\%o | %u%%\n",
+      ptr, &ptr, (int)strlen(ptr), ((int)strlen(ptr) / 1.0), ptr[0], ptr[0],
+      ptr[0], ptr[0], 4 - 10);
+  return 0;
+}
+```
+
+## 7.4 Formatted Input - Scanf
+
+`scanf` is the input analog of `printf`.
+
+In 42 we need to make tow functions:
+
+- `ft_printf` a clone of `printf`.
+- `get_next_line` a clone of `scanf`.
+
+Form scratch just using the syscall `write`
+
+```c
+int scanf(char *format, ...);
+```
+
+`scanf` reads characters from the standard input.
+based on the specification in `format`
+
+`scanf` returns the number of scuccessfully matched and assigned input items
