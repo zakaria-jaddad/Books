@@ -4,6 +4,7 @@
 
 #define MAX_LINE_LEN 100
 
+/* HEY: run ./diff input-1.txt input-2.txt */
 int main(int argc, char **argv)
 {
   char *program_name;
