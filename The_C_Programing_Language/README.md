@@ -6733,7 +6733,358 @@ Form scratch just using the syscall `write`
 int scanf(char *format, ...);
 ```
 
-`scanf` reads characters from the standard input.
-based on the specification in `format`
+`scanf`:
 
-`scanf` returns the number of scuccessfully matched and assigned input items
+- reads characters from the standard input, based on the specification in `format`
+- stops when it exhausts it's format string, or when some input fails to match the control specification
+- returns the number of scuccessfully matched and assigned input items
+
+There is alost a function `sscanf` that reads from a string instead of the _standard input_
+
+```c
+int sscanf(char *string, char *format, arg1, arg2, ...);
+```
+
+It scans the `string` based on the `format` and stores the result in `arg1` and `arg2`
+
+Basic `Scanf` Conversions Table
+
+| Character | Description                                                                                                                                                                                          |
+| --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| d         | decimal integer; `int *`                                                                                                                                                                             |
+| i         | integer; `int *`. The integer may be in octal (leading 0) or hexadecimal (leading 0x or 0X).                                                                                                         |
+| o         | octal integer (with or without leading zero); `int *`                                                                                                                                                |
+| u         | unsigned decimal integer; `unsigned int *`                                                                                                                                                           |
+| x         | hexadecimal integer (with or without leading 0x or 0X); `int *`                                                                                                                                      |
+| c         | characters; `char *`. The next input characters (default 1) are placed at the indicated spot. The normal skip-over white space is suppressed; to read the next non-white space character, use `%1s`. |
+| S         | character string (not quoted); `char *`, pointing to an array of characters long enough for the string and a terminating `\0` that will be added.                                                    |
+| e, f, g   | floating-point number with optional sign, optional decimal point, and optional exponent; `float *`                                                                                                   |
+| %         | literal %; no assignment is made.                                                                                                                                                                    |
+
+Suppose we want to read input lines that contain dates of the form which are like this
+
+**05 Oct 2024**
+
+The scanf statement would be like this
+
+```c
+int day, year;
+char monthname[20];
+
+scanf("%d %s %d", &day, monthname, &year);
+```
+
+`monthname` is array name which is just a pointer so no need to `&`
+
+also we can read dates of the form `mm/dd/yy` with `scanf`
+
+```c
+int day, month, year;
+scanf("%d/%d/%d", &mont, &day, &year);
+```
+
+`scanf` ignores blanks and tabs in the format string,
+also it skips white spaces (blanks, tabs, newline, ...)
+
+`"%d/%d/%d"` == `"%d/ %d/ %d"` == `"%d/ \t%d/ \t%d"`
+
+It is often best to read a line at a time, then pick it a part using `sscanf`
+
+For example
+
+```c
+while (getline(line, sizeof(line)) > 0)
+{
+    if (sscanf(line, "%d %s %d", &day, monthname, &year) == 3)
+        printf("valid: %s\n", line); /* 05 Oct 2024 */
+    else if (sscanf(line, "%d %d %d", &mont, &day, &year) == 3)
+        printf("valid: %s\n", line); /* 10/05/2024 */
+    else
+        printf("invalid: %s\n", line);
+}
+```
+
+ARGUMENTS TO `scanf` and `sscanf` MUST BE A POINTER.
+
+**This error is not generally detected at a compile time**
+
+```c
+scanf("%d", n);
+```
+
+instead of
+
+```c
+scanf("%d", &n);
+```
+
+## 7.5 File Access
+
+This pointer, called the file pointer, points to a structure that contains information about the
+file, such as the location of a buffer, the current character position in the buffer, whether the
+file is being read or written, and whether errors or end of file have occurred. Users don't need
+to know the details, because the definitions obtained from <stdio.h> include a structure
+declaration called FILE. The only declaration needed for a file pointer is exemplified by
+
+```c
+FILE *fp
+FILE *fopen(char *name, char *mode);
+```
+
+`fp` is a pointer to a **FILE** structure.
+
+The first argument of fopen is a character string containing the name of the file. The second
+argument is the mode, also a character string, which indicates how one intends to use the file.
+Allowable modes include read `("r")`, write `("w")`, and append `("a")`. Some systems
+distinguis between text and binary files; for the latter, a "b" must be appended to the mode
+string.
+
+The next thing needed is a way to read or write the file once it is open. getc returns the next
+character from a file; it needs the file pointer to tell it which file.
+
+```c
+int getc(FILE *fp);
+int putc(int c, FILE *fp);
+```
+
+When a `C` program is started, the operating system environment is responsible for opening
+three files and providing pointers for them. These files are the standard input, the standard
+output, and the standard error; the corresponding file pointers are called `stdin`, `stdout`, and
+`stderr`, and are declared in `<stdio.h>`. Normally `stdin` is connected to the keyboard and `stdout` and `stderr` are connected to the screen
+
+`getchar` and `putchar` are just a macros
+
+```c
+#define getchar() getc(stdin)
+#define putchar(c) putc(c, stdout)
+```
+
+`printf`, `scanf` has other brotters `fprintf` and `fscanf`
+
+```c
+int fprintf(FILE *fp, char *format, ...);
+int fscanf(FILE *fp, char *format, ...);
+```
+
+So let's creat `cat`
+
+```c
+#include <stdio.h>
+
+/* cat: concatenate files, version 1 */
+int main(int argc, char **argv)
+{
+  FILE *fp;
+  void filecopy(FILE *, FILE *);
+
+  if (argc == 1) /* no argc: copy standard input */
+    filecopy(stdin, stdout);
+  else
+  {
+    while (--argc > 0)
+    {
+      if ((fp = fopen(*++argv, "r")) == NULL)
+      {
+        printf("cat: cant\'t open %s\n", *argv);
+        return -1;
+      }
+      else
+      {
+        filecopy(fp, stdout);
+        fclose(fp);
+      }
+    }
+  }
+  return 0;
+}
+
+/* filecopy: copy file ifp to file ofp */
+void filecopy(FILE *ifp, FILE *ofp)
+{
+  int c;
+
+  while ((c = getc(ifp)) != EOF)
+    putc(c, stdout);
+}
+```
+
+```c
+int fclose(FILE *fp);
+```
+
+breaks the connection between the printer and the file, and free the content of the pointer
+so other files can use it
+
+`fclose` is called automatically for each open file when a program terminates normally.
+
+You can also close `stdin` and `stdout`
+
+## 7.6 Error Handling - Stderr and Exit
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+/* cat: concatenate files, version 1 */
+int main(int argc, char **argv)
+{
+  FILE *fp;
+  void filecopy(FILE *, FILE *);
+  char *prog = argv[0]; /* program name for errors */
+
+  if (argc == 1) /* no argc: copy standard input */
+    filecopy(stdin, stdout);
+  else
+  {
+    while (--argc > 0)
+    {
+      if ((fp = fopen(*++argv, "r")) == NULL)
+      {
+        fprintf(stderr, "cat: cant\'t open %s\n", *argv);
+        return -1;
+      }
+      else
+      {
+        filecopy(fp, stdout);
+        fclose(fp);
+      }
+    }
+    if (ferror(stdout))
+    {
+      fprintf(stderr, "%s: error writing stdout\n", prog);
+      exit(2);
+    }
+  }
+  exit(0);
+}
+
+/* filecopy: copy file ifp to file ofp */
+void filecopy(FILE *ifp, FILE *ofp)
+{
+  int c;
+
+  while ((c = getc(ifp)) != EOF)
+    putc(c, stdout);
+}
+```
+
+The program signals errors in two ways. First, the diagnostic output produced by fprintf
+goes to `stderr`, so it finds its way to the screen instead of disappearing down a pipeline or
+into an output file. We included the program name, from `argv[0]`, in the message, so if this
+program is used with others, the source of an error is identified.
+
+`exit` has an advantage that it can be called not just from `main` but from all function and stop current process
+
+The function `ferror` returns non-zero if an error occurred on the stream fp.
+
+```c
+int ferror(FILE *fp)
+```
+
+Although output errors are rare, they do occur _(for example, if a disk fills up)_, so a production program should check this as well.
+
+The function `feof(FILE *)` is analogous to ferror; it returns non-zero if end of file has occurred on the specified file.
+
+```c
+int feof(FILE *fp)
+```
+
+We have generally not worried about exit status in our small illustrative programs, but any
+serious program should take care to return sensible, useful status values.
+
+## 7.7 Line Input and Output
+
+The standard library provides an input and output function `fputs` and `fgets` that is similar to get line
+`fputs` and `fgets` are similar to `puts` and `gets` but the last ones oberates on `stdin` and `stdout`
+
+`fgets` reads the next input line (including the newline) from file fp into the character array line
+at most `maxline-1` characters will be read.
+
+The resulting line is terminated with `'\0'`.
+
+Normally fgets returns `line`; on end of file or error it returns NULL.
+
+For output, the function `fputs` writes a string (which need not contain a new line) to a file
+
+Confusingly, `gets` deletes the terminating '\n', and `puts` adds it.
+
+`fputs` and `fgets` prototype
+
+```c
+int fputs(char *line, FILE *fp);
+char *fgets(char *line, int maxline, FILE *fp);
+```
+
+`fputs` and `fgets` definitions
+
+```c
+/* fgets: get a most n chars from iop */
+char *fgets(char *line, int maxline, FILE *iop)
+{
+    int c;
+    char *cs;
+
+    cs = s;
+    while (--n > 0 && (c = getc(iop)) != EOF)
+    {
+        if ((*cs++ = c) == '\n')
+            break;
+    }
+    *cs = '\0';
+    return (c == EOF && cs == s) ? NULL : s;
+}
+```
+
+```c
+/* fputs: put string s on file iop */
+int fputs(char *s, FILE *fp)
+{
+    int c;
+
+    while (c = *s++)
+        putc(c, iop);
+    return ferror(iop) ? EOF : 0;
+}
+```
+
+### Exercise 7-6.
+
+Write a program to compare two files, printing the first line where they differ.
+
+Exercise 7-7. Modify the pattern finding program of Chapter 5 to take its input from a set of
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAX_LINE_LEN 100
+
+int main(int argc, char **argv)
+{
+  char *filename[] = {argv[1], argv[2]};
+  FILE *fp1;
+  FILE *fp2;
+  char s1[MAX_LINE_LEN];
+  char s2[MAX_LINE_LEN];
+
+  if (argc != 3)
+  {
+    fprintf(stderr, "Invalid number of arguments\n");
+    exit(-1);
+  }
+  fp1 = fopen(filename[0], "r");
+  fp2 = fopen(filename[1], "r");
+  while (fgets(s1, MAX_LINE_LEN, fp1) != NULL &&
+         fgets(s2, MAX_LINE_LEN, fp2) != NULL)
+  {
+    if (strcmp(s1, s2) != 0)
+    {
+      fprintf(stdout, "%s", s1);
+      fprintf(stdout, "==================\n");
+      fprintf(stdout, "%s", s2);
+    }
+  }
+  return (0);
+}
+```
