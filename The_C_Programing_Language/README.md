@@ -7088,3 +7088,56 @@ int main(int argc, char **argv)
   return (0);
 }
 ```
+
+## 7.8 Miscellaneous Functions
+
+Most of functions here i know them, hack i even going to code them in `42` coursus
+
+The one interesting ones are these
+
+`strchr(s,c)` return pointer to first c in s, or NULL if not present
+`strrchr(s,c)` return pointer to last c in s, or NULL if not present
+
+### 7.8.4 Command Execution
+
+This is the first time i new that i can run a command using the `system` function is `c`, Pog.
+
+### 7.8.5 Storage Management
+
+The functions `malloc` and `calloc` obtains blocks of memory dynamically.
+
+```c
+void calloc(size_t n, size_t size);
+```
+
+`n` is the number of objects of the specified size.
+`size` is size of either a type of a struct.
+
+```c
+int *ip;
+ip = (int *) calloc(n, sizeof(int));
+```
+
+On why we need to type cast before memory allocation function?
+
+So far what i know, since a pointer points to a continuous memory.
+when need to treversed it the compiler needs size to treversed with, if you compile with warnings
+the compiler would yal at ya.
+
+Also don't be dumb and free memory you already freed.
+
+Here is a code that free a linked list.
+
+```c
+for (p = head; p != NULL; p = p->next) /* WRONG */
+    free(p);
+```
+
+The right way is to save whatever is needed before freeing:
+
+```c
+for (p = head; p != NULL; p = q) {
+    q = p->next;
+    free(p);
+}
+```
