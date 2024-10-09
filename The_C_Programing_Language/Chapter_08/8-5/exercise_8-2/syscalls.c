@@ -73,6 +73,11 @@ MY_FILE _iob[OPEN_MAX] = {
     {0, (char *) 0, (char *) 0, {0, 1, 1, 0, 0}, 2},
 };
 
+/*
+ * HEY: run
+ * gcc syscalls.c -o syscalls
+ * ./syscalls
+ */
 int main(void)
 {
   clock_t start = clock();
