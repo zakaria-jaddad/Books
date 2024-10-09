@@ -1,1 +1,2 @@
 "BreakBeforeBraces": Allman
+SpaceAfterCStyleCast: true
