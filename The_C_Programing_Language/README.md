@@ -7141,3 +7141,370 @@ for (p = head; p != NULL; p = q) {
     free(p);
 }
 ```
+
+# Chapter 8 - The UNIX System Interface
+
+## 8.1 File Descriptors
+
+In the UNIX operating system, all input and output is done by reading or writing files,
+because all peripheral devices, even keyboard and screen, are files in the file system. This
+means that a single homogeneous interface handles all communication between a program
+and peripheral devices.
+
+In the most general case, before you read and write a file, you must inform the system of your
+intent to do so, a process called opening the file. If you are going to write on a file it may also
+be necessary to create it or to discard its previous contents. The system checks your right to
+do so (Does the file exist? Do you have permission to access it?) and if all is well, returns to
+the program a small non-negative integer called a **file descriptor**.
+
+Whenever input or output is to be done on the file, the file descriptor is used instead of the name to identify the file. (A file
+descriptor is analogous to the file pointer used by the _standard library_, or to the file handle of
+MS-DOS.) All information about an open file is maintained by the system; the user program
+refers to the file only by the file descriptor.
+
+Since input and output involving keyboard and screen is so common, special arrangements
+exist to make this convenient. When the command interpreter (the ``shell'') runs a program,
+three files are open, with file descriptors 0, 1, and 2, called the standard input, the standard
+output, and the standard error. If a program reads 0 and writes 1 and 2, it can do input and
+output without worrying about opening files.
+
+The user program can redirect input and outputs
+
+```bash
+prog < input-file > output-file
+```
+
+In this case, the shell changes the default assignments for the file descriptors 0 and 1 to the
+named files. Normally file descriptor 2 remains attached to the screen, so error messages can
+go there. Similar observations hold for input or output associated with a pipe. In all cases, the
+file assignments are changed by the shell, not by the program. The program does not know
+where its input comes from nor where its output goes, so long as it uses file 0 for input and 1
+and 2 for output.
+
+## 8.2 Low Level I/O - Read and Write
+
+Input and output uses the `read` and `write` system calls, which are accessed from `C` programs
+through two functions called `read` and `write`.
+
+To use `read` and `write` call `unistd` library
+
+For both, the first argument is a file descriptor.
+
+The second argument is a character array in your program where the data is to go to or to come from.
+
+The third argument is the number is the number of bytes to be transferred.
+
+```c
+int n_read = read(int fd, char *buf, int n);
+int n_written = write(int fd, char *buf, int n);
+```
+
+Each call returns a count of the number of bytes transferred.
+
+On reading, the number of bytes returned may be less than the number requested.
+
+A return value of zero bytes implies end of file, and -1 indicates an error of some sort.
+
+For writing, the return value is the number of bytes written
+
+Error accures if number of bytes differ form number requested.
+
+Any number of bytes can be read or written in one call, common number is `1`, but it can accept big numbers like: `1200`
+
+Large sizes are batter since fewr system calls will be made.
+
+so let's make a program that copies it's input to it's output
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+/* copy input to output */
+int main(int argc, char *argv[])
+{
+  char buf[BUFSIZ];
+  int n;
+
+  while ((n = read(0, buf, sizeof(char) * BUFSIZ)))
+    write(1, buf, n);
+  return EXIT_SUCCESS;
+}
+```
+
+Some `read` would return a number smaller than input length, that would lead to a different behave of write returning `0`
+
+`read` and `write` are the bare bone of all higher level routines like `getchar` `putchar`.
+
+```c
+#include "syscalls.h"
+
+/* ft_getchar: unbeffered single character input */
+int ft_getchar(void)
+{
+  char c;
+  return (read(0, &c, 1) == 1) ? (unsigned char)c : EOF;
+}
+```
+
+`c` must be a char, read need a character pointer
+
+## 8.3 Open, Creat, Close, Unlink
+
+So youmust explicitly open files in order to read and write them.
+
+There are two system calls for this, `open` and `creat` sys calls.
+
+`open` is like the `fopen` form `stdio.h`, but instead of returning a file pointer, it returns
+a file descriptor, which is just an `int`, `open` return `-1` if any error occurs.
+
+So to use `open` and `creat` you need to include `fcntl.h` library
+
+The `fcntl.h` header file is part of the POSIX standard and provides functions for controlling file descriptors,
+including file locking, file mode changes, and file status inquiries.
+
+`open()`: Opens a file, returning a file descriptor.
+`creat()`: Creates a new file, returning a file descriptor.
+
+```c
+#include <fcntl.h>
+
+int fd;
+in open(char *name, int flags, int perms);
+
+fd = open(name, flags, perms);
+```
+
+The `name` argument is a string represent filename.
+
+The `flags` is an `int` specifies how the file is to be opened, there are quite a lot:
+
+- `O_RDONLY`: Open for reading only.
+- `O_WRONLY`: Open for writing only.
+- `O_RDWR`: Open for reading and writing.
+- `O_CREAT`: Create file if it doesn’t exist.
+- `O_EXCL`: Fail if file already exists.
+- `O_TRUNC`: Truncate file to zero length.
+- `O_APPEND`: Write to end of file.
+- `O_NONBLOCK`: Non-blocking I/O.
+- `O_ASYNC`: Send SIGIO to owner when data is ready.
+- `O_FSYNC`: Synchronous writes.
+- `O_SYNC`: Synchronous writes (same as O_FSYNC).
+
+These constants are defined in `<fcntl.h>` on V UNIX systems, and in `<sys/file.h>` on BSD versionns
+
+To oepn an existing file for reading:
+
+```c
+fd = open(name, , O_RDONLY, 0);
+```
+
+`perams` for now is just `0` why? sir i don't know.
+
+It is an error to try to open a file that doesn't exist.
+
+The system call `creat` creates new files, or to re-write old ones.
+
+```c
+int creat(char *name, int perams);
+
+fd = creat(name, perms)
+```
+
+returns a file descriptor `fd` if it was able to creat a file.
+`-1` if not.
+if file already exist, `creat` override it's content and set it's length to `0`.
+
+If the file doesn't exist, `creat` will creates it with the permissions specified by the `perms`.
+
+This is a program like shell command `cp`
+
+```c
+#include "../syscalls.h"
+#include <sys/fcntl.h>
+
+#define PERMS 0666 /* RW for owner, group and others */
+
+void error(char *, ...);
+
+/* cp: copy f1 to f2 */
+int main(int argc, char **argv)
+{
+  char buf[BUFSIZ];
+
+  int f1, f2, n;
+  if (argc != 3)
+    error("Usage: cp from to");
+  if ((f1 = open(argv[1], O_RDONLY, 0)) == -1)
+    error("cp: can't open %s", argv[1]);
+  if ((f2 = creat(argv[2], PERMS)) == -1)
+    error("cp: can't creat %s, mode %03c", argv[2], PERMS);
+  while ((n = read(f1, buf, BUFSIZ)) > 0)
+  {
+    if (write(f2, buf, n) != n)
+      error("cp: write error on file %s", argv[2]);
+  }
+  return (EXIT_SUCCESS);
+}
+```
+
+Notice that the function `error` is called with variable argument lists much like `printf`.
+
+The implementation of error illustrates how to use another member of the `printf` family.
+
+The standard library function `vprintf` is like `printf` except that the variable argument list is
+replaced by a single argument that has been initialized by calling the `va_start` macro.
+
+Similarly, `vfprintf` and `vsprintf` match `fprintf` and `sprintf`.
+
+```c
+void error(char *fmt, ...)
+{
+  va_list args;
+
+  va_start(args, fmt);
+  fprintf(stderr, "error: ");
+  vprintf(stderr, args);
+  fprintf(stderr, "\n");
+  va_end(args);
+  exit(1);
+}
+```
+
+There is a limit (often about 20) on the number of files that a program may open simultaneously.
+
+Accordingly, any program that intends to process many files must be prepared to re-use file descriptors.
+
+The function `close(int fd)` breaks the connection between a file descriptor and an open file,
+and frees the file descriptor for use with some other file
+it corresponds to fclose in the standard library except that there is no buffer to flush.
+
+Termination of a program via exit or return from the main program closes all open files.
+
+### Exercise 8-1.
+
+Rewrite the program cat from Chapter 7 using read, write, open, and close
+instead of their standard library equivalents. Perform experiments to determine the relative
+speeds of the two versions.
+
+```c
+#include <fcntl.h>
+#include <stdarg.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+void error(char *, ...);
+void filecopy_to_stdout(char *);
+
+/* HEY: run ./cat input-1.txt input-2.txt */
+/* cat program using read, write, open and close */
+/* cat: concatenate files, exercise */
+int main(int argc, char **argv)
+{
+  int n;
+  char buf[BUFSIZ];
+
+  if (argc == 1)
+  {
+    while ((n = read(STDIN_FILENO, buf, BUFSIZ)) > 0)
+      if (write(STDOUT_FILENO, buf, n) != n)
+        error("cat: write error");
+    exit(EXIT_SUCCESS);
+  }
+  while (--argc > 0)
+    filecopy_to_stdout(*++argv);
+  exit(EXIT_SUCCESS);
+}
+
+void filecopy_to_stdout(char *filename)
+{
+  char buf[BUFSIZ];
+
+  int fd, n;
+  if ((fd = open(filename, O_RDONLY, 0)) == -1)
+  {
+    error("cat: can't open %s", filename);
+    exit(EXIT_FAILURE);
+  }
+  while ((n = read(fd, buf, BUFSIZ)) > 0)
+    if (write(STDOUT_FILENO, buf, n) != n)
+      error("cat: write error");
+  close(fd);
+}
+
+void error(char *fmt, ...)
+{
+  va_list args;
+
+  va_start(args, fmt);
+  fprintf(stderr, "ERROR: ");
+  vfprintf(stderr, fmt, args);
+  fprintf(stderr, "\n");
+  exit(EXIT_FAILURE);
+}
+```
+
+## 8.4 Random Access - Lseek
+
+Each `read` and `write` takes place at a position in the file right after the previous one.
+
+However a file can be read or written in any order.
+
+The systam call `lsee` provides a way to move around in a file without reading or writing and data.
+
+```c
+long lseek(int fd, long offset, in original);
+```
+
+`lseek` set's the current position in the file to `offset`, which take relative to the location specified by `origin`.
+
+So beased of `offset` and `origin` you determine weather it's going from right to left or vise versa
+
+```c
+lseek(fd, (long)0, 2);
+```
+
+or
+
+```c
+lseek(fd, 0L, 2);
+```
+
+Set's the origin to index `2` of the file, to get back to index `0`.
+
+So `lseek` makes it possible to treat file like arrays, but with a slower access
+
+The following code any number of bytes from any arbitrary place in file,
+it returns the number read, or `-1` on error.
+
+```c
+#include "sscalls.h"
+
+/* get: read n bytes from position pos*/
+int get(int fd, long pos, char *buf, int n)
+{
+    if (lseek(fd, pos, 0) >= 0)
+        return read(fd, buf, n);
+    else
+        return -1;
+}
+```
+
+## 8.5 Example - An implementation of `Fopen` and `Getc`
+
+When new i get new stuff in my brain i get confused + i don't write i Concentrate :)
+
+### Exercise 8-2.
+
+Rewrite `fopen` and `_fillb` with fields instead of explicit bit operations.
+
+Compare code size and execution speed.
+
+Bit operations code is a bit simpler, readable and shorter
+
+Execution time slightlly defference
+
+[Code Solution](./Chapter_08/8-5/exercise_8-2/)
+
+![Execution Time](./Media/Getc_Putc_Execution_Time.png)
