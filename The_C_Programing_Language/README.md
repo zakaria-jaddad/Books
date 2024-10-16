@@ -43,6 +43,7 @@ Thanks for reading
     - [Exercise 1-21](#exercise-1-21)
     - [Exercise 1-22](#exercise-1-22)
     - [Exercise 1-23](#exercise-1-23)
+- [Chapter 2: Types, Operators and Expressions](#chapter-2-types-operators-and-expressions)
   - [2.1 Variable Names](#21-variable-names)
   - [2.2 Data Types and Sizes](#22-data-types-and-sizes)
     - [What are qualifiers in C](#what-are-qualifiers-in-c)
